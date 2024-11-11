@@ -1,11 +1,7 @@
 <?php
-// Iniciar sesión (si aún no lo has hecho)
-session_start();
+require_once __DIR__ . '/../conexion.php';
 
-// Incluir la conexión a la base de datos
-include('./conexion.php');
-
-// Verificar si el formulario fue enviado
+class AgregarUsuarioModel extends Database{}
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Obtener los datos del formulario
     $dni = $_POST['dni'];

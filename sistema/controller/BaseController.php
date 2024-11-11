@@ -10,7 +10,7 @@ class BaseController {
         // return $_SESSION['nombres'];
     }
 
-       protected function loadView($view, 
+        protected function loadView($view, 
                                         $data = [],
                                         $additionalCss = [],
                                         $additionalJs = [],

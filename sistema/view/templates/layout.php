@@ -17,10 +17,10 @@
 
         <!-- Estilos adicionales -->
         <?php if (!empty($additionalCss)) : ?>
-                <?php foreach ($additionalCss as $cssFile) : ?>
-                    <link rel="stylesheet" href="<?= $cssFile ?>">
-                <?php endforeach; ?>
-            <?php endif; ?>
+            <?php foreach ($additionalCss as $cssFile) : ?>
+                <link rel="stylesheet" href="<?= $cssFile ?>">
+            <?php endforeach; ?>
+        <?php endif; ?>
     </head>
 
     <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
@@ -59,7 +59,7 @@
                 <div class="sidebar-wrapper">
                     <nav class="mt-2"> <!--begin::Sidebar Menu-->
                         <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false" color="#8b783d">
-                            <li class="nav-item"> <a href="/biometrico/sistema/controller/DashboardController/DashboardController.php?action=MostrarDashboard" class="nav-link active"> <i class="nav-icon bi bi-speedometer"></i>
+                            <li class="nav-item"> <a href="/biometrico/sistema/controller/DashboardController/DashboardController.php?action=MostrarDashboard" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
                                     <p>
                                         Dashboard
                                     </p>
@@ -71,11 +71,16 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-header">---------------------------------</li>
-                            <li class="nav-item"> <a href="../../controller/AutenticacionController/logout.php" class="nav-link"> <i class="nav-icon bi bi-box-arrow-in-right"></i>
+                            <li class="nav-item"> <a href="/biometrico/sistema/controller/UsuariosController/UsuariosController.php?action=MostrarUsuario" class="nav-link"> <i class="nav-icon bi bi-pencil-square"></i>
                                     <p>
-                                        Cerrar Sesion
+                                        Empleados</i>
                                     </p>
+                                </a>
+                            </li>
+                            <li class="nav-header">---------------------------------</li>
+                            <li class="nav-item"> <a href="#" id="cerrarSesion" class="nav-link">
+                                    <i class="nav-icon bi bi-box-arrow-in-right"></i>
+                                    <p>Cerrar Sesión</p>
                                 </a>
                             </li>
                         </ul> <!--end::Sidebar Menu-->
@@ -107,8 +112,8 @@
         </div>
 
         <!-- Scripts globales -->
-    <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
-    <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script> <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
+        <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
+        <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script> <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I=" crossorigin="anonymous"></script> <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script> <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
         <script src="../../resources/dist/js/adminlte.js"></script> <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
@@ -136,6 +141,29 @@
             });
         </script> <!--end::OverlayScrollbars Configure--> <!-- OPTIONAL SCRIPTS --> <!-- apexcharts -->
         <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            // Agregar el eventListener al enlace de "Cerrar Sesión"
+            document.getElementById('cerrarSesion').addEventListener('click', function(e) {
+                e.preventDefault(); // Prevenir el comportamiento por defecto (redirigir inmediatamente)
+
+                // Mostrar la alerta de confirmación de SweetAlert2
+                Swal.fire({
+                    title: "¿Estás seguro de que deseas cerrar sesión?",
+                    showCancelButton: true,
+                    confirmButtonText: "Sí",
+                    cancelButtonText: "No",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire("Has cerrado sesión", "", "success").then(() => {
+                            window.location.href = "../../controller/AutenticacionController/logout.php";
+                        });
+                    } else {
+                        Swal.fire("Cancelado", "", "info");
+                    }
+                });
+            });
+        </script>
         <script>
             // NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
             // IT'S ALL JUST JUNK FOR DEMO
@@ -256,12 +284,12 @@
         </script> <!--end::Script-->
     </body><!--end::Body-->
 
-        <!-- Scripts adicionales -->
-        <?php if (!empty($additionalJs)) : ?>
-            <?php foreach ($additionalJs as $jsFile) : ?>
-                <script src="<?= $jsFile ?>"></script>
-            <?php endforeach; ?>
-        <?php endif; ?>
+    <!-- Scripts adicionales -->
+    <?php if (!empty($additionalJs)) : ?>
+        <?php foreach ($additionalJs as $jsFile) : ?>
+            <script src="<?= $jsFile ?>"></script>
+        <?php endforeach; ?>
+    <?php endif; ?>
 
     </body>
 
