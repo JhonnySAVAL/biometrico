@@ -65,9 +65,9 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-pencil-square"></i>
+                            <li class="nav-item"> <a href="/biometrico/sistema/controller/AsistenciaController/AsistenciaController.php?=VerAsistencias" class="nav-link"> <i class="nav-icon bi bi-pencil-square"></i>
                                     <p>
-                                        ejemplo</i>
+                                        Asistencia</i>
                                     </p>
                                 </a>
                             </li>

@@ -40,7 +40,6 @@ if (isset($_GET['action'])) {
     
 
 // public function showConsumible()
-
 //     {
 //         $nombre = $this->checkLogin();
 //         $consumiblesRegulares = $this->model->getConsumibles(); ---Funciones que obtiene del model
