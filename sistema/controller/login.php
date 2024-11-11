@@ -1,8 +1,7 @@
 <?php
-session_start(); // Iniciar sesión
-
-// Incluir la conexión a la base de datos desde el archivo conexion.php
-include('../model/conexion.php'); // Asegúrate de que la ruta al archivo es correcta
+require_once 'BaseController.php';
+include('../model/conexion.php'); 
+session_start();
 
 // Verificar si la conexión es exitosa
 if ($conn === null) {
@@ -25,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->rowCount() > 0) {
         // Usuario encontrado, iniciar sesión
         $_SESSION['usuario'] = $usuario; // Almacenar el nombre de usuario en la sesión
-        header("Location: ../view/template.php"); // Redirigir al área protegida
+        header("Location: /biometrico/sistema/controller/DashboardController/DashboardController.php?action=MostrarDashboard");
         exit();
     } else {
         // Usuario o contraseña incorrectos

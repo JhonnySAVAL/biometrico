@@ -1,12 +1,4 @@
-<?php
-session_start();
 
-// Verificar si el usuario está logueado
-if (!isset($_SESSION['usuario'])) {
-    header("Location: login.html"); // Si no está logueado, redirigir al login
-    exit();
-}
-?>
 <!DOCTYPE html>
 <html lang="en"> <!--begin::Head-->
 
