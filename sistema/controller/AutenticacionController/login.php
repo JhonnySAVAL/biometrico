@@ -1,6 +1,6 @@
 <?php
-require_once 'BaseController.php';
-include('../model/conexion.php'); 
+require_once '../BaseController.php';
+include('../../model/conexion.php'); 
 session_start();
 
 // Verificar si la conexión es exitosa

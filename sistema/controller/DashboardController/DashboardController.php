@@ -6,7 +6,6 @@ class DashboardController extends BaseController
     public function MostrarDashboard()
     {
         $this->loadView('Dashboard.Dashboard', [
-            // Datos si los necesitas
         ], [], [], 'Dashboard');
     }
 }
