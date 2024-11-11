@@ -3,8 +3,8 @@
         <div class="col-lg-12">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title">Listado de Vacaciones</h3>
-                    <a href="/vacaciones/agregar" class="btn btn-success">Agregar Vacación</a>
+                    <h3 class="card-title">Listado de Exoneraciones</h3>
+                    <a href="/exoneraciones/agregar" class="btn btn-success">Agregar Exoneración</a>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-striped">
@@ -19,17 +19,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($vacaciones as $vacacion): ?>
+                            <?php foreach ($exoneraciones as $exoneracion): ?>
                                 <tr>
-                                    <td><?= $vacacion['nombre'] ?></td>
-                                    <td><?= $vacacion['fechaInicio'] ?></td>
-                                    <td><?= $vacacion['fechaFin'] ?></td>
-                                    <td><?= $vacacion['motivo'] ?></td>
-                                    <td><?= $vacacion['estado'] ?></td>
+                                    <td><?= $exoneracion['nombre'] ?></td>
+                                    <td><?= $exoneracion['fechaInicio'] ?></td>
+                                    <td><?= $exoneracion['fechaFin'] ?></td>
+                                    <td><?= $exoneracion['motivo'] ?></td>
+                                    <td><?= $exoneracion['estado'] ?></td>
                                     <td>
-                                        <?php if ($vacacion['estado'] == 'Pendiente'): ?>
-                                            <a href="/vacaciones/aprobar/<?= $vacacion['idVacacion'] ?>" class="btn btn-primary">Aprobar</a>
-                                            <a href="/vacaciones/rechazar/<?= $vacacion['idVacacion'] ?>" class="btn btn-danger">Rechazar</a>
+                                        <?php if ($exoneracion['estado'] == 'Pendiente'): ?>
+                                            <a href="/exoneraciones/aprobar/<?= $exoneracion['idExoneracion'] ?>" class="btn btn-primary">Aprobar</a>
+                                            <a href="/exoneraciones/rechazar/<?= $exoneracion['idExoneracion'] ?>" class="btn btn-danger">Rechazar</a>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
