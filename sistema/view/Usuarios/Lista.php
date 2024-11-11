@@ -59,7 +59,6 @@
                                         <th>DNI</th>
                                         <th>Correo</th>
                                         <th>Teléfono</th>
-                                        <th>Ubigeo</th>
                                         <th>Puesto</th>
                                         <th>Turno</th>
                                         <th>Estado</th>
@@ -76,7 +75,6 @@
                                                 <td><?php echo $empleado['dni']; ?></td>
                                                 <td><?php echo $empleado['correo']; ?></td>
                                                 <td><?php echo $empleado['telefono']; ?></td>
-                                                <td><?php echo $empleado['idUbigeo']; ?></td>
                                                 <td><?php echo $empleado['idPuesto']; ?></td>
                                                 <td><?php echo $empleado['idTurno']; ?></td>
                                                 <td>
