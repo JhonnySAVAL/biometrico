@@ -2,7 +2,8 @@
 require_once '../BaseController.php';
 include('../../model/conexion.php'); 
 session_start();
-
+$db = new Database();
+$conn = $db->getConnection();
 if ($conn === null) {
     die('Error de conexión a la base de datos.');
 }

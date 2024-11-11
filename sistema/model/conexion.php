@@ -1,5 +1,5 @@
 <?php
-// Asegúrate de que la clase Database esté configurada correctamente
+
 class Database {
     protected $conn;
 
@@ -11,12 +11,15 @@ class Database {
             $password = ''; 
 
             $this->conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-           
+        
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo "Error de conexión: " . $e->getMessage();
             exit(); 
         }
+    }
+    public function getConnection() {
+        return $this->conn;
     }
 }
 ?>
