@@ -15,7 +15,7 @@ class ListaModel extends Database
                     LEFT JOIN puestos p ON e.idPuesto = p.idPuesto
                     LEFT JOIN turnos t ON e.idTurno = t.idTurno";
 
-        $stmt = $this->connect()->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
 
         $stmt->execute();
 
