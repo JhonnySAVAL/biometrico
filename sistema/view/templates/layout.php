@@ -72,7 +72,7 @@
                                 </a>
                             </li>
                             <li class="nav-header">---------------------------------</li>
-                            <li class="nav-item"> <a href="../controller/logout.php" class="nav-link"> <i class="nav-icon bi bi-box-arrow-in-right"></i>
+                            <li class="nav-item"> <a href="../../controller/logout.php" class="nav-link"> <i class="nav-icon bi bi-box-arrow-in-right"></i>
                                     <p>
                                         Cerrar Sesion
                                     </p>
