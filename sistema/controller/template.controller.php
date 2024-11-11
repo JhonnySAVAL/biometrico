@@ -2,7 +2,7 @@
 
     class ControllerTemplate{
         public function controllerTemplate(){
-            include "view/template.php";
+            include('C:/xampp/htdocs/biometrico/sistema/view/login.html');
         }
     }
 
