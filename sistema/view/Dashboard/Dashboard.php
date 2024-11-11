@@ -58,7 +58,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td> <img src="../resources/dist/assets/img/default-150x150.png" alt="Product 1" class="rounded-circle img-size-32 me-2">
+                                    <td> <img src="../../resources/dist/assets/img/default-150x150.png" alt="Product 1" class="rounded-circle img-size-32 me-2">
                                         Some Product
                                     </td>
                                     <td>$13 USD</td>
@@ -70,7 +70,7 @@
                                     <td> <a href="#" class="text-secondary"> <i class="bi bi-search"></i> </a> </td>
                                 </tr>
                                 <tr>
-                                    <td> <img src="../resources/dist/assets/img/default-150x150.png" alt="Product 1" class="rounded-circle img-size-32 me-2">
+                                    <td> <img src="../../resources/dist/assets/img/default-150x150.png" alt="Product 1" class="rounded-circle img-size-32 me-2">
                                         Another Product
                                     </td>
                                     <td>$29 USD</td>
@@ -82,7 +82,7 @@
                                     <td> <a href="#" class="text-secondary"> <i class="bi bi-search"></i> </a> </td>
                                 </tr>
                                 <tr>
-                                    <td> <img src="../resources/dist/assets/img/default-150x150.png" alt="Product 1" class="rounded-circle img-size-32 me-2">
+                                    <td> <img src="../../resources/dist/assets/img/default-150x150.png" alt="Product 1" class="rounded-circle img-size-32 me-2">
                                         Amazing Product
                                     </td>
                                     <td>$1,230 USD</td>
@@ -94,7 +94,7 @@
                                     <td> <a href="#" class="text-secondary"> <i class="bi bi-search"></i> </a> </td>
                                 </tr>
                                 <tr>
-                                    <td> <img src="../resources/dist/assets/img/default-150x150.png" alt="Product 1" class="rounded-circle img-size-32 me-2">
+                                    <td> <img src="../../resources/dist/assets/img/default-150x150.png" alt="Product 1" class="rounded-circle img-size-32 me-2">
                                         Perfect Item
                                         <span class="badge text-bg-danger">NEW</span>
                                     </td>
