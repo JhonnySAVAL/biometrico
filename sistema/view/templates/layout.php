@@ -1,5 +1,5 @@
     <!DOCTYPE html>
-    <html lang="en"> <!--begin::Head-->
+    <html lang="en">
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -14,8 +14,8 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css" integrity="sha256-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous"><!--end::Third Party Plugin(Bootstrap Icons)--><!--begin::Required Plugin(AdminLTE)-->
         <link rel="stylesheet" href="../../resources/dist/css/adminlte.css"><!--end::Required Plugin(AdminLTE)--><!-- apexcharts -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous">
+        <script src="../../public/js/sweetalert2@11.all.min.js"></script>
 
-        <!-- Estilos adicionales -->
         <?php if (!empty($additionalCss)) : ?>
             <?php foreach ($additionalCss as $cssFile) : ?>
                 <link rel="stylesheet" href="<?= $cssFile ?>">
@@ -23,41 +23,41 @@
         <?php endif; ?>
     </head>
 
-    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
-        <div class="app-wrapper"> <!--begin::Header-->
-            <nav class="app-header navbar navbar-expand bg-body"> <!--begin::Container-->
-                <div class="container-fluid"> <!--begin::Start Navbar Links-->
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <nav class="app-header navbar navbar-expand bg-body">
+                <div class="container-fluid"> 
                     <ul class="navbar-nav">
                         <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i class="bi bi-list"></i> </a> </li>
                         <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Home</a> </li>
-                    </ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
-                    <ul class="navbar-nav ms-auto"> <!--begin::Navbar Search-->
+                    </ul>
+                    <ul class="navbar-nav ms-auto"> 
                         <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a> </li> <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
                         <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img src="../resources/dist/assets/img/user2-160x160.jpg" class="user-image rounded-circle shadow" alt="User Image"> <span class="d-none d-md-inline">Alexander Pierce</span> </a>
-                            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <!--begin::User Image-->
+                            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> 
                                 <li class="user-header text-bg-primary"> <img src="../resources/dist/assets/img/user2-160x160.jpg" class="rounded-circle shadow" alt="User Image">
                                     <p>
                                         Alexander Pierce - Web Developer
                                         <small>Member since Nov. 2023</small>
                                     </p>
-                                </li> <!--end::User Image--> <!--begin::Menu Body-->
-                                <li class="user-body"> <!--begin::Row-->
+                                </li> 
+                                <li class="user-body"> 
                                     <div class="row">
                                         <div class="col-4 text-center"> <a href="#">Followers</a> </div>
                                         <div class="col-4 text-center"> <a href="#">Sales</a> </div>
                                         <div class="col-4 text-center"> <a href="#">Friends</a> </div>
-                                    </div> <!--end::Row-->
-                                </li> <!--end::Menu Body--> <!--begin::Menu Footer-->
-                                <li class="user-footer"> <a href="#" class="btn btn-default btn-flat">Profile</a> <a href="/biometrico/web/view/index.html" class="btn btn-default btn-flat float-end">Sign out</a> </li> <!--end::Menu Footer-->
+                                    </div> 
+                                </li> 
+                                <li class="user-footer"> <a href="#" class="btn btn-default btn-flat">Profile</a> <a href="/biometrico/web/view/index.html" class="btn btn-default btn-flat float-end">Sign out</a> </li> 
                             </ul>
-                        </li> <!--end::User Menu Dropdown-->
-                    </ul> <!--end::End Navbar Links-->
-                </div> <!--end::Container-->
-            </nav> <!--end::Header--> <!--begin::Sidebar-->
-            <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
-                <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="./index.php" class="brand-link"> <!--begin::Brand Image--> <img src="../../resources/img/minaLogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light">316 Mining</span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
+                        </li> 
+                    </ul> 
+                </div>
+            </nav>
+            <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> 
+                <div class="sidebar-brand"> <a href="./index.php" class="brand-link"> <img src="../../resources/img/minaLogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <span class="brand-text fw-light">316 Mining</span> </a> </div>
                 <div class="sidebar-wrapper">
-                    <nav class="mt-2"> <!--begin::Sidebar Menu-->
+                    <nav class="mt-2">
                         <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false" color="#8b783d">
                             <li class="nav-item"> <a href="/biometrico/sistema/controller/DashboardController/DashboardController.php?action=MostrarDashboard" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
                                     <p>
@@ -77,27 +77,27 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-header">---------------------------------</li>
+                            <li class="nav-header">-------------------------------------------</li>
                             <li class="nav-item"> <a href="#" id="cerrarSesion" class="nav-link">
                                     <i class="nav-icon bi bi-box-arrow-in-right"></i>
                                     <p>Cerrar Sesión</p>
                                 </a>
                             </li>
-                        </ul> <!--end::Sidebar Menu-->
+                        </ul>
                     </nav>
-                </div> <!--end::Sidebar Wrapper-->
+                </div>
             </aside>
 
 
 
-            <main class="app-main"> <!--begin::App Content Header-->
-                <div class="app-content-header"> <!--begin::Container-->
-                    <div class="container-fluid"> <!--begin::Row-->
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
                         <div class="row">
                             <?php include $viewPath; ?>
-                        </div> <!--end::Row-->
-                    </div> <!--end::Container-->
-                </div> <!--end::App Content-->
+                        </div> 
+                    </div> 
+                </div> 
             </main>
 
             </div>
@@ -132,29 +132,7 @@
             });
         </script> <!--end::OverlayScrollbars Configure--> <!-- OPTIONAL SCRIPTS --> <!-- apexcharts -->
         <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-            // Agregar el eventListener al enlace de "Cerrar Sesión"
-            document.getElementById('cerrarSesion').addEventListener('click', function(e) {
-                e.preventDefault(); // Prevenir el comportamiento por defecto (redirigir inmediatamente)
-
-                // Mostrar la alerta de confirmación de SweetAlert2
-                Swal.fire({
-                    title: "¿Estás seguro de que deseas cerrar sesión?",
-                    showCancelButton: true,
-                    confirmButtonText: "Sí",
-                    cancelButtonText: "No",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire("Has cerrado sesión", "", "success").then(() => {
-                            window.location.href = "../../controller/AutenticacionController/logout.php";
-                        });
-                    } else {
-                        Swal.fire("Cancelado", "", "info");
-                    }
-                });
-            });
-        </script>
+        <script src="../../public/js/logout.min.js"></script>
         <script>
             // NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
             // IT'S ALL JUST JUNK FOR DEMO
