@@ -62,7 +62,6 @@ CREATE TABLE `empleados` (
   `dni` varchar(8) NOT NULL,
   `correo` varchar(50) NOT NULL,
   `telefono` varchar(15) DEFAULT NULL,
-  `idUbigeo` int(6) DEFAULT NULL,
   `idPuesto` int(11) DEFAULT NULL,
   `idTurno` int(11) DEFAULT NULL,
   `estado` enum('Activo','Inactivo') DEFAULT 'Activo'
@@ -153,19 +152,6 @@ CREATE TABLE `turnos` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ubigeos`
---
-
-CREATE TABLE `ubigeos` (
-  `idUbigeo` int(11) NOT NULL,
-  `departamento` varchar(45) DEFAULT NULL,
-  `provincia` varchar(45) DEFAULT NULL,
-  `distrito` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -220,7 +206,6 @@ ALTER TABLE `auditoria`
 ALTER TABLE `empleados`
   ADD PRIMARY KEY (`idEmpleado`),
   ADD UNIQUE KEY `correo` (`correo`),
-  ADD KEY `idUbigeo` (`idUbigeo`),
   ADD KEY `idPuesto` (`idPuesto`),
   ADD KEY `idTurno` (`idTurno`);
 
@@ -263,12 +248,6 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `turnos`
   ADD PRIMARY KEY (`idTurno`);
-
---
--- Indices de la tabla `ubigeos`
---
-ALTER TABLE `ubigeos`
-  ADD PRIMARY KEY (`idUbigeo`);
 
 --
 -- Indices de la tabla `vacaciones`
@@ -330,12 +309,6 @@ ALTER TABLE `turnos`
   MODIFY `idTurno` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `ubigeos`
---
-ALTER TABLE `ubigeos`
-  MODIFY `idUbigeo` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `vacaciones`
 --
 ALTER TABLE `vacaciones`
@@ -361,7 +334,6 @@ ALTER TABLE `auditoria`
 -- Filtros para la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  ADD CONSTRAINT `empleados_ibfk_1` FOREIGN KEY (`idUbigeo`) REFERENCES `ubigeos` (`idUbigeo`),
   ADD CONSTRAINT `empleados_ibfk_2` FOREIGN KEY (`idPuesto`) REFERENCES `puestos` (`idPuesto`),
   ADD CONSTRAINT `empleados_ibfk_3` FOREIGN KEY (`idTurno`) REFERENCES `turnos` (`idTurno`);
 
