@@ -3,9 +3,24 @@ require_once '../BaseController.php';
 require_once __DIR__ . '/../../model/DashboardModel/Dashboard.php';
 class DashboardController extends BaseController
 {
-    public function MostrarDashboard()
+    private $model;
+
+    public function __construct()
     {
+        $this->model = new Dashboard();
+    }
+        public function MostrarDashboard()
+    {
+        $asistencias = $this->model-> getAsistencias();
+        $justificaciones = $this->model-> getJustificaciones();
+        $vacaciones = $this->model-> getVacaciones();
+        $permisos = $this->model-> getPermisos();
+        
         $this->loadView('Dashboard.Dashboard', [
+            'asistencias' => $asistencias,
+            'justificaciones' => $justificaciones,
+            'vacaciones' => $vacaciones,
+            'permisos' => $permisos
         ], [], [], 'Dashboard');
     }
 }
@@ -25,6 +40,7 @@ if (isset($_GET['action'])) {
     
 
 // public function showConsumible()
+
 //     {
 //         $nombre = $this->checkLogin();
 //         $consumiblesRegulares = $this->model->getConsumibles(); ---Funciones que obtiene del model

@@ -1,4 +1,4 @@
-<!--Contenido-->
+
 <div class="col-sm-6">
     <h3 class="mb-0">Dashboard</h3>
 </div>
@@ -10,14 +10,14 @@
         </li>
     </ol>
 </div>
-</div> <!--end::Row-->
-</div> <!--end::Container-->
+</div> 
+</div> 
 </div>
-<div class="app-content"> <!--begin::Container-->
-    <div class="container-fluid"> <!--begin::Row-->
+<div class="app-content"> 
+    <div class="container-fluid"> 
         <div class="row">
 
-            <!--Incluye tu contenido-->
+            
 
 
             <div class="col-lg-6">
@@ -32,7 +32,7 @@
                             <p class="d-flex flex-column"> <span class="fw-bold fs-5">820</span> <span>Visitors Over Time</span> </p>
                             <p class="ms-auto d-flex flex-column text-end"> <span class="text-success"> <i class="bi bi-arrow-up"></i> 12.5%
                                 </span> <span class="text-secondary">Since last week</span> </p>
-                        </div> <!-- /.d-flex -->
+                        </div>
                         <div class="position-relative mb-4">
                             <div id="visitors-chart"></div>
                         </div>
@@ -40,7 +40,7 @@
                             </span> <span> <i class="bi bi-square-fill text-secondary"></i> Last Week
                             </span> </div>
                     </div>
-                </div> <!-- /.card -->
+                </div> 
                 <div class="card mb-4">
                     <div class="card-header border-0">
                         <h3 class="card-title">Products</h3>
@@ -114,7 +114,6 @@
 
 
             
-<!-- Fin del contenido -->
         </div>
     </div>
 </div>
