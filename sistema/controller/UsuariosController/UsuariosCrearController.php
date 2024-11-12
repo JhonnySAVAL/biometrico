@@ -19,7 +19,7 @@ class AgregarUsuarioController extends BaseController
             'usuarios' => $empleados,
             'puestos' => $puestos,
             'turnos' => $turnos,
-        ], [], [], 'Usuarios');
+        ], [], ['/biometrico/sistema/view/usuarios/js/limpiar.min.js'], 'Usuarios');
     }
 }
 if (isset($_GET['action'])) {
