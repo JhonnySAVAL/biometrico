@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-11-2024 a las 14:33:30
+-- Tiempo de generación: 12-11-2024 a las 16:12:10
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -141,6 +141,13 @@ CREATE TABLE `puestos` (
   `descripcion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `puestos`
+--
+
+INSERT INTO `puestos` (`idPuesto`, `nombrePuesto`, `area`, `descripcion`) VALUES
+(1, 'Electricista', 'Zona B mina 5', 'Encargado del mantneimiento en el area de electric');
+
 -- --------------------------------------------------------
 
 --
@@ -167,6 +174,13 @@ CREATE TABLE `turnos` (
   `duracion` time DEFAULT NULL,
   `receso` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `turnos`
+--
+
+INSERT INTO `turnos` (`idTurno`, `descripcion`, `entrada`, `salida`, `duracion`, `receso`) VALUES
+(1, 'Turno Mañana', '08:00:00', '16:00:00', '08:00:00', '00:30:00');
 
 -- --------------------------------------------------------
 
@@ -295,7 +309,7 @@ ALTER TABLE `permisos`
 -- AUTO_INCREMENT de la tabla `puestos`
 --
 ALTER TABLE `puestos`
-  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -307,7 +321,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `idTurno` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTurno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `vacaciones`

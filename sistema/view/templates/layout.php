@@ -81,7 +81,7 @@
                                     <li class="nav-item"> <a href="/biometrico/sistema/controller/UsuariosController/UsuariosController.php?action=MostrarUsuario" class="nav-link"> <i class="nav-icon bi bi-pencil-square"></i>
                                             <p>Lista</p>
                                         </a> </li>
-                                    <li class="nav-item"> <a href="./index2.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                    <li class="nav-item"> <a href="/biometrico/sistema/controller/UsuariosController/UsuariosCrearController.php?action=vistaAgregarUsuario" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                             <p>Registrar</p>
                                         </a> </li>
                                 </ul>

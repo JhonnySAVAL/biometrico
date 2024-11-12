@@ -1,23 +1,29 @@
 <?php
 
 require_once '../BaseController.php';
-require_once __DIR__ . '/../../model/UsuarioModel/ListaModel.php';
+require_once __DIR__ . '/../../model/UsuarioModel/AgregarUsuarioModel.php';
 
-class UsuariosController extends BaseController
+class AgregarUsuarioController extends BaseController
 {
-    public function MostrarUsuario()
-    {
-        $listaModel = new ListaModel();
-        
-        $empleados = $listaModel->getUsuarios();
 
-        $this->loadView('Usuarios.Lista', [
+
+    public function vistaAgregarUsuario()
+    {
+        $crearModel = new AgregarUsuarioModel();
+        
+        $empleados = $crearModel->agregarUsuario();
+        $puestos = $crearModel ->MostrarPuestos();
+        $turnos = $crearModel ->MostrarTurnos();
+        
+        $this->loadView('Usuarios.Crear', [
             'usuarios' => $empleados,
+            'puestos' => $puestos,
+            'turnos' => $turnos,
         ], [], [], 'Usuarios');
     }
 }
 if (isset($_GET['action'])) {
-    $controller = new UsuariosController();
+    $controller = new AgregarUsuarioController();
     $action = $_GET['action'];
 
     if (method_exists($controller, $action)) {
