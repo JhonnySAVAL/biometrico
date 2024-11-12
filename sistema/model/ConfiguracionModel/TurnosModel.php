@@ -1,63 +1,52 @@
 <?php
-require_once __DIR__ . '/../conexion.php';
+require_once __DIR__ . '/../conexion.php';  // Asegúrate de que la conexión esté incluida
 
-class Turno extends Database {
+class Turnos extends Database {
+    
     public function __construct() {
-        parent::__construct(); 
-    }
-    public function registrarTurno($descripcion, $entrada, $salida, $duracion, $receso) {
-        $query = "INSERT INTO turnos (descripcion, entrada, salida, duracion, receso) 
-                  VALUES (:descripcion, :entrada, :salida, :duracion, :receso)";
-        
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':descripcion', $descripcion);
-        $stmt->bindParam(':entrada', $entrada);
-        $stmt->bindParam(':salida', $salida);
-        $stmt->bindParam(':duracion', $duracion);
-        $stmt->bindParam(':receso', $receso);
-        
-        return $stmt->execute();
+        parent::__construct();
     }
 
-    public function obtenerTurnos() {
-        $query = "SELECT * FROM turnos";
-        
-        $stmt = $this->conn->prepare($query);
+    public function ObtenerTurnos() {
+        $sql = "SELECT * FROM turnos ORDER BY descripcion ASC"; 
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function obtenerTurnoPorId($idTurno) {
-        $query = "SELECT * FROM turnos WHERE idTurno = :idTurno";
+    public function InsertarTurno($descripcion, $entrada, $salida, $duracion, $receso) {
+        $sql = "INSERT INTO turnos (descripcion, entrada, salida, duracion, receso) 
+                VALUES (:descripcion, :entrada, :salida, :duracion, :receso)";
         
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':idTurno', $idTurno);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    public function actualizarTurno($idTurno, $descripcion, $entrada, $salida, $duracion, $receso) {
-        $query = "UPDATE turnos SET descripcion = :descripcion, entrada = :entrada, salida = :salida, 
-                  duracion = :duracion, receso = :receso WHERE idTurno = :idTurno";
-        
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':idTurno', $idTurno);
+        $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':descripcion', $descripcion);
         $stmt->bindParam(':entrada', $entrada);
         $stmt->bindParam(':salida', $salida);
         $stmt->bindParam(':duracion', $duracion);
         $stmt->bindParam(':receso', $receso);
         
-        return $stmt->execute();
+        $stmt->execute();
     }
 
-    public function eliminarTurno($idTurno) {
-        $query = "DELETE FROM turnos WHERE idTurno = :idTurno";
+    public function ActualizarTurno($idTurno, $descripcion, $entrada, $salida, $duracion, $receso) {
+        $sql = "UPDATE turnos SET descripcion = ?, entrada = ?, salida = ?, duracion = ?, receso = ? WHERE idTurno = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$descripcion, $entrada, $salida, $duracion, $receso, $idTurno]);
+    }
+
+    public function EliminarTurno($idTurno) {
+        if (empty($idTurno) || !is_numeric($idTurno)) {
+            throw new Exception("ID del turno no válido.");
+        }
         
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':idTurno', $idTurno);
+        $sql = "DELETE FROM turnos WHERE idTurno = ?";
+        $stmt = $this->conn->prepare($sql);
         
-        return $stmt->execute();
+        if ($stmt->execute([$idTurno])) {
+            return true;
+        } else {
+            throw new Exception("Error al eliminar el turno.");
+        }
     }
 }
 ?>
