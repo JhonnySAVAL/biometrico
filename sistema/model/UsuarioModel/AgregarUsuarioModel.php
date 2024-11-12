@@ -1,7 +1,10 @@
 <?php
 require_once __DIR__ . '/../conexion.php';
 
-class AgregarUsuarioModel extends Database{}
+class AgregarUsuarioModel extends Database{
+
+    
+}
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $dni = $_POST['dni'];

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2024 a las 17:09:15
+-- Tiempo de generación: 12-11-2024 a las 14:33:30
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -20,6 +20,24 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `biometrico`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `admin`
+--
+
+CREATE TABLE `admin` (
+  `DNI` varchar(10) NOT NULL,
+  `nombre` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `admin`
+--
+
+INSERT INTO `admin` (`DNI`, `nombre`) VALUES
+('123', 'juan');
 
 -- --------------------------------------------------------
 
@@ -64,7 +82,8 @@ CREATE TABLE `empleados` (
   `telefono` varchar(15) DEFAULT NULL,
   `idPuesto` int(11) DEFAULT NULL,
   `idTurno` int(11) DEFAULT NULL,
-  `estado` enum('Activo','Inactivo') DEFAULT 'Activo'
+  `estado` enum('Activo','Inactivo') DEFAULT 'Activo',
+  `habilitado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -148,24 +167,6 @@ CREATE TABLE `turnos` (
   `duracion` time DEFAULT NULL,
   `receso` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
---
-
-CREATE TABLE `usuarios` (
-  `DNI` char(8) NOT NULL,
-  `nombre` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`DNI`, `nombre`) VALUES
-('123', 'Juan');
 
 -- --------------------------------------------------------
 

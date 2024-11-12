@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario = $_POST['usuario'];
     $dni = $_POST['dni'];
 
-    $sql = "SELECT * FROM usuarios WHERE DNI = :dni AND nombre = :usuario LIMIT 1";
+    $sql = "SELECT * FROM admin WHERE DNI = :dni AND nombre = :usuario LIMIT 1";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':usuario', $usuario);
     $stmt->bindParam(':dni', $dni);

@@ -3,6 +3,10 @@ require_once __DIR__ . '/../conexion.php';
 
 class ListaModel extends Database
 {
+    public function __construct() {
+        parent::__construct(); 
+    }
+    
     public function getUsuarios()
     {
         $sql = "SELECT e.idEmpleado, e.nombres, e.apellidos, e.dni, e.correo, e.telefono, 
