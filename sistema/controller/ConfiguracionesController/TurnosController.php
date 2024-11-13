@@ -73,15 +73,19 @@ class TurnosController extends BaseController
         }
     }
 
-    public function VerificarUsuariosPorTurno()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $idTurno = $_GET['idTurno'];
-            $empleados = $this->model->ObtenerEmpleadosPorTurno($idTurno);
-            echo json_encode(['empleados' => $empleados]);
-            exit();
-        }
-    }
+    // public function VerificarUsuariosPorTurno()
+    // {
+    //     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    //         $idTurno = $_GET['idTurno'];
+    //         $empleados = $this->model->ObtenerEmpleadosPorTurno($idTurno);
+    //         echo json_encode(['empleados' => $empleados]);
+    //         exit();
+    //     }
+    // }
+
+
+    
+
 }
 if (isset($_GET['action'])) {
     $controller = new TurnosController();

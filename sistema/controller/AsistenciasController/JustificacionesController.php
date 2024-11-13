@@ -1,77 +1,41 @@
 <?php
-require_once __DIR__ . '/../modelos/Justificaciones.php';
+require_once __DIR__ . '/../conexion.php';
 
-class JustificacionesController extends BaseController
-{
-    private $model;
-
-    public function __construct()
-    {
-        $this->model = new Dashboard();
-    }
-    public function MostrarJustificaciones()
-    {
-        $justificacionesModel = new Justificaciones();
-        $justificaciones = $justificacionesModel->getTodasLasJustificaciones();
-
-        $this->loadView('Justificaciones.JustificacionesList', [
-            'justificaciones' => $justificaciones
-        ], [], [], 'Justificaciones');
+class Justificaciones extends Database {
+    
+    // Insertar una nueva justificación
+    public function insertarJustificacion($empleadoId, $fecha, $motivo, $documento = null) {
+        $sql = "INSERT INTO justificaciones (empleadoId, fecha, motivo, documento, estado) VALUES (:empleadoId, :fecha, :motivo, :documento, 'pendiente')";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':empleadoId', $empleadoId);
+        $stmt->bindParam(':fecha', $fecha);
+        $stmt->bindParam(':motivo', $motivo);
+        $stmt->bindParam(':documento', $documento);
+        $stmt->execute();
     }
 
-    public function MostrarJustificacionesAprobadas()
-    {
-        $justificacionesModel = new Justificaciones();
-        $justificaciones = $justificacionesModel->getJustificacionesAprobadas();
-
-        $this->loadView('Justificaciones.JustificacionesAprobadas', [
-            'justificaciones' => $justificaciones
-        ], [], [], 'Justificaciones');
+    // Obtener todas las justificaciones
+    public function obtenerJustificaciones() {
+        $sql = "SELECT * FROM justificaciones";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function AgregarJustificacion()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $idEmpleado = $_POST['idEmpleado'];
-            $fechaInicio = $_POST['fechaInicio'];
-            $fechaFin = $_POST['fechaFin'];
-            $motivo = $_POST['motivo'];
-
-            $justificacionesModel = new Justificaciones();
-            $justificacionesModel->agregarJustificacion($idEmpleado, $fechaInicio, $fechaFin, $motivo);
-
-            header('Location: /justificaciones');
-            exit;
-        }
-
-        $this->loadView('Justificaciones.AgregarJustificacion');
+    // Aprobar una justificación
+    public function aprobarJustificacion($justificacionId) {
+        $sql = "UPDATE justificaciones SET estado = 'aprobada' WHERE idJustificacion = :justificacionId";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':justificacionId', $justificacionId);
+        $stmt->execute();
     }
 
-    public function AprobarJustificacion($idJustificacion)
-    {
-        $justificacionesModel = new Justificaciones();
-        $justificacionesModel->aprobarJustificacion($idJustificacion);
-
-        header('Location: /justificaciones');
-        exit;
-    }
-
-    public function RechazarJustificacion($idJustificacion)
-    {
-        $justificacionesModel = new Justificaciones();
-        $justificacionesModel->rechazarJustificacion($idJustificacion);
-
-        header('Location: /justificaciones');
-        exit;
+    // Rechazar una justificación
+    public function rechazarJustificacion($justificacionId) {
+        $sql = "UPDATE justificaciones SET estado = 'rechazada' WHERE idJustificacion = :justificacionId";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':justificacionId', $justificacionId);
+        $stmt->execute();
     }
 }
-if (isset($_GET['action'])) {
-    $controller = new JustificacionesController();
-    $action = $_GET['action'];
-
-    if (method_exists($controller, $action)) {
-        $controller->$action();  
-    } else {
-        echo "Error: Acción no encontrada.";
-    }
-}
+?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-11-2024 a las 04:04:43
+-- Tiempo de generación: 13-11-2024 a las 17:04:34
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -51,7 +51,12 @@ CREATE TABLE `asistencia` (
   `fechaRegistro` date NOT NULL,
   `horaEntrada` time DEFAULT NULL,
   `horaSalida` time DEFAULT NULL,
-  `estado` varchar(45) DEFAULT NULL
+  `estado` varchar(45) DEFAULT NULL,
+  `minutos_anticipados` int(11) DEFAULT 0,
+  `minutos_tardanza` int(11) DEFAULT 0,
+  `tipo_registro` enum('automatica','manual') DEFAULT 'automatica',
+  `horaReceso` time DEFAULT NULL,
+  `minutos_receso` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -88,14 +93,6 @@ CREATE TABLE `empleados` (
   `passwordApp` varchar(20) DEFAULT NULL COMMENT 'contra para la app'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `empleados`
---
-
-INSERT INTO `empleados` (`idEmpleado`, `nombres`, `apellidos`, `dni`, `correo`, `telefono`, `idPuesto`, `idTurno`, `estado`, `habilitado`, `idApp`, `passwordApp`) VALUES
-(1, 'asd', 'asd', '12345678', 'qqq@gma', '123456789', 1, 1, 'Activo', 0, NULL, NULL),
-(2, '432', '432', '432', '432@123', '432', 1, 1, 'Activo', 1, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -111,16 +108,32 @@ CREATE TABLE `empleados_roles` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `justificacion`
+-- Estructura de tabla para la tabla `exoneraciones`
 --
 
-CREATE TABLE `justificacion` (
+CREATE TABLE `exoneraciones` (
+  `idExoneracion` int(11) NOT NULL,
+  `empleadoId` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `motivo` text NOT NULL,
+  `tipo_exoneracion` enum('asistencia','tardanza','receso') DEFAULT 'asistencia',
+  `estado` enum('pendiente','aprobada','rechazada') DEFAULT 'pendiente',
+  `fecha_solicitud` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `justificaciones`
+--
+
+CREATE TABLE `justificaciones` (
   `idJustificacion` int(11) NOT NULL,
-  `idEmpleado` int(11) DEFAULT NULL,
-  `fechaInicio` date DEFAULT NULL,
-  `fechaFin` date DEFAULT NULL,
-  `motivo` varchar(100) DEFAULT NULL,
-  `estado` varchar(45) DEFAULT NULL
+  `empleadoId` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `motivo` text NOT NULL,
+  `documento` varchar(255) DEFAULT NULL,
+  `estado` enum('pendiente','aprobada','rechazada') DEFAULT 'pendiente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -151,13 +164,6 @@ CREATE TABLE `puestos` (
   `descripcion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `puestos`
---
-
-INSERT INTO `puestos` (`idPuesto`, `nombrePuesto`, `area`, `descripcion`) VALUES
-(1, 'Electricista', 'Zona B mina 5', 'Encargado del mantneimiento en el area de electric');
-
 -- --------------------------------------------------------
 
 --
@@ -182,15 +188,10 @@ CREATE TABLE `turnos` (
   `entrada` time DEFAULT NULL,
   `salida` time DEFAULT NULL,
   `duracion` time DEFAULT NULL,
-  `receso` time NOT NULL
+  `receso` time NOT NULL,
+  `tolerancia` int(11) DEFAULT 0,
+  `tolerancia_acumulada_mensual` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `turnos`
---
-
-INSERT INTO `turnos` (`idTurno`, `descripcion`, `entrada`, `salida`, `duracion`, `receso`) VALUES
-(1, 'Turno Mañana', '08:00:00', '16:00:00', '08:00:00', '00:30:00');
 
 -- --------------------------------------------------------
 
@@ -242,11 +243,18 @@ ALTER TABLE `empleados_roles`
   ADD KEY `idRol` (`idRol`);
 
 --
--- Indices de la tabla `justificacion`
+-- Indices de la tabla `exoneraciones`
 --
-ALTER TABLE `justificacion`
+ALTER TABLE `exoneraciones`
+  ADD PRIMARY KEY (`idExoneracion`),
+  ADD KEY `empleadoId` (`empleadoId`);
+
+--
+-- Indices de la tabla `justificaciones`
+--
+ALTER TABLE `justificaciones`
   ADD PRIMARY KEY (`idJustificacion`),
-  ADD KEY `idEmpleado` (`idEmpleado`);
+  ADD KEY `empleadoId` (`empleadoId`);
 
 --
 -- Indices de la tabla `permisos`
@@ -301,12 +309,18 @@ ALTER TABLE `auditoria`
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `justificacion`
+-- AUTO_INCREMENT de la tabla `exoneraciones`
 --
-ALTER TABLE `justificacion`
+ALTER TABLE `exoneraciones`
+  MODIFY `idExoneracion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `justificaciones`
+--
+ALTER TABLE `justificaciones`
   MODIFY `idJustificacion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -319,7 +333,7 @@ ALTER TABLE `permisos`
 -- AUTO_INCREMENT de la tabla `puestos`
 --
 ALTER TABLE `puestos`
-  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -331,7 +345,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `idTurno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idTurno` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `vacaciones`
@@ -370,10 +384,16 @@ ALTER TABLE `empleados_roles`
   ADD CONSTRAINT `empleados_roles_ibfk_2` FOREIGN KEY (`idRol`) REFERENCES `roles` (`idRol`);
 
 --
--- Filtros para la tabla `justificacion`
+-- Filtros para la tabla `exoneraciones`
 --
-ALTER TABLE `justificacion`
-  ADD CONSTRAINT `justificacion_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`);
+ALTER TABLE `exoneraciones`
+  ADD CONSTRAINT `exoneraciones_ibfk_1` FOREIGN KEY (`empleadoId`) REFERENCES `empleados` (`idEmpleado`);
+
+--
+-- Filtros para la tabla `justificaciones`
+--
+ALTER TABLE `justificaciones`
+  ADD CONSTRAINT `justificaciones_ibfk_1` FOREIGN KEY (`empleadoId`) REFERENCES `empleados` (`idEmpleado`);
 
 --
 -- Filtros para la tabla `permisos`

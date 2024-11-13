@@ -1,78 +1,50 @@
 <?php
-require_once __DIR__ . '/../modelos/Asistencia.php';
+require_once '../BaseController.php';
+require_once __DIR__ . '/../../model/Asistencias.php';
 
 class AsistenciaController extends BaseController
 {
-    public function RegistrarEntrada()
+    private $asistenciasModel;
+
+    public function __construct()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $idEmpleado = $_POST['idEmpleado'];
-            $horaEntrada = $_POST['horaEntrada'];
+        $this->asistenciasModel = new Asistencias();
+    }
 
-            $asistenciaModel = new Asistencia();
-            $asistenciaModel->registrarAsistencia($idEmpleado, $horaEntrada);
-
-            header('Location: /asistencia');
-            exit;
+    public function marcarEntrada($empleadoId)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->asistenciasModel->registrarEntrada($empleadoId, 'manual'); // Tipo de registro: manual
+            echo json_encode(['success' => true, 'message' => 'Entrada registrada exitosamente.']);
         }
-
-        $this->loadView('Asistencia.RegistrarEntrada');
     }
 
-    public function RegistrarSalida($idAsistencia)
+    public function marcarReceso($empleadoId)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $horaSalida = $_POST['horaSalida'];
-
-            $asistenciaModel = new Asistencia();
-            $asistenciaModel->registrarSalida($idAsistencia, $horaSalida);
-
-            header('Location: /asistencia');
-            exit;
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->asistenciasModel->registrarReceso($empleadoId, 'manual');
+            echo json_encode(['success' => true, 'message' => 'Receso registrado exitosamente.']);
         }
-
-        $this->loadView('Asistencia.RegistrarSalida', [
-            'idAsistencia' => $idAsistencia
-        ]);
     }
 
-    public function VerAsistencias($fecha)
+    public function marcarSalida($empleadoId)
     {
-        $asistenciaModel = new Asistencia();
-        $asistencias = $asistenciaModel->getAsistenciasPorFechaGeneral($fecha);
-
-        $this->loadView('Asistencia.AsistenciasList', [
-            'asistencias' => $asistencias
-        ]);
-    }
-
-    public function VerAsistenciaEmpleado($idEmpleado, $fecha)
-    {
-        $asistenciaModel = new Asistencia();
-        $asistencia = $asistenciaModel->getAsistenciasPorFecha($idEmpleado, $fecha);
-
-        $this->loadView('Asistencia.AsistenciaEmpleado', [
-            'asistencia' => $asistencia
-        ]);
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->asistenciasModel->registrarSalida($empleadoId, 'manual');
+            echo json_encode(['success' => true, 'message' => 'Salida registrada exitosamente.']);
+        }
     }
 }
+
 if (isset($_GET['action'])) {
     $controller = new AsistenciaController();
     $action = $_GET['action'];
+    $empleadoId = $_POST['empleadoId'] ?? null;
 
-    if (method_exists($controller, $action)) {
-        $controller->$action();  
+    if (method_exists($controller, $action) && $empleadoId) {
+        $controller->$action($empleadoId);
     } else {
-        echo "Error: Acción no encontrada.";
+        echo "Error: Acción o ID de empleado no válido.";
     }
 }
-if (isset($_GET['action'])) {
-    $controller = new AsistenciaController();
-    $action = $_GET['action'];
-
-    if (method_exists($controller, $action)) {
-        $controller->$action();  
-    } else {
-        echo "Error: Acción no encontrada.";
-    }
-}
+?>

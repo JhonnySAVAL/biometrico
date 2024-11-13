@@ -48,5 +48,16 @@ class Turnos extends Database {
             throw new Exception("Error al eliminar el turno.");
         }
     }
+
+    //Usado por Asistencia este modelo
+    public function obtenerDuracionTurno($empleadoId) {
+        $sql = "SELECT t.duracion FROM turnos t
+                INNER JOIN empleados e ON e.idTurno = t.idTurno
+                WHERE e.idEmpleado = :empleadoId";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':empleadoId', $empleadoId);
+        $stmt->execute();
+        return $stmt->fetchColumn(); // Devuelve la duración del turno en horas
+    }
 }
 ?>

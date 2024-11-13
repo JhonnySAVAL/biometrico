@@ -1,89 +1,48 @@
 <?php
-require_once __DIR__ . '/../modelos/Exoneraciones.php';
+require_once '../BaseController.php';
+require_once __DIR__ . '/../../model/Exoneraciones.php';
 
 class ExoneracionesController extends BaseController
 {
-    private $model;
+    private $exoneracionesModel;
 
     public function __construct()
     {
-        $this->model = new Dashboard();
-    }
-    public function MostrarExoneraciones()
-    {
-        $exoneracionesModel = new Exoneraciones();
-
-        $exoneraciones = $exoneracionesModel->getTodasLasExoneraciones();
-
-        // Pasar los datos a la vista
-        $this->loadView('Exoneraciones.ExoneracionesList', [
-            'exoneraciones' => $exoneraciones
-        ], [], [], 'Exoneraciones');
+        $this->exoneracionesModel = new Exoneraciones();
     }
 
-    public function MostrarExoneracionesAprobadas()
+    public function solicitarExoneracion($empleadoId, $fecha, $motivo)
     {
-        $exoneracionesModel = new Exoneraciones();
-        $exoneraciones = $exoneracionesModel->getExoneracionesAprobadas();
-
-        $this->loadView('Exoneraciones.ExoneracionesAprobadas', [
-            'exoneraciones' => $exoneraciones
-        ], [], [], 'Exoneraciones');
-    }
-
-    public function AgregarExoneracion()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $idEmpleado = $_POST['idEmpleado'];
-            $fechaInicio = $_POST['fechaInicio'];
-            $fechaFin = $_POST['fechaFin'];
-            $motivo = $_POST['motivo'];
-
-            $exoneracionesModel = new Exoneraciones();
-            $exoneracionesModel->agregarExoneracion($idEmpleado, $fechaInicio, $fechaFin, $motivo);
-
-            header('Location: /exoneraciones');
-            exit;
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->exoneracionesModel->insertarExoneracion($empleadoId, $fecha, $motivo);
+            echo json_encode(['success' => true, 'message' => 'Exoneración solicitada exitosamente.']);
         }
-
-        $this->loadView('Exoneraciones.AgregarExoneracion');
     }
 
-    public function AprobarExoneracion($idExoneracion)
+    public function aprobarExoneracion($exoneracionId)
     {
-        $exoneracionesModel = new Exoneraciones();
-        $exoneracionesModel->aprobarExoneracion($idExoneracion);
-
-        header('Location: /exoneraciones');
-        exit;
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->exoneracionesModel->aprobarExoneracion($exoneracionId);
+            echo json_encode(['success' => true, 'message' => 'Exoneración aprobada exitosamente.']);
+        }
     }
 
-    public function RechazarExoneracion($idExoneracion)
+    public function listarExoneraciones()
     {
-        $exoneracionesModel = new Exoneraciones();
-        $exoneracionesModel->rechazarExoneracion($idExoneracion);
-
-        header('Location: /exoneraciones');
-        exit;
+        $exoneraciones = $this->exoneracionesModel->obtenerExoneraciones();
+        $this->loadView('asistencia.exoneraciones', ['exoneraciones' => $exoneraciones]);
     }
 }
+
 if (isset($_GET['action'])) {
     $controller = new ExoneracionesController();
     $action = $_GET['action'];
+    $empleadoId = $_POST['empleadoId'] ?? null;
 
     if (method_exists($controller, $action)) {
-        $controller->$action();  
+        $controller->$action($empleadoId);
     } else {
         echo "Error: Acción no encontrada.";
     }
 }
-if (isset($_GET['action'])) {
-    $controller = new ExoneracionesController();
-    $action = $_GET['action'];
-
-    if (method_exists($controller, $action)) {
-        $controller->$action();  
-    } else {
-        echo "Error: Acción no encontrada.";
-    }
-}
+?>
