@@ -15,7 +15,7 @@
         <div class="col-lg-6"> <!-- El formulario ahora ocupará el 80% del ancho -->
             <div class="card mb-6 align-items-center">
                 <div class="card-body col-md-10">
-                    <form id="formCrearUsuario" action="../../controller/UsuariosController/UsuariosCrearController.php" method="POST">
+                    <form id="formCrearUsuario" action="../../controller/UsuariosController/UsuariosCrearController.php?action=agregarUsuario" method="POST">
                         
                         <div class="row mb-4">
                             <!-- Aumenté el ancho de los campos -->
@@ -72,7 +72,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <input type="checkbox" class="form-check-input" id="habilitado" name="habilitado" required>
+                            <input type="checkbox" class="form-check-input" id="habilitado" name="habilitado">
                             <label for="habilitado" class="form-check-label">Habilitado</label>
                         </div>
 
