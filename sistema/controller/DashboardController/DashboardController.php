@@ -11,16 +11,9 @@ class DashboardController extends BaseController
     }
         public function MostrarDashboard()
     {
-        $asistencias = $this->model-> getAsistencias();
-        $justificaciones = $this->model-> getJustificaciones();
-        $vacaciones = $this->model-> getVacaciones();
-        $permisos = $this->model-> getPermisos();
-        
+
         $this->loadView('Dashboard.Dashboard', [
-            'asistencias' => $asistencias,
-            'justificaciones' => $justificaciones,
-            'vacaciones' => $vacaciones,
-            'permisos' => $permisos
+
         ], [], [], 'Dashboard');
     }
 }
