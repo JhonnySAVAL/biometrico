@@ -6,6 +6,15 @@ class Exoneraciones extends Database
     public function __construct() {
         parent::__construct(); 
     }
+    public function obtenerExoneraciones()
+    {
+        $sql = "SELECT e.idExoneracion, e.fechaInicio, e.fechaFin, e.motivo, e.estado, emp.nombre
+                FROM exoneraciones e
+                JOIN empleados emp ON e.idEmpleado = emp.idEmpleado";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function getExoneracionesAprobadas()
     {
         $sql = "SELECT e.idExoneracion, e.fechaInicio, e.fechaFin, e.motivo, e.estado, emp.nombre
@@ -17,15 +26,7 @@ class Exoneraciones extends Database
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getTodasLasExoneraciones()
-    {
-        $sql = "SELECT e.idExoneracion, e.fechaInicio, e.fechaFin, e.motivo, e.estado, emp.nombre
-                FROM exoneraciones e
-                JOIN empleados emp ON e.idEmpleado = emp.idEmpleado";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+
 
     public function agregarExoneracion($idEmpleado, $fechaInicio, $fechaFin, $motivo)
     {

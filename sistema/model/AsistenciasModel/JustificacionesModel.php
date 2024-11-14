@@ -2,7 +2,13 @@
 require_once __DIR__ . '/../conexion.php';
 
 class Justificaciones extends Database {
-    
+        // Obtener todas las justificaciones
+        public function obtenerJustificaciones() {
+            $sql = "SELECT * FROM justificaciones";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
     // Insertar una nueva justificación
     public function insertarJustificacion($empleadoId, $fecha, $motivo, $documento = null) {
         $sql = "INSERT INTO justificaciones (empleadoId, fecha, motivo, documento, estado) VALUES (:empleadoId, :fecha, :motivo, :documento, 'pendiente')";
@@ -14,13 +20,7 @@ class Justificaciones extends Database {
         $stmt->execute();
     }
 
-    // Obtener todas las justificaciones
-    public function obtenerJustificaciones() {
-        $sql = "SELECT * FROM justificaciones";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+
 
     // Aprobar una justificación
     public function aprobarJustificacion($justificacionId) {

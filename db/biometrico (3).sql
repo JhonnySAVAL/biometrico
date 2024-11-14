@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-11-2024 a las 17:04:34
+-- Tiempo de generación: 14-11-2024 a las 07:26:13
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -93,6 +93,14 @@ CREATE TABLE `empleados` (
   `passwordApp` varchar(20) DEFAULT NULL COMMENT 'contra para la app'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `empleados`
+--
+
+INSERT INTO `empleados` (`idEmpleado`, `nombres`, `apellidos`, `dni`, `correo`, `telefono`, `idPuesto`, `idTurno`, `estado`, `habilitado`, `idApp`, `passwordApp`) VALUES
+(1, 'asd', 'asd', '12345678', 'qqq@gma', '123456789', 1, 1, 'Activo', 0, NULL, NULL),
+(2, '432', '432', '432', '432@123', '432', 1, 1, 'Activo', 1, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -164,6 +172,31 @@ CREATE TABLE `puestos` (
   `descripcion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `puestos`
+--
+
+INSERT INTO `puestos` (`idPuesto`, `nombrePuesto`, `area`, `descripcion`) VALUES
+(1, 'Electricista', 'Zona B mina 5', 'Encargado del mantneimiento en el area de electric');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `reportes_asistencia`
+--
+
+CREATE TABLE `reportes_asistencia` (
+  `idReporte` int(11) NOT NULL,
+  `empleadoId` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `estado` enum('presente','ausente','falta','permiso','exonerado','tardanza') NOT NULL,
+  `horaEntrada` time DEFAULT NULL,
+  `horaSalida` time DEFAULT NULL,
+  `minutosTardanza` int(11) DEFAULT 0,
+  `minutosAnticipados` int(11) DEFAULT 0,
+  `tipoRegistro` enum('automatica','manual') DEFAULT 'automatica'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -192,6 +225,13 @@ CREATE TABLE `turnos` (
   `tolerancia` int(11) DEFAULT 0,
   `tolerancia_acumulada_mensual` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `turnos`
+--
+
+INSERT INTO `turnos` (`idTurno`, `descripcion`, `entrada`, `salida`, `duracion`, `receso`, `tolerancia`, `tolerancia_acumulada_mensual`) VALUES
+(1, 'Turno Mañana', '08:00:00', '16:00:00', '08:00:00', '00:30:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -270,6 +310,13 @@ ALTER TABLE `puestos`
   ADD PRIMARY KEY (`idPuesto`);
 
 --
+-- Indices de la tabla `reportes_asistencia`
+--
+ALTER TABLE `reportes_asistencia`
+  ADD PRIMARY KEY (`idReporte`),
+  ADD KEY `empleadoId` (`empleadoId`);
+
+--
 -- Indices de la tabla `roles`
 --
 ALTER TABLE `roles`
@@ -309,7 +356,7 @@ ALTER TABLE `auditoria`
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `exoneraciones`
@@ -333,7 +380,13 @@ ALTER TABLE `permisos`
 -- AUTO_INCREMENT de la tabla `puestos`
 --
 ALTER TABLE `puestos`
-  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `reportes_asistencia`
+--
+ALTER TABLE `reportes_asistencia`
+  MODIFY `idReporte` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -345,7 +398,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `idTurno` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTurno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `vacaciones`
@@ -400,6 +453,12 @@ ALTER TABLE `justificaciones`
 --
 ALTER TABLE `permisos`
   ADD CONSTRAINT `permisos_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`);
+
+--
+-- Filtros para la tabla `reportes_asistencia`
+--
+ALTER TABLE `reportes_asistencia`
+  ADD CONSTRAINT `reportes_asistencia_ibfk_1` FOREIGN KEY (`empleadoId`) REFERENCES `empleados` (`idEmpleado`);
 
 --
 -- Filtros para la tabla `vacaciones`

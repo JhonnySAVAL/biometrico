@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../modelos/Vacaciones.php';
+require_once '../BaseController.php';
+require_once __DIR__ . '/../../model/AsistenciasModel/VacacionesModel.php';
 
 class VacacionesController extends BaseController
 {
@@ -14,7 +15,7 @@ class VacacionesController extends BaseController
         $vacacionesModel = new Vacaciones();
         $vacaciones = $vacacionesModel->getTodasLasVacaciones();
 
-        $this->loadView('Vacaciones.VacacionesList', [
+        $this->loadView('Vacaciones.Vacaciones', [
             'vacaciones' => $vacaciones
         ], [], [], 'Vacaciones');
     }

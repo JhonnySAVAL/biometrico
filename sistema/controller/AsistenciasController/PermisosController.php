@@ -1,6 +1,6 @@
 <?php
 require_once '../BaseController.php';
-require_once __DIR__ . '/../../model/Permisos.php';
+require_once __DIR__ . '/../../model/AsistenciasModel/PermisosModel.php';
 
 class PermisosController extends BaseController
 {
@@ -10,7 +10,11 @@ class PermisosController extends BaseController
     {
         $this->permisosModel = new Permisos();
     }
-
+    public function listarPermisos()
+    {
+        $permisos = $this->permisosModel->obtenerPermisos();
+        $this->loadView('Asistencias.Permisos', ['permisos' => $permisos]);
+    }
     public function solicitarPermiso($empleadoId, $fechaInicio, $fechaFin, $motivo)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -27,11 +31,7 @@ class PermisosController extends BaseController
         }
     }
 
-    public function listarPermisos()
-    {
-        $permisos = $this->permisosModel->obtenerPermisos();
-        $this->loadView('asistencia.permisos', ['permisos' => $permisos]);
-    }
+
 }
 
 if (isset($_GET['action'])) {

@@ -2,7 +2,83 @@
 require_once __DIR__ . '/../conexion.php';
 
 class Asistencias extends Database {
+    public function obtenerEmpleadosSinEntradaSinPermiso($fecha)
+    {
+        $sql = "SELECT idEmpleado FROM empleados 
+                WHERE idEmpleado NOT IN (
+                    SELECT empleadoId FROM asistencia WHERE fechaRegistro = :fecha
+                )
+                AND idEmpleado NOT IN (
+                    SELECT empleadoId FROM permisos WHERE fechaInicio <= :fecha AND fechaFin >= :fecha
+                )
+                AND idEmpleado NOT IN (
+                    SELECT empleadoId FROM exoneraciones WHERE fecha = :fecha
+                )";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':fecha', $fecha);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function obtenerEmpleadosConEntrada($fecha) {
+        $sql = "SELECT e.idEmpleado, e.nombre, 
+                       CASE WHEN a.minutos_tardanza > 0 THEN 'Tardanza' ELSE 'A Tiempo' END AS estado
+                FROM empleados e
+                JOIN asistencia a ON e.idEmpleado = a.empleadoId
+                WHERE a.fechaRegistro = :fecha AND a.horaEntrada IS NOT NULL";
+                
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':fecha', $fecha);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
+    // Obtener empleados que no han marcado entrada ni tienen permisos o exoneraciones
+    public function obtenerEmpleadosAusentes($fecha) {
+        $sql = "SELECT e.idEmpleado, e.nombre
+                FROM empleados e
+                WHERE e.idEmpleado NOT IN (
+                    SELECT a.empleadoId
+                    FROM asistencia a
+                    WHERE a.fechaRegistro = :fecha AND a.horaEntrada IS NOT NULL
+                )
+                AND e.idEmpleado NOT IN (
+                    SELECT p.empleadoId
+                    FROM permisos p
+                    WHERE p.fechaInicio <= :fecha AND p.fechaFin >= :fecha
+                )
+                AND e.idEmpleado NOT IN (
+                    SELECT ex.empleadoId
+                    FROM exoneraciones ex
+                    WHERE ex.fecha = :fecha
+                )";
+        
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':fecha', $fecha);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Obtener empleados que tienen una falta registrada en una fecha específica
+    public function obtenerEmpleadosConFalta($fecha) {
+        $sql = "SELECT e.idEmpleado, e.nombre
+                FROM empleados e
+                JOIN asistencia a ON e.idEmpleado = a.empleadoId
+                WHERE a.fechaRegistro = :fecha AND a.estado = 'falta'";
+                
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':fecha', $fecha);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function registrarFalta($empleadoId)
+    {
+        $sql = "INSERT INTO asistencia (empleadoId, fechaRegistro, estado) VALUES (:empleadoId, CURDATE(), 'falta')";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':empleadoId', $empleadoId);
+        $stmt->execute();
+    }
+    
     // Registrar Entrada
     public function registrarEntrada($empleadoId, $tipoRegistro = 'automatica') {
         // Calcular minutos anticipados o tardanza

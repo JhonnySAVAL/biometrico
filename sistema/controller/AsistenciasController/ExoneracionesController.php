@@ -1,6 +1,6 @@
 <?php
 require_once '../BaseController.php';
-require_once __DIR__ . '/../../model/Exoneraciones.php';
+require_once __DIR__ . '/../../model/AsistenciasModel/ExoneracionesModel.php';
 
 class ExoneracionesController extends BaseController
 {
@@ -10,11 +10,15 @@ class ExoneracionesController extends BaseController
     {
         $this->exoneracionesModel = new Exoneraciones();
     }
-
-    public function solicitarExoneracion($empleadoId, $fecha, $motivo)
+    public function listarExoneraciones()
+    {
+        $exoneraciones = $this->exoneracionesModel->obtenerExoneraciones();
+        $this->loadView('Asistencias.Exoneraciones', ['exoneraciones' => $exoneraciones]);
+    }
+    public function solicitarExoneracion($idEmpleado, $fechaInicio, $fechaFin, $motivo)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->exoneracionesModel->insertarExoneracion($empleadoId, $fecha, $motivo);
+            $this->exoneracionesModel->agregarExoneracion($idEmpleado, $fechaInicio, $fechaFin, $motivo);
             echo json_encode(['success' => true, 'message' => 'Exoneración solicitada exitosamente.']);
         }
     }
@@ -27,11 +31,7 @@ class ExoneracionesController extends BaseController
         }
     }
 
-    public function listarExoneraciones()
-    {
-        $exoneraciones = $this->exoneracionesModel->obtenerExoneraciones();
-        $this->loadView('asistencia.exoneraciones', ['exoneraciones' => $exoneraciones]);
-    }
+   
 }
 
 if (isset($_GET['action'])) {

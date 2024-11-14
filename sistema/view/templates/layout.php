@@ -64,12 +64,7 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item"> <a href="/biometrico/sistema/controller/AsistenciaController/AsistenciaController.php?=VerAsistencias" class="nav-link"> <i class="nav-icon bi bi-pencil-square"></i>
-                                    <p>
-                                        Asistencia</i>
-                                    </p>
-                                </a>
-                            </li>
+                            
                             <li class="nav-item menu-close"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
                                     <p>
                                         Empleados
@@ -88,19 +83,58 @@
 
                             <li class="nav-item menu-close"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
                                     <p>
-                                        Puestos
+                                        Asistencias
                                         <i class="nav-arrow bi bi-chevron-right"></i>
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item"> <a href="/biometrico/sistema/controller/UsuariosController/UsuariosController.php?action=MostrarUsuario" class="nav-link"> <i class="nav-icon bi bi-pencil-square"></i>
-                                            <p>Lista</p>
+                                    <li class="nav-item"> <a href="/biometrico/sistema/controller/AsistenciasController/AsistenciasController.php?action=mostrarAsistenciaDiaria" class="nav-link"> <i class="nav-icon bi bi-pencil-square"></i>
+                                            <p>Ver Asistencias</p>
                                         </a> </li>
-                                    <li class="nav-item"> <a href="./index2.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                            <p>Registrar</p>
+                                    <li class="nav-item"> <a href="/biometrico/sistema/controller/AsistenciasController/PermisosController.php?action=listarPermisos" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                            <p>Permisos</p>
+                                        </a> </li>
+                                    <li class="nav-item"> <a href="/biometrico/sistema/controller/AsistenciasController/JustificacionesController.php?action=listarJustificaciones" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                            <p>Justificaciones</p>
+                                        </a> </li>
+                                        <li class="nav-item"> <a href="/biometrico/sistema/controller/AsistenciasController/ExoneracionesController.php?action=listarExoneraciones" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                            <p>Exoneraciones</p>
+                                        </a> </li>
+                                        <li class="nav-item"> <a href="/biometrico/sistema/controller/AsistenciasController/VacacionesController.php?action=MostrarVacaciones" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                            <p>Vacaciones</p>
+                                        </a> </li>
+                                        <li class="nav-item"> <a href="/biometrico/sistema/controller/AsistenciasController/ReportesController.php?action=generarReporteGeneral" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                            <p>Reportes</p>
                                         </a> </li>
                                 </ul>
 
+                                <li class="nav-item menu-close"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                                    <p>
+                                        Vacaciones
+                                        <i class="nav-arrow bi bi-chevron-right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                <li class="nav-item"> <a href="/biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=MostrarVacaciones" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                    <p>Ver Vacaciones</p>
+                                        </a> </li>
+                                </ul>
+                            </li>
+
+                                <li class="nav-item menu-close"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                                    <p>
+                                        Reportes
+                                        <i class="nav-arrow bi bi-chevron-right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                <li class="nav-item"> <a href="/biometrico/sistema/controller/AsistenciasController/ReportesController.php?action=generarReporteGeneral" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                    <p>Ver Reportes</p>
+                                        </a> </li>
+                                </ul>
+                            </li>
+                                
+                                    
                             <li class="nav-item menu-close"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
                                     <p>
                                         Configuraciones

@@ -1,6 +1,6 @@
 <?php
 require_once '../BaseController.php';
-require_once __DIR__ . '/../../model/Asistencias.php';
+require_once __DIR__ . '/../../model/AsistenciasModel/AsistenciasModel.php';
 
 class AsistenciaController extends BaseController
 {
@@ -10,7 +10,21 @@ class AsistenciaController extends BaseController
     {
         $this->asistenciasModel = new Asistencias();
     }
-
+    public function mostrarAsistenciaDiaria()
+    {
+        $this->verificarFaltas(); // Verificar faltas antes de mostrar la asistencia diaria
+    
+        $empleadosEntrada = $this->asistenciasModel->obtenerEmpleadosConEntrada(date('Y-m-d'));
+        $empleadosAusentes = $this->asistenciasModel->obtenerEmpleadosAusentes(date('Y-m-d'));
+        $empleadosConFalta = $this->asistenciasModel->obtenerEmpleadosConFalta(date('Y-m-d'));
+    
+        $this->loadView('Asistencias.Asistencias', [
+            'empleadosEntrada' => $empleadosEntrada,
+            'empleadosAusentes' => $empleadosAusentes,
+            'empleadosConFalta' => $empleadosConFalta,
+        ]);
+    }
+    
     public function marcarEntrada($empleadoId)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -34,6 +48,17 @@ class AsistenciaController extends BaseController
             echo json_encode(['success' => true, 'message' => 'Salida registrada exitosamente.']);
         }
     }
+    public function verificarFaltas()
+    {
+        $empleadosConFalta = $this->asistenciasModel->obtenerEmpleadosSinEntradaSinPermiso(date('Y-m-d'));
+    
+        foreach ($empleadosConFalta as $empleado) {
+            $this->asistenciasModel->registrarFalta($empleado['idEmpleado']);
+        }
+    }
+    
+
+
 }
 
 if (isset($_GET['action'])) {

@@ -117,3 +117,18 @@
         </div>
     </div>
 </div>
+
+
+<!-- CREATE TABLE `reportes_asistencia` (
+  `idReporte` int(11) NOT NULL AUTO_INCREMENT,
+  `empleadoId` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `estado` enum('presente', 'ausente', 'falta', 'permiso', 'exonerado', 'tardanza') NOT NULL,
+  `horaEntrada` time DEFAULT NULL,
+  `horaSalida` time DEFAULT NULL,
+  `minutosTardanza` int(11) DEFAULT 0,
+  `minutosAnticipados` int(11) DEFAULT 0,
+  `tipoRegistro` enum('automatica', 'manual') DEFAULT 'automatica',
+  PRIMARY KEY (`idReporte`),
+  FOREIGN KEY (`empleadoId`) REFERENCES `empleados`(`idEmpleado`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; -->
