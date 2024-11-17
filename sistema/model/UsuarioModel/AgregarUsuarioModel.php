@@ -29,7 +29,7 @@ class AgregarUsuarioModel extends Database
         if ($idPuesto && $idTurno) {
             $sql = "INSERT INTO empleados (nombres, apellidos, dni, correo, telefono, idPuesto, idTurno, habilitado) 
                     VALUES (:nombres, :apellidos, :dni, :correo, :telefono, :idPuesto, :idTurno, :habilitado)";
-            
+
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':nombres', $nombres);
             $stmt->bindParam(':apellidos', $apellidos);
