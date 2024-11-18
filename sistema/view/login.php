@@ -49,10 +49,10 @@
                     </div>
                     <h5 class="fw-normal mb-3 pb-3" style=" color: white">Bienvenido, por favor ingrese sus credenciales</h5>
                     <div class="form-outline mb-4">
-                      <input type="text" id="usuario" name="usuario" class="form-control form-control-lg" placeholder="ID de administrador" required />
+                      <input type="text" id="usuario" name="usergen" class="form-control form-control-lg" placeholder="ID de administrador" required />
                     </div>
                     <div class="form-outline mb-4">
-                      <input type="password" id="dni" name="dni" class="form-control form-control-lg"placeholder="Contraseña de administrador" required />
+                      <input type="password" id="dni" name="passgen" class="form-control form-control-lg"placeholder="Contraseña de administrador" required />
                     </div>
 
                     <div class="pt-1 mb-4">

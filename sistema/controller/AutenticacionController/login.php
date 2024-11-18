@@ -10,8 +10,8 @@ if ($conn === null) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $usuario = trim($_POST['usuario']);  // Sanitización de entrada
-    $dni = trim($_POST['dni']);  // Sanitización de entrada
+    $usuario = trim($_POST['usergen']);  // Sanitización de entrada
+    $password = trim($_POST['passgen']);  // Sanitización de entrada
 
     // Consultamos si el usuario existe en la tabla login_intentos
     $sql_attempt = "SELECT * FROM login_intentos WHERE usuario = :usuario LIMIT 1";
@@ -34,10 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Verificamos las credenciales del usuario
-    $sql = "SELECT * FROM admin WHERE DNI = :dni AND nombre = :usuario LIMIT 1";
+    $sql = "SELECT * FROM admins WHERE usergen = :usergen AND passgen = :passgen LIMIT 1";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':usuario', $usuario);
-    $stmt->bindParam(':dni', $dni);
+    $stmt->bindParam(':usergen', $usuario);
+    $stmt->bindParam(':passgen', $password);
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
