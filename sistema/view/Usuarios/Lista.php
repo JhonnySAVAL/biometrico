@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-striped align-middle">
+                        <table class="table table-striped align-middle text-center"> <!-- Añadido text-center -->
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -37,6 +37,7 @@
                                     <th>Puesto</th>
                                     <th>Turno</th>
                                     <th>Estado</th>
+                                    <th>bar_code</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -52,13 +53,18 @@
                                             <td><?php echo $empleado['telefono']; ?></td>
                                             <td><?php echo $empleado['puesto']; ?></td>
                                             <td><?php echo $empleado['turno']; ?></td>
-                                            <td>
+                                            <!-- Centrado Estado -->
+                                            <td class="text-center align-middle">
                                                 <span class="badge bg-<?php echo $empleado['habilitado'] == 'activo' ? 'success' : 'danger'; ?>">
                                                     <?php echo ucfirst($empleado['habilitado']); ?>
                                                 </span>
                                             </td>
-                                            <td>
-                                            <td>
+                                            <!-- Centrado bar_code -->
+                                            <td class="text-center align-middle">
+                                                <?php echo $empleado['codigo_barras']; ?>
+                                            </td>
+                                            <!-- Centrado Acciones -->
+                                            <td class="text-center align-middle">
                                                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
                                                     data-id="<?= $empleado['idEmpleado'] ?>"
                                                     data-nombres="<?= $empleado['nombres'] ?>"
@@ -67,26 +73,21 @@
                                                     data-correo="<?= $empleado['correo'] ?>"
                                                     data-telefono="<?= $empleado['telefono'] ?>"
                                                     data-puesto="<?= $empleado['puesto'] ?>"
-                                                    data-turno="<?= $empleado['turno'] ?>">
+                                                    data-turno="<?= $empleado['turno'] ?>"
+                                                    data-codigobar="<?= $empleado['codigo_barras'] ?>">
                                                     <i class="bi bi-pencil"></i> Editar
                                                 </button>
-                                            </td>
-                                            <!-- <a href="javascript:void(0);" class="btn btn-warning btn-sm">
-                                                <i class="bi bi-pencil"></i> Editar
-                                            </a>
-                                            <a href="javascript:void(0);" class="btn btn-danger btn-sm">
-                                                <i class="bi bi-trash"></i> Eliminar
-                                            </a> -->
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr>
-                                        <td colspan="10" class="text-center">No hay empleados registrados.</td>
+                                        <td colspan="11" class="text-center">No hay empleados registrados.</td>
                                     </tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
+
                     </div>
                 </div> <!-- /.card -->
             </div> <!-- /.col-lg-12 -->

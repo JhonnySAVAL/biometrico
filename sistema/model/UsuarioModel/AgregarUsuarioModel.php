@@ -27,8 +27,8 @@ class AgregarUsuarioModel extends Database
 
         // Verificar que ambos IDs existen
         if ($idPuesto && $idTurno) {
-            $sql = "INSERT INTO empleados (nombres, apellidos, dni, correo, telefono, idPuesto, idTurno, habilitado) 
-                    VALUES (:nombres, :apellidos, :dni, :correo, :telefono, :idPuesto, :idTurno, :habilitado)";
+            $sql = "INSERT INTO empleados (nombres, apellidos, dni, correo, telefono, idPuesto, idTurno, habilitado, codigo_barras) 
+                    VALUES (:nombres, :apellidos, :dni, :correo, :telefono, :idPuesto, :idTurno, :habilitado, :codigo_barras)";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':nombres', $nombres);
@@ -39,6 +39,7 @@ class AgregarUsuarioModel extends Database
             $stmt->bindParam(':idPuesto', $idPuesto);
             $stmt->bindParam(':idTurno', $idTurno);
             $stmt->bindParam(':habilitado', $habilitado);
+            $stmt->bindParam(':codigo_barras', $codigoBarrasRuta);
 
             // Ejecutar la inserción y retornar el resultado
             return $stmt->execute();

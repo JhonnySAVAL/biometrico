@@ -1,4 +1,8 @@
 <?php
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
+
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 require_once '../BaseController.php';
 require_once __DIR__ . '/../../model/UsuarioModel/AgregarUsuarioModel.php';
@@ -76,11 +80,35 @@ class AgregarUsuarioController extends BaseController
                 ]);
                 return;
             }
+            $generator = new BarcodeGeneratorPNG();
+            $directorioBarcodes = __DIR__ . '/../../resources/bar_codes/';
+            if (!file_exists($directorioBarcodes)) {
+                mkdir($directorioBarcodes, 0777, true);
+            }
+
+            $codigoBarrasRuta = $directorioBarcodes . $dni . '.png';
+            try {
+                file_put_contents($codigoBarrasRuta, $generator->getBarcode($dni, BarcodeGeneratorPNG::TYPE_CODE_128));
+            } catch (Exception $e) {
+                $errores[] = "Error al generar el código de barras: " . $e->getMessage();
+                $crearModel = new AgregarUsuarioModel();
+                $puestos = $crearModel->MostrarPuestos();
+                $turnos = $crearModel->MostrarTurnos();
+                $this->loadView('Usuarios.Crear', [
+                    'puestos' => $puestos,
+                    'turnos' => $turnos,
+                    'errores' => $errores,
+                ]);
+                return;
+            }
+
             $crearModel = new AgregarUsuarioModel();
             $crearModel->agregarUsuario($nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado);
 
-            // Redirigir después de guardar
-            header('Location: /biometrico/sistema/controller/UsuariosController/UsuariosCrearController.php?action=VistaAgregarUsuario&success=true');
+            if (!headers_sent()) {
+                header('Location: /biometrico/sistema/controller/UsuariosController/UsuariosCrearController.php?action=VistaAgregarUsuario&success=true');
+                exit();
+            }
         }
     }
 }
