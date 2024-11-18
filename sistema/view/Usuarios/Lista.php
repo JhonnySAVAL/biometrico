@@ -65,16 +65,7 @@
                                             </td>
                                             <!-- Centrado Acciones -->
                                             <td class="text-center align-middle">
-                                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
-                                                    data-id="<?= $empleado['idEmpleado'] ?>"
-                                                    data-nombres="<?= $empleado['nombres'] ?>"
-                                                    data-apellidos="<?= $empleado['apellidos'] ?>"
-                                                    data-dni="<?= $empleado['dni'] ?>"
-                                                    data-correo="<?= $empleado['correo'] ?>"
-                                                    data-telefono="<?= $empleado['telefono'] ?>"
-                                                    data-puesto="<?= $empleado['puesto'] ?>"
-                                                    data-turno="<?= $empleado['turno'] ?>"
-                                                    data-codigobar="<?= $empleado['codigo_barras'] ?>">
+                                                <button class="btn btn-warning btn-sm edit-btn">
                                                     <i class="bi bi-pencil"></i> Editar
                                                 </button>
                                             </td>
@@ -96,7 +87,7 @@
 </div> <!-- end::app-content -->
 
 <!-- Modal de Edición -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -160,4 +151,4 @@
             </form>
         </div>
     </div>
-</div>
+</div> -->

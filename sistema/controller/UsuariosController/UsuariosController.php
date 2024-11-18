@@ -23,42 +23,44 @@ class UsuariosController extends BaseController
     }
 
     public function actualizarUsuario()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Obtener datos del formulario
-            $idEmpleado = $_POST['idEmpleado'];
-            $nombres = trim($_POST['nombres']);
-            $apellidos = trim($_POST['apellidos']);
-            $dni = trim($_POST['dni']);
-            $correo = trim($_POST['correo']);
-            $telefono = trim($_POST['telefono']);
-            $puesto = $_POST['puesto'];
-            $turno = $_POST['turno'];
-            $habilitado = isset($_POST['habilitado']) ? 1 : 0;
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $idEmpleado = $_POST['idEmpleado'];
+        $nombres = $_POST['nombres'];
+        $apellidos = $_POST['apellidos'];
+        $dni = $_POST['dni'];
+        $correo = $_POST['correo'];
+        $telefono = $_POST['telefono'];
+        $puesto = $_POST['puesto'];
+        $turno = $_POST['turno'];
+        $habilitado = isset($_POST['habilitado']) ? 1 : 0;
 
-            // Validación de los datos
-            if (empty($nombres) || empty($apellidos) || empty($dni) || empty($correo) || empty($puesto) || empty($turno)) {
-                echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios.']);
-                exit();
-            }
-
-            if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-                echo json_encode(['success' => false, 'message' => 'El correo electrónico no es válido.']);
-                exit();
-            }
-
-            $listaModel = new ListaModel();
-            $resultado = $listaModel->ActualizarEmpleado($idEmpleado, $nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado);
-
-            // Manejo del resultado de la actualización
-            if ($resultado) {
-                echo json_encode(['success' => true, 'message' => 'Empleado actualizado correctamente.']);
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Hubo un error al actualizar el usuario.']);
-            }
+        // Validación de los campos obligatorios
+        if (empty($nombres) || empty($apellidos) || empty($dni) || empty($correo) || empty($puesto) || empty($turno)) {
+            echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios.']);
             exit();
         }
+
+        // Validación del correo
+        if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(['success' => false, 'message' => 'El correo electrónico no es válido.']);
+            exit();
+        }
+
+        // Llamada al modelo para actualizar el empleado
+        $listaModel = new ListaModel();
+        $resultado = $listaModel->ActualizarEmpleado($idEmpleado, $nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado);
+
+        // Respuesta dependiendo del resultado
+        if ($resultado) {
+            echo json_encode(['success' => true, 'message' => 'Empleado actualizado correctamente.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Hubo un error al actualizar el usuario.']);
+        }
+        exit();
     }
+}
+
 }
 
 // Ejecutar el controlador si la acción está definida

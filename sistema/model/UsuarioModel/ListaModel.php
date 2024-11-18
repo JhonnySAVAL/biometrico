@@ -43,18 +43,16 @@ class ListaModel extends Database
     }
 
     public function ActualizarEmpleado($idEmpleado, $nombres, $apellidos, $dni, $correo, $telefono, $idPuesto, $idTurno, $habilitado)
-    {
-        // Preparar la consulta SQL para actualizar el empleado
-        $sql = "UPDATE empleados 
+{
+    $sql = "UPDATE empleados 
             SET nombres = ?, apellidos = ?, dni = ?, correo = ?, telefono = ?, 
-                idPuesto = ?, idTurno = ?, habilitado = ? 
+                idPuesto = ?, idTurno = ?, habilitado = ?
             WHERE idEmpleado = ?";
-        $stmt = $this->conn->prepare($sql);
+    $stmt = $this->conn->prepare($sql);
 
-        // Ejecutar la actualización
-        $stmt->execute([$nombres, $apellidos, $dni, $correo, $telefono, $idPuesto, $idTurno, $habilitado, $idEmpleado]);
+    $stmt->execute([$nombres, $apellidos, $dni, $correo, $telefono, $idPuesto, $idTurno, $habilitado, $idEmpleado]);
 
-        // Retornar si la consulta fue exitosa
-        return $stmt->rowCount() > 0;  // Retorna true si al menos una fila fue actualizada
-    }
+    return $stmt->rowCount() > 0;
+}
+
 }
