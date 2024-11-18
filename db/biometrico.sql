@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-11-2024 a las 14:50:21
+-- Tiempo de generación: 18-11-2024 a las 15:50:36
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -62,7 +62,8 @@ INSERT INTO `admins` (`codigo`, `nombres`, `apellidos`, `dni`, `usergen`, `passg
 (1, 'julios', 'mendoza', '12345678', 'jume', '25d55'),
 (2, 'marta', 'juliana', '54355425', 'maju', '25f7f'),
 (3, 'elizabeth', 'mariana', '43243243', 'elma', '5b903'),
-(4, 'torreon', 'josemiro', '99789678', 'tojo', 'c93a5');
+(4, 'torreon', 'josemiro', '99789678', 'tojo', 'c93a5'),
+(5, 'jhonny', 'sanes', '75209245', 'jhsa', '85a54');
 
 -- --------------------------------------------------------
 
@@ -198,6 +199,14 @@ CREATE TABLE `login_intentos` (
   `intentos` int(11) DEFAULT 0,
   `ultimo_intento` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `login_intentos`
+--
+
+INSERT INTO `login_intentos` (`id`, `usuario`, `intentos`, `ultimo_intento`) VALUES
+(1, '', 1, '2024-11-18 13:54:56'),
+(2, 'jume', 0, '2024-11-18 13:55:51');
 
 -- --------------------------------------------------------
 
@@ -417,7 +426,7 @@ ALTER TABLE `vacaciones`
 -- AUTO_INCREMENT de la tabla `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `codigo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `codigo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `asistencia`
@@ -459,7 +468,7 @@ ALTER TABLE `justificaciones`
 -- AUTO_INCREMENT de la tabla `login_intentos`
 --
 ALTER TABLE `login_intentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
