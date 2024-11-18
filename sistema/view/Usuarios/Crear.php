@@ -15,33 +15,43 @@
         <div class="col-lg-6"> <!-- El formulario ahora ocupará el 80% del ancho -->
             <div class="card mb-6 align-items-center">
                 <div class="card-body col-md-10">
+                    <!-- Mostrar errores si existen -->
+                    <?php if (!empty($errores)): ?>
+                        <div class="alert alert-danger">
+                            <ul>
+                                <?php foreach ($errores as $error): ?>
+                                    <li><?php echo htmlspecialchars($error); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
                     <form id="formCrearUsuario" action="../../controller/UsuariosController/UsuariosCrearController.php?action=agregarUsuario" method="POST">
                         
                         <div class="row mb-4">
                             <!-- Aumenté el ancho de los campos -->
                             <div class="form-group col-md-6">
                                 <label for="nombres" class="form-label">Nombres</label>
-                                <input type="text" class="form-control" id="nombres" name="nombres" maxlength="50" required>
+                                <input type="text" class="form-control" id="nombres" name="nombres" maxlength="50" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" title="Solo se permiten letras y espacios." required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="apellidos" class="form-label">Apellidos</label>
-                                <input type="text" class="form-control" id="apellidos" name="apellidos" maxlength="50" required>
+                                <input type="text" class="form-control" id="apellidos" name="apellidos" maxlength="50" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" title="Solo se permiten letras y espacios." required>
                             </div>
                         </div>
 
                         <div class="form-group mb-4">
                             <label for="correo" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="correo" name="correo" required>
+                            <input type="email" class="form-control" id="correo" name="correo" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|net|edu)$" title="Ingrese un correo válido con un dominio como .com, .org, .net o .edu." required>
                         </div>
 
                         <div class="row mb-4">
                             <div class="form-group col-md-6">
                                 <label for="dni" class="form-label">DNI</label>
-                                <input type="text" class="form-control" id="dni" name="dni" maxlength="8" required>
+                                <input type="text" class="form-control" id="dni" name="dni" pattern="^\d{8}$" maxlength="8" title="Ingrese un DNI válido (8 dígitos numéricos)." required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="telefono" name="telefono" maxlength="9" required>
+                                <input type="text" class="form-control" id="telefono" name="telefono" pattern="^\d{9}$" maxlength="9" title="Ingrese un número de teléfono válido (9 dígitos numéricos)." required>
                             </div>
                         </div>
 
