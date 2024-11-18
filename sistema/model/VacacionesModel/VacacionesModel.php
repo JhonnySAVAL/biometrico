@@ -30,10 +30,10 @@ class Vacaciones extends Database
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Asignar vacaciones a un empleado
+    // Asignar vacaciones a un empleado 
     public function asignarVacacion($idEmpleado, $fechaInicio, $fechaFin, $motivo) {
         if ($fechaInicio >= $fechaFin) {
-            return false; // Fecha de inicio debe ser menor que la fecha de fin
+            return false;
         }
     
         // Verificar solapamientos
@@ -49,7 +49,7 @@ class Vacaciones extends Database
         $result = $stmtCheck->fetch(PDO::FETCH_ASSOC);
     
         if ($result['num'] > 0) {
-            return false; // Hay solapamientos
+            return false;
         }
     
         // Insertar nueva vacación si no hay solapamientos y las fechas son correctas
@@ -78,5 +78,18 @@ class Vacaciones extends Database
         $stmt->bindParam(':fechaFin', $fechaFin);
         return $stmt->execute();
     }
+
+    public function getVacacionById($idVacacion)
+{
+    $sql = "SELECT v.idVacacion, v.fechaInicio, v.fechaFin, v.motivo 
+            FROM vacaciones v 
+            WHERE v.idVacacion = :idVacacion";
+    
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':idVacacion', $idVacacion);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);  // Devuelve los datos de la vacación
+}
+
 }
 ?>

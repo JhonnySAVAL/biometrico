@@ -14,14 +14,9 @@ class VacacionesController extends BaseController
     public function MostrarEmpleadosSinVacaciones()
     {
         $empleados = $this->model->getEmpleadosSinVacaciones();
-        $this->loadView('Vacaciones.EmpleadosSinVacaciones',
-        [
+        $this->loadView('Vacaciones.VacacionesNoProgramadas', [
             'empleados' => $empleados
-        ],[
-            // '/biometrico/sistema/view/Vacaciones/recursos/css/VacacionesNoProgramadas.min.css'
-        ],[
-            '/biometrico/sistema/view/Vacaciones/recursos/js/VacacionesNoProgramadas.min.js'
-        ], 'Vacaciones No Programadas');
+        ], [], ['/biometrico/sistema/view/Vacaciones/recursos/js/VacacionesNoProgramadas.min.js'], 'Vacaciones No Programadas');
     }
 
     public function MostrarVacacionesProgramadas()
@@ -29,11 +24,7 @@ class VacacionesController extends BaseController
         $vacaciones = $this->model->getVacacionesProgramadas();
         $this->loadView('Vacaciones.VacacionesProgramadas', [
             'vacaciones' => $vacaciones
-        ],[
-            // '/biometrico/sistema/view/Vacaciones/recursos/js/VacacionesProgramadas.min.css'
-        ],[
-            '/biometrico/sistema/view/Vacaciones/recursos/js/VacacionesProgramadas.min.js'
-        ], 'Vacaciones Programadas');
+        ], [], ['/biometrico/sistema/view/Vacaciones/recursos/js/VacacionesProgramadas.min.js'], 'Vacaciones Programadas');
     }
 
     public function AsignarVacacion()
@@ -43,13 +34,14 @@ class VacacionesController extends BaseController
             $fechaInicio = $_POST['fechaInicio'];
             $fechaFin = $_POST['fechaFin'];
             $motivo = $_POST['motivo'];
-
+            if (empty($idEmpleado)) {
+                echo "Error: El idEmpleado está vacío.";
+                exit;
+            }
             $this->model->asignarVacacion($idEmpleado, $fechaInicio, $fechaFin, $motivo);
-
-            header('Location: /biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=MostrarVacacionesProgramadas');
+            header('Location: /biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=MostrarEmpleadosSinVacaciones');
             exit;
         }
-
         $this->loadView('Vacaciones.AsignarVacacion');
     }
 
@@ -66,6 +58,15 @@ class VacacionesController extends BaseController
             exit;
         }
     }
+
+    public function ObtenerVacacion()
+    {
+        if (isset($_GET['idVacacion'])) {
+            $idVacacion = $_GET['idVacacion'];
+            $vacacion = $this->model->getVacacionById($idVacacion);
+            echo json_encode($vacacion);
+        }
+    }
 }
 
 if (isset($_GET['action'])) {
@@ -78,4 +79,5 @@ if (isset($_GET['action'])) {
         echo "Error: Acción no encontrada.";
     }
 }
+
 ?>
