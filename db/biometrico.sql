@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-11-2024 a las 07:26:13
+-- Tiempo de generación: 18-11-2024 a las 05:13:01
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -38,6 +38,31 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`DNI`, `nombre`) VALUES
 ('123', 'juan');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `admins`
+--
+
+CREATE TABLE `admins` (
+  `codigo` int(10) NOT NULL,
+  `nombres` varchar(50) NOT NULL,
+  `apellidos` varchar(50) NOT NULL,
+  `dni` varchar(8) NOT NULL,
+  `usergen` varchar(5) NOT NULL,
+  `passgen` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `admins`
+--
+
+INSERT INTO `admins` (`codigo`, `nombres`, `apellidos`, `dni`, `usergen`, `passgen`) VALUES
+(1, 'julios', 'mendoza', '12345678', 'jume', '25d55'),
+(2, 'marta', 'juliana', '54355425', 'maju', '25f7f'),
+(3, 'elizabeth', 'mariana', '43243243', 'elma', '5b903'),
+(4, 'torreon', 'josemiro', '99789678', 'tojo', 'c93a5');
 
 -- --------------------------------------------------------
 
@@ -142,6 +167,19 @@ CREATE TABLE `justificaciones` (
   `motivo` text NOT NULL,
   `documento` varchar(255) DEFAULT NULL,
   `estado` enum('pendiente','aprobada','rechazada') DEFAULT 'pendiente'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `login_intentos`
+--
+
+CREATE TABLE `login_intentos` (
+  `id` int(11) NOT NULL,
+  `usuario` varchar(255) NOT NULL,
+  `intentos` int(11) DEFAULT 0,
+  `ultimo_intento` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -253,6 +291,12 @@ CREATE TABLE `vacaciones` (
 --
 
 --
+-- Indices de la tabla `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`codigo`);
+
+--
 -- Indices de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
@@ -295,6 +339,12 @@ ALTER TABLE `exoneraciones`
 ALTER TABLE `justificaciones`
   ADD PRIMARY KEY (`idJustificacion`),
   ADD KEY `empleadoId` (`empleadoId`);
+
+--
+-- Indices de la tabla `login_intentos`
+--
+ALTER TABLE `login_intentos`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `permisos`
@@ -341,6 +391,12 @@ ALTER TABLE `vacaciones`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `codigo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
@@ -369,6 +425,12 @@ ALTER TABLE `exoneraciones`
 --
 ALTER TABLE `justificaciones`
   MODIFY `idJustificacion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `login_intentos`
+--
+ALTER TABLE `login_intentos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
