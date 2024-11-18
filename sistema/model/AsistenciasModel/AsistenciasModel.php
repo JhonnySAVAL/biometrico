@@ -20,7 +20,7 @@ class Asistencias extends Database {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function obtenerEmpleadosConEntrada($fecha) {
-        $sql = "SELECT e.idEmpleado, e.nombre, 
+        $sql = "SELECT e.idEmpleado, e.nombres, 
                        CASE WHEN a.minutos_tardanza > 0 THEN 'Tardanza' ELSE 'A Tiempo' END AS estado
                 FROM empleados e
                 JOIN asistencia a ON e.idEmpleado = a.empleadoId
@@ -34,7 +34,7 @@ class Asistencias extends Database {
 
     // Obtener empleados que no han marcado entrada ni tienen permisos o exoneraciones
     public function obtenerEmpleadosAusentes($fecha) {
-        $sql = "SELECT e.idEmpleado, e.nombre
+        $sql = "SELECT e.idEmpleado, e.nombres
                 FROM empleados e
                 WHERE e.idEmpleado NOT IN (
                     SELECT a.empleadoId
@@ -60,7 +60,7 @@ class Asistencias extends Database {
 
     // Obtener empleados que tienen una falta registrada en una fecha específica
     public function obtenerEmpleadosConFalta($fecha) {
-        $sql = "SELECT e.idEmpleado, e.nombre
+        $sql = "SELECT e.idEmpleado, e.nombres
                 FROM empleados e
                 JOIN asistencia a ON e.idEmpleado = a.empleadoId
                 WHERE a.fechaRegistro = :fecha AND a.estado = 'falta'";

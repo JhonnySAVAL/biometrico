@@ -28,33 +28,16 @@
                 <div class="container-fluid">
                     <ul class="navbar-nav">
                         <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i class="bi bi-list"></i> </a> </li>
-                        <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Home</a> </li>
+                        <li class="nav-item d-none d-md-block"> <a href="/biometrico/sistema/controller/DashboardController/DashboardController.php?action=MostrarDashboard" class="nav-link">Inicio</a> </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a> </li> <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
-                        <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img src="../resources/dist/assets/img/user2-160x160.jpg" class="user-image rounded-circle shadow" alt="User Image"> <span class="d-none d-md-inline">Alexander Pierce</span> </a>
-                            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                                <li class="user-header text-bg-primary"> <img src="../resources/dist/assets/img/user2-160x160.jpg" class="rounded-circle shadow" alt="User Image">
-                                    <p>
-                                        Alexander Pierce - Web Developer
-                                        <small>Member since Nov. 2023</small>
-                                    </p>
-                                </li>
-                                <li class="user-body">
-                                    <div class="row">
-                                        <div class="col-4 text-center"> <a href="#">Followers</a> </div>
-                                        <div class="col-4 text-center"> <a href="#">Sales</a> </div>
-                                        <div class="col-4 text-center"> <a href="#">Friends</a> </div>
-                                    </div>
-                                </li>
-                                <li class="user-footer"> <a href="#" class="btn btn-default btn-flat">Profile</a> <a href="/biometrico/web/view/index.html" class="btn btn-default btn-flat float-end">Sign out</a> </li>
-                            </ul>
-                        </li>
+                        <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a> </li> 
+                        
                     </ul>
                 </div>
             </nav>
             <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
-                <div class="sidebar-brand"> <a href="./index.php" class="brand-link"> <img src="../../resources/img/minaLogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <span class="brand-text fw-light">316 Mining</span> </a> </div>
+                <div class="sidebar-brand"> <a href="/biometrico/sistema/controller/DashboardController/DashboardController.php?action=MostrarDashboard" class="brand-link"> <img src="../../resources/img/minaLogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <span class="brand-text fw-light">316 Mining</span> </a> </div>
                 <div class="sidebar-wrapper">
                     <nav class="mt-2">
                         <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false" color="#8b783d">
@@ -65,7 +48,6 @@
                                     <p> Dashboard </p>
                                 </a>
                             </li>
-<<<<<<< HEAD
                             
                             <li class="nav-item menu-close"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
                                     <p>
@@ -80,18 +62,11 @@
                                 </ul>
                             </li>
 
-                            <li class="nav-item menu-close"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                            <li class="nav-item menu-close"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-person"></i>
                                     <p>
                                         Empleados
                                         <i class="nav-arrow bi bi-chevron-right"></i>
                                     </p>
-=======
-
-                            <li class="nav-item menu-close">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon bi bi-person"></i>
-                                    <p> Empleados <i class="nav-arrow bi bi-chevron-right"></i> </p>
->>>>>>> 050208c3f8d26dd67ae08960a2539fec816f91c5
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
@@ -139,12 +114,7 @@
                                             <p>Exoneraciones</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/biometrico/sistema/controller/AsistenciasController/VacacionesController.php?action=MostrarVacaciones" class="nav-link">
-                                            <i class="nav-icon bi bi-airplane-engines"></i>
-                                            <p>Vacaciones</p>
-                                        </a>
-                                    </li>
+                                   
                                     <li class="nav-item">
                                         <a href="/biometrico/sistema/controller/AsistenciasController/ReportesController.php?action=generarReporteGeneral" class="nav-link">
                                             <i class="nav-icon bi bi-file-earmark-bar-graph"></i>
@@ -161,12 +131,21 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="/biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=MostrarVacaciones" class="nav-link">
+                                        <a href="/biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=MostrarEmpleadosSinVacaciones" class="nav-link">
                                             <i class="nav-icon bi bi-calendar-day"></i>
-                                            <p>Ver Vacaciones</p>
+                                            <p>Vacaciones sin Programar</p>
                                         </a>
                                     </li>
                                 </ul>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=MostrarVacacionesProgramadas" class="nav-link">
+                                            <i class="nav-icon bi bi-calendar-day"></i>
+                                            <p>Vacaciones Programadas</p>
+                                        </a>
+                                    </li>
+                                </ul>
+
                             </li>
 
                             <li class="nav-item menu-close">
@@ -248,8 +227,8 @@
 
         <script src="../../public/js/sweetalert2@11.all.min.js"></script>
         <script src="../../public/js/logout.min.js"></script>
-        <script src="../../resources/dist/js/adminlte.js"></script> <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
-        <script>
+        <script src="../../resources/dist/js/adminlte.js"></script>
+        <!-- <script>
             const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
             const Default = {
                 scrollbarTheme: "os-theme-light",
@@ -271,11 +250,9 @@
                     });
                 }
             });
-        </script> <!--end::OverlayScrollbars Configure--> <!-- OPTIONAL SCRIPTS --> <!-- apexcharts -->
+        </script> 
         <script>
-            // NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
-            // IT'S ALL JUST JUNK FOR DEMO
-            // ++++++++++++++++++++++++++++++++++++++++++
+            
 
             const visitors_chart_options = {
                 series: [{
@@ -301,7 +278,7 @@
                 grid: {
                     borderColor: "#e7e7e7",
                     row: {
-                        colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+                        colors: ["#f3f3f3", "transparent"], 
                         opacity: 0.5,
                     },
                 },
@@ -389,8 +366,7 @@
                 sales_chart_options
             );
             sales_chart.render();
-        </script> <!--end::Script-->
-    </body><!--end::Body-->
+        </script> -->
 
     <!-- Scripts adicionales -->
     <?php if (!empty($additionalJs)) : ?>

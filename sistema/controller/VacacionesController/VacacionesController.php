@@ -1,6 +1,6 @@
 <?php
 require_once '../BaseController.php';
-require_once __DIR__ . '/../../model/AsistenciasModel/VacacionesModel.php';
+require_once __DIR__ . '/../../model/VacacionesModel/VacacionesModel.php';
 
 class VacacionesController extends BaseController
 {
@@ -10,19 +10,33 @@ class VacacionesController extends BaseController
     {
         $this->model = new Vacaciones();
     }
-    public function MostrarVacaciones()
+
+    public function MostrarEmpleadosSinVacaciones()
     {
-        $vacaciones = $this->model->getTodasLasVacaciones();
-
-        $this->loadView('Vacaciones.Vacaciones', [
-            'vacaciones' => $vacaciones
-        ], [], [
-
-        ], 'Vacaciones');
+        $empleados = $this->model->getEmpleadosSinVacaciones();
+        $this->loadView('Vacaciones.EmpleadosSinVacaciones',
+        [
+            'empleados' => $empleados
+        ],[
+            // '/biometrico/sistema/view/Vacaciones/recursos/css/VacacionesNoProgramadas.min.css'
+        ],[
+            '/biometrico/sistema/view/Vacaciones/recursos/js/VacacionesNoProgramadas.min.js'
+        ], 'Vacaciones No Programadas');
     }
 
+    public function MostrarVacacionesProgramadas()
+    {
+        $vacaciones = $this->model->getVacacionesProgramadas();
+        $this->loadView('Vacaciones.VacacionesProgramadas', [
+            'vacaciones' => $vacaciones
+        ],[
+            // '/biometrico/sistema/view/Vacaciones/recursos/js/VacacionesProgramadas.min.css'
+        ],[
+            '/biometrico/sistema/view/Vacaciones/recursos/js/VacacionesProgramadas.min.js'
+        ], 'Vacaciones Programadas');
+    }
 
-    public function AgregarVacacion()
+    public function AsignarVacacion()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $idEmpleado = $_POST['idEmpleado'];
@@ -30,33 +44,30 @@ class VacacionesController extends BaseController
             $fechaFin = $_POST['fechaFin'];
             $motivo = $_POST['motivo'];
 
-            $this->model = new Vacaciones();
-            $this->model->agregarVacacion($idEmpleado, $fechaInicio, $fechaFin, $motivo);
+            $this->model->asignarVacacion($idEmpleado, $fechaInicio, $fechaFin, $motivo);
 
-            header('Location: /vacaciones');
+            header('Location: /biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=MostrarVacacionesProgramadas');
             exit;
         }
 
-        $this->loadView('Vacaciones.AgregarVacacion');
+        $this->loadView('Vacaciones.AsignarVacacion');
     }
 
-    public function AprobarVacacion($idVacacion)
+    public function EditarVacacion()
     {
-        $this->model = new Vacaciones();
-        $this->model->aprobarVacacion($idVacacion);
-        header('Location: /vacaciones');
-        exit;
-    }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $idVacacion = $_POST['idVacacion'];
+            $fechaInicio = $_POST['fechaInicio'];
+            $fechaFin = $_POST['fechaFin'];
 
-    public function RechazarVacacion($idVacacion)
-    {
-        $this->model = new Vacaciones();
-        $this->model->rechazarVacacion($idVacacion);
+            $this->model->editarVacacion($idVacacion, $fechaInicio, $fechaFin);
 
-        header('Location: /vacaciones');
-        exit;
+            header('Location: /biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=MostrarVacacionesProgramadas');
+            exit;
+        }
     }
 }
+
 if (isset($_GET['action'])) {
     $controller = new VacacionesController();
     $action = $_GET['action'];
@@ -67,3 +78,4 @@ if (isset($_GET['action'])) {
         echo "Error: Acción no encontrada.";
     }
 }
+?>

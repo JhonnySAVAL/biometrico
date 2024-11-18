@@ -27,7 +27,7 @@ class Permisos extends Database {
 
     // Obtener todos los permisos
     public function obtenerPermisos() {
-        $sql = "SELECT p.idPermiso, p.empleadoId, e.nombre, p.fechaInicio, p.fechaFin, p.motivo, p.estado
+        $sql = "SELECT p.idPermiso, p.empleadoId, e.nombres, p.fechaInicio, p.fechaFin, p.motivo, p.estado
                 FROM permisos p
                 JOIN empleados e ON p.empleadoId = e.idEmpleado
                 ORDER BY p.fechaInicio DESC";

@@ -10,7 +10,7 @@ class ListaModel extends Database
 
     public function getUsuarios()
     {
-        $sql = "SELECT e.idEmpleado, e.nombres, e.apellidos, e.dni, e.correo, e.telefono, 
+        $sql = "SELECT e.idEmpleado, e.nombress, e.apellidos, e.dni, e.correo, e.telefono, 
                                 e.idPuesto, p.nombrePuesto AS puesto, 
                                 e.idTurno, t.descripcion AS turno, 
                                 e.habilitado

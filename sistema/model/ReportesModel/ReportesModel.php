@@ -39,7 +39,7 @@ class Reportes extends Database
 
     public function obtenerReporteGeneral() {
         // Unir las tablas de empleados, asistencia, permisos, etc., para obtener un reporte completo
-        $sql = "SELECT e.idEmpleado, e.nombre, e.departamento, e.puesto, 
+        $sql = "SELECT e.idEmpleado, e.nombres, e.departamento, e.puesto, 
                        COUNT(a.idAsistencia) AS diasAsistidos,
                        SUM(CASE WHEN a.minutos_tardanza > 0 THEN 1 ELSE 0 END) AS tardanzas,
                        COUNT(p.idPermiso) AS permisos,
