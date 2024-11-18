@@ -12,24 +12,15 @@ class VacacionesController extends BaseController
     }
     public function MostrarVacaciones()
     {
-        $vacacionesModel = new Vacaciones();
-        $vacaciones = $vacacionesModel->getTodasLasVacaciones();
+        $vacaciones = $this->model->getTodasLasVacaciones();
 
         $this->loadView('Vacaciones.Vacaciones', [
             'vacaciones' => $vacaciones
-        ], [], [], 'Vacaciones');
+        ], [], [
+
+        ], 'Vacaciones');
     }
 
-
-    public function MostrarVacacionesAprobadas()
-    {
-        $vacacionesModel = new Vacaciones();
-        $vacaciones = $vacacionesModel->getVacaciones();
-
-        $this->loadView('Vacaciones.VacacionesAprobadas', [
-            'vacaciones' => $vacaciones
-        ], [], [], 'Vacaciones');
-    }
 
     public function AgregarVacacion()
     {
@@ -39,8 +30,8 @@ class VacacionesController extends BaseController
             $fechaFin = $_POST['fechaFin'];
             $motivo = $_POST['motivo'];
 
-            $vacacionesModel = new Vacaciones();
-            $vacacionesModel->agregarVacacion($idEmpleado, $fechaInicio, $fechaFin, $motivo);
+            $this->model = new Vacaciones();
+            $this->model->agregarVacacion($idEmpleado, $fechaInicio, $fechaFin, $motivo);
 
             header('Location: /vacaciones');
             exit;
@@ -51,16 +42,16 @@ class VacacionesController extends BaseController
 
     public function AprobarVacacion($idVacacion)
     {
-        $vacacionesModel = new Vacaciones();
-        $vacacionesModel->aprobarVacacion($idVacacion);
+        $this->model = new Vacaciones();
+        $this->model->aprobarVacacion($idVacacion);
         header('Location: /vacaciones');
         exit;
     }
 
     public function RechazarVacacion($idVacacion)
     {
-        $vacacionesModel = new Vacaciones();
-        $vacacionesModel->rechazarVacacion($idVacacion);
+        $this->model = new Vacaciones();
+        $this->model->rechazarVacacion($idVacacion);
 
         header('Location: /vacaciones');
         exit;
