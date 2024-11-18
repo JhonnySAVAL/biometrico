@@ -35,3 +35,15 @@ document.getElementById('formCrearUsuario').addEventListener('submit', function(
         }
     });
 });
+
+// Detectar el parámetro 'success' en la URL
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has('success') && urlParams.get('success') === 'true') {
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Empleado creado exitosamente",
+        showConfirmButton: false,
+        timer: 1500
+    });
+}
