@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="en">
 
     <head>
@@ -65,11 +65,33 @@
                                     <p> Dashboard </p>
                                 </a>
                             </li>
+<<<<<<< HEAD
+                            
+                            <li class="nav-item menu-close"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                                    <p>
+                                        Admins
+                                        <i class="nav-arrow bi bi-chevron-right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item"> <a href="/biometrico/sistema/controller/AdminController/AdminController.php?action=vistaAgregarAdmin" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                            <p>Registrar</p>
+                                        </a> </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item menu-close"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                                    <p>
+                                        Empleados
+                                        <i class="nav-arrow bi bi-chevron-right"></i>
+                                    </p>
+=======
 
                             <li class="nav-item menu-close">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon bi bi-person"></i>
                                     <p> Empleados <i class="nav-arrow bi bi-chevron-right"></i> </p>
+>>>>>>> 050208c3f8d26dd67ae08960a2539fec816f91c5
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
