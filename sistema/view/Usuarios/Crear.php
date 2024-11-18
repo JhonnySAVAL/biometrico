@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary">Registrar Empleado</button>
+                            <button type="submit" class="btn btn-primary" id="regsitraremp">Registrar Empleado</button>
                             <a href="javascript:history.back()" class="btn btn-secondary">Volver</a>
                         </div>
                     </form>

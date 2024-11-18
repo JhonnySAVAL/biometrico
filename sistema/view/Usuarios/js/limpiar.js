@@ -15,3 +15,23 @@ document.getElementById('limpiar').addEventListener('click', function(e){
     });
     
 });
+// Selecciona el formulario
+document.getElementById('formCrearUsuario').addEventListener('submit', function(event) {
+    event.preventDefault(); // Evita el envío inmediato del formulario
+
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¿Quieres crear este nuevo empleado?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, crear!',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Envía el formulario al confirmar
+            this.submit();
+        }
+    });
+});

@@ -5,7 +5,6 @@ require_once __DIR__ . '/../../model/UsuarioModel/AgregarUsuarioModel.php';
 
 class AgregarUsuarioController extends BaseController
 {
-    // Método para cargar la vista de agregar usuario
     public function vistaAgregarUsuario()
     {
         $crearModel = new AgregarUsuarioModel();
@@ -16,7 +15,7 @@ class AgregarUsuarioController extends BaseController
         $this->loadView('Usuarios.Crear', [
             'puestos' => $puestos,
             'turnos' => $turnos,
-        ], [], ['/biometrico/sistema/view/usuarios/js/limpiar.min.js', '/biometrico/sistema/view/usuarios/js/alertaCrear.min.js'], 'Usuarios');
+        ], [], ['/biometrico/sistema/view/usuarios/js/limpiar.min.js'], 'Usuarios');
     }
 
     // Método para procesar la creación de un nuevo usuario
@@ -36,15 +35,8 @@ class AgregarUsuarioController extends BaseController
             $crearModel = new AgregarUsuarioModel();
 
             // Llamar al modelo para agregar el usuario
-            $exito = $crearModel->agregarUsuario($nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado);
-
-            // Preparar respuesta en JSON
-            header('Content-Type: application/json');
-            if ($exito) {
-                echo json_encode(['status' => 'success', 'message' => 'Usuario creado exitosamente.']);
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'Error al crear el usuario.']);
-            }
+            $crearModel->agregarUsuario($nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado);
+            header('Location: /biometrico/sistema/controller/UsuariosController/UsuariosCrearController.php?action=VistaAgregarUsuario');
         }
     }
 }
