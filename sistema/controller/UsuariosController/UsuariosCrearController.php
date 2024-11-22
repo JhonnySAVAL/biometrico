@@ -54,63 +54,45 @@ class AgregarUsuarioController extends BaseController
 
     // Método para procesar la creación de un nuevo usuario
     public function agregarUsuario()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Obtener datos del formulario
-            $nombres = trim($_POST['nombres']);
-            $apellidos = trim($_POST['apellidos']);
-            $dni = trim($_POST['dni']);
-            $correo = trim($_POST['correo']);
-            $telefono = trim($_POST['telefono']);
-            $puesto = $_POST['puesto'];
-            $turno = $_POST['turno'];
-            $habilitado = isset($_POST['habilitado']) ? 1 : 0;
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Obtener datos del formulario
+        $nombres = trim($_POST['nombres']);
+        $apellidos = trim($_POST['apellidos']);
+        $dni = trim($_POST['dni']);
+        $correo = trim($_POST['correo']);
+        $telefono = trim($_POST['telefono']);
+        $puesto = $_POST['puesto'];
+        $turno = $_POST['turno'];
+        $habilitado = isset($_POST['habilitado']) ? 1 : 0;
 
-            $errores = $this->validarDatosUsuario($nombres, $apellidos, $dni, $correo, $telefono);
-            if (!empty($errores)) {
-                // Si hay errores, recargar la vista con mensajes de error
-                $crearModel = new AgregarUsuarioModel();
-                $puestos = $crearModel->MostrarPuestos();
-                $turnos = $crearModel->MostrarTurnos();
-
-                $this->loadView('Usuarios.Crear', [
-                    'puestos' => $puestos,
-                    'turnos' => $turnos,
-                    'errores' => $errores, // Pasar los errores a la vista
-                ]);
-                return;
-            }
-            $generator = new BarcodeGeneratorPNG();
-            $directorioBarcodes = __DIR__ . '/../../resources/bar_codes/';
-            if (!file_exists($directorioBarcodes)) {
-                mkdir($directorioBarcodes, 0777, true);
-            }
-
-            $codigoBarrasRuta = $directorioBarcodes . $dni . '.png';
-            try {
-                file_put_contents($codigoBarrasRuta, $generator->getBarcode($dni, BarcodeGeneratorPNG::TYPE_CODE_128));
-            } catch (Exception $e) {
-                $errores[] = "Error al generar el código de barras: " . $e->getMessage();
-                $crearModel = new AgregarUsuarioModel();
-                $puestos = $crearModel->MostrarPuestos();
-                $turnos = $crearModel->MostrarTurnos();
-                $this->loadView('Usuarios.Crear', [
-                    'puestos' => $puestos,
-                    'turnos' => $turnos,
-                    'errores' => $errores,
-                ]);
-                return;
-            }
-
+        $errores = $this->validarDatosUsuario($nombres, $apellidos, $dni, $correo, $telefono);
+        if (!empty($errores)) {
+            // Si hay errores, recargar la vista con mensajes de error
             $crearModel = new AgregarUsuarioModel();
-            $crearModel->agregarUsuario($nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado);
+            $puestos = $crearModel->MostrarPuestos();
+            $turnos = $crearModel->MostrarTurnos();
 
-            if (!headers_sent()) {
-                header('Location: /biometrico/sistema/controller/UsuariosController/UsuariosCrearController.php?action=VistaAgregarUsuario&success=true');
-                exit();
-            }
+            $this->loadView('Usuarios.Crear', [
+                'puestos' => $puestos,
+                'turnos' => $turnos,
+                'errores' => $errores, // Pasar los errores a la vista
+            ]);
+            return;
+        }
+
+        // Ahora ya no se genera ni guarda el código de barras
+        // Solo se agregan los datos del usuario
+        $crearModel = new AgregarUsuarioModel();
+        $crearModel->agregarUsuario($nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado);
+
+        if (!headers_sent()) {
+            header('Location: /biometrico/sistema/controller/UsuariosController/UsuariosCrearController.php?action=VistaAgregarUsuario&success=true');
+            exit();
         }
     }
+}
+
 }
 if (isset($_GET['action'])) {
     $controller = new AgregarUsuarioController();

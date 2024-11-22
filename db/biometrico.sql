@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-11-2024 a las 15:50:36
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Tiempo de generación: 22-11-2024 a las 01:07:01
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -116,19 +116,19 @@ CREATE TABLE `empleados` (
   `estado` enum('Activo','Inactivo') DEFAULT 'Activo',
   `habilitado` tinyint(1) NOT NULL,
   `idApp` varchar(10) DEFAULT NULL COMMENT 'id para la app',
-  `passwordApp` varchar(20) DEFAULT NULL COMMENT 'contra para la app',
-  `codigo_barras` varchar(255) DEFAULT NULL
+  `passwordApp` varchar(20) DEFAULT NULL COMMENT 'contra para la app'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`idEmpleado`, `nombres`, `apellidos`, `dni`, `correo`, `telefono`, `idPuesto`, `idTurno`, `estado`, `habilitado`, `idApp`, `passwordApp`, `codigo_barras`) VALUES
-(1, 'asd', 'asd', '12345678', 'qqq@gma', '123456789', 1, 1, 'Activo', 0, NULL, NULL, NULL),
-(2, '432', '432', '432', '432@123', '432', 1, 1, 'Activo', 1, NULL, NULL, NULL),
-(3, 'mono', 'mano', '56451654', 'mono@gmail.com', '454151542', 1, 1, 'Activo', 1, NULL, NULL, NULL),
-(4, 'mene', 'mana', '34436547', 'mar@nose.com', '345643657', 1, 1, 'Activo', 1, NULL, NULL, NULL);
+INSERT INTO `empleados` (`idEmpleado`, `nombres`, `apellidos`, `dni`, `correo`, `telefono`, `idPuesto`, `idTurno`, `estado`, `habilitado`, `idApp`, `passwordApp`) VALUES
+(1, 'asd', 'asd', '12345678', 'qqq@gma', '123456789', 1, 1, 'Activo', 0, NULL, NULL),
+(2, '432', '432', '432', '432@123', '432', 1, 1, 'Activo', 1, NULL, NULL),
+(3, 'mono', 'mano', '56451654', 'mono@gmail.com', '454151542', 1, 1, 'Activo', 1, NULL, NULL),
+(4, 'mene', 'mana', '34436547', 'mar@nose.com', '345643657', 1, 1, 'Activo', 1, NULL, NULL),
+(5, 'aman', 'perez', '43243243', 'qwe@qwe.com', '432432432', 1, 1, 'Activo', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -444,7 +444,7 @@ ALTER TABLE `auditoria`
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `exoneraciones`

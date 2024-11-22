@@ -12,7 +12,7 @@ class ListaModel extends Database
     {
         $sql = "SELECT e.idEmpleado, e.nombres, e.apellidos, e.dni, e.correo, e.telefono, 
                                 e.idPuesto, p.nombrePuesto AS puesto, 
-                                e.idTurno, t.descripcion AS turno, e.codigo_barras, 
+                                e.idTurno, t.descripcion AS turno, 
                                 e.habilitado
                     FROM empleados e
                     LEFT JOIN puestos p ON e.idPuesto = p.idPuesto
@@ -42,17 +42,30 @@ class ListaModel extends Database
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function ActualizarEmpleado($idEmpleado, $nombres, $apellidos, $dni, $correo, $telefono, $idPuesto, $idTurno, $habilitado)
-{
-    $sql = "UPDATE empleados 
-            SET nombres = ?, apellidos = ?, dni = ?, correo = ?, telefono = ?, 
-                idPuesto = ?, idTurno = ?, habilitado = ?
-            WHERE idEmpleado = ?";
-    $stmt = $this->conn->prepare($sql);
+    public function ActualizarEmpleado($idEmpleado, $nombres, $apellidos, $correo, $telefono, $nombrePuesto, $descripcionTurno, $habilitado)
+    {
+        $sql = "UPDATE empleados 
+            SET nombres = :nombres, 
+                apellidos = :apellidos, 
+                correo = :correo, 
+                telefono = :telefono, 
+                idPuesto = (SELECT idPuesto FROM puestos WHERE nombrePuesto = :nombrePuesto), 
+                idTurno = (SELECT idTurno FROM turnos WHERE descripcion = :descripcionTurno), 
+                habilitado = :habilitado
+            WHERE idEmpleado = :idEmpleado";
 
-    $stmt->execute([$nombres, $apellidos, $dni, $correo, $telefono, $idPuesto, $idTurno, $habilitado, $idEmpleado]);
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':nombres', $nombres);
+        $stmt->bindParam(':apellidos', $apellidos);
+        $stmt->bindParam(':correo', $correo);
+        $stmt->bindParam(':telefono', $telefono);
+        $stmt->bindParam(':nombrePuesto', $nombrePuesto);
+        $stmt->bindParam(':descripcionTurno', $descripcionTurno);
+        $stmt->bindParam(':habilitado', $habilitado);
+        $stmt->bindParam(':idEmpleado', $idEmpleado);
 
-    return $stmt->rowCount() > 0;
-}
+        $stmt->execute();
 
+        return $stmt->rowCount() > 0;
+    }
 }

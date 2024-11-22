@@ -19,48 +19,46 @@ class UsuariosController extends BaseController
             'usuarios' => $empleados,
             'puestos' => $puesto,
             'turnos' => $turno,
-        ], [], ['/biometrico/sistema/view/Usuarios/js/editarEmpleados.min.js'], 'Usuarios');
+        ], [], ['/biometrico/sistema/view/Usuarios/js/editarEmpleado.min.js'], 'Usuarios');
     }
 
     public function actualizarUsuario()
-{
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $idEmpleado = $_POST['idEmpleado'];
-        $nombres = $_POST['nombres'];
-        $apellidos = $_POST['apellidos'];
-        $dni = $_POST['dni'];
-        $correo = $_POST['correo'];
-        $telefono = $_POST['telefono'];
-        $puesto = $_POST['puesto'];
-        $turno = $_POST['turno'];
-        $habilitado = isset($_POST['habilitado']) ? 1 : 0;
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $idEmpleado = $_POST['idEmpleado'];
+            $nombres = $_POST['nombres'];
+            $apellidos = $_POST['apellidos'];
+            $correo = $_POST['correo'];
+            $telefono = $_POST['telefono'];
+            $puesto = $_POST['puesto'];
+            $turno = $_POST['turno'];
+            $habilitado = isset($_POST['habilitado']) ? 1 : 0;
 
-        // Validación de los campos obligatorios
-        if (empty($nombres) || empty($apellidos) || empty($dni) || empty($correo) || empty($puesto) || empty($turno)) {
-            echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios.']);
+            // Validación de los campos obligatorios
+            if (empty($nombres) || empty($apellidos) || empty($correo) || empty($puesto) || empty($turno)) {
+                echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios.']);
+                exit();
+            }
+
+            // Validación del correo
+            if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+                echo json_encode(['success' => false, 'message' => 'El correo electrónico no es válido.']);
+                exit();
+            }
+
+            // Llamada al modelo para actualizar el empleado
+            $listaModel = new ListaModel();
+            $resultado = $listaModel->ActualizarEmpleado($idEmpleado, $nombres, $apellidos, $correo, $telefono, $puesto, $turno, $habilitado);
+
+            // Respuesta dependiendo del resultado
+            if ($resultado) {
+                echo json_encode(['success' => true, 'message' => 'Empleado actualizado correctamente.']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Hubo un error al actualizar el usuario.']);
+            }
             exit();
         }
-
-        // Validación del correo
-        if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-            echo json_encode(['success' => false, 'message' => 'El correo electrónico no es válido.']);
-            exit();
-        }
-
-        // Llamada al modelo para actualizar el empleado
-        $listaModel = new ListaModel();
-        $resultado = $listaModel->ActualizarEmpleado($idEmpleado, $nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado);
-
-        // Respuesta dependiendo del resultado
-        if ($resultado) {
-            echo json_encode(['success' => true, 'message' => 'Empleado actualizado correctamente.']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Hubo un error al actualizar el usuario.']);
-        }
-        exit();
     }
-}
-
 }
 
 // Ejecutar el controlador si la acción está definida
