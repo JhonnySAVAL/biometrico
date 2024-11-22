@@ -9,6 +9,19 @@ class AgregarUsuarioModel extends Database
         parent::__construct();
     }
 
+    public function verificarDniExistente($dni)
+    {
+        // Consulta para verificar si el DNI ya está en la base de datos
+        $sql = "SELECT COUNT(*) FROM empleados WHERE dni = :dni";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':dni', $dni);
+        $stmt->execute();
+
+        // Si la consulta devuelve un número mayor que 0, el DNI ya existe
+        $resultado = $stmt->fetchColumn();
+        return $resultado > 0;
+    }
+
     public function agregarUsuario($nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado)
     {
         // Obtener el id del puesto
