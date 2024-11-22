@@ -58,21 +58,6 @@
 
                         <li class="nav-item menu-close">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Admins <i class="nav-arrow bi bi-chevron-right"></i></p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="/biometrico/sistema/controller/AdminController/AdminController.php?action=vistaAgregarAdmin" class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Registrar</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item menu-close">
-                            <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-person"></i>
                                 <p>Empleados <i class="nav-arrow bi bi-chevron-right"></i></p>
                             </a>
@@ -138,31 +123,15 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="/biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=MostrarEmpleadosSinVacaciones" class="nav-link">
-                                        <i class="nav-icon bi bi-calendar-day"></i>
-                                        <p>Vacaciones sin Programar</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="/biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=MostrarVacacionesProgramadas" class="nav-link">
                                         <i class="nav-icon bi bi-calendar-day"></i>
-                                        <p>Vacaciones Programadas</p>
+                                        <p>Vacaciones Asignadas</p>
                                     </a>
                                 </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item menu-close">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-book"></i>
-                                <p>Feriados <i class="nav-arrow bi bi-chevron-right"></i></p>
-                            </a>
-                            <ul class="nav nav-treeview">
-
                                 <li class="nav-item">
-                                    <a href="/biometrico/sistema/controller/ConfiguracionesController/FeriadosController.php?action=mostrarFeriados" class="nav-link">
+                                    <a href="/biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=MostrarEmpleadosSinVacaciones" class="nav-link">
                                         <i class="nav-icon bi bi-calendar-day"></i>
-                                        <p>Ver Feriados</p>
+                                        <p>Vacaciones Sin Asignar</p>
                                     </a>
                                 </li>
                             </ul>
@@ -175,12 +144,30 @@
                                 <p>Configuraciones <i class="nav-arrow bi bi-chevron-right"></i></p>
                             </a>
                             <ul class="nav nav-treeview">
+
+
+                                <li class="nav-item">
+                                    <a href="/biometrico/sistema/controller/AdminController/AdminController.php?action=vistaAgregarAdmin" class="nav-link">
+                                        <i class="nav-icon bi bi-speedometer"></i>
+                                        <p>Registrar Administradores</p>
+                                    </a>
+                                </li>
+
+
+                                <li class="nav-item">
+                                    <a href="/biometrico/sistema/controller/ConfiguracionesController/FeriadosController.php?action=mostrarFeriados" class="nav-link">
+                                        <i class="nav-icon bi bi-calendar-day"></i>
+                                        <p>Ver Feriados</p>
+                                    </a>
+                                </li>
+
                                 <li class="nav-item">
                                     <a href="/biometrico/sistema/controller/ConfiguracionesController/PuestosController.php?action=MostrarPuestos" class="nav-link">
                                         <i class="nav-icon bi bi-people"></i>
                                         <p>Puestos</p>
                                     </a>
                                 </li>
+
                                 <li class="nav-item">
                                     <a href="/biometrico/sistema/controller/ConfiguracionesController/TurnosController.php?action=MostrarTurnos" class="nav-link">
                                         <i class="nav-icon bi bi-clock"></i>
@@ -189,6 +176,7 @@
                                 </li>
                             </ul>
                         </li>
+                        
                         <li class="nav-item">
                             <a href="/biometrico/sistema/controller/DashboardController/DashboardController.php" class="nav-link">
                                 <i class="nav-icon bi bi-house-door"></i>
@@ -230,14 +218,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script> <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
 
-<!-- Agregar Bootstrap JS y jQuery antes de cerrar el </body> -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Agregar Bootstrap JS y jQuery antes de cerrar el </body> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../../public/js/sweetalert2@11.all.min.js"></script>
     <script src="../../public/js/logout.min.js"></script>
     <script src="../../resources/dist/js/adminlte.js"></script>
-   
+
     <!-- Scripts adicionales -->
     <?php if (!empty($additionalJs)) : ?>
         <?php foreach ($additionalJs as $jsFile) : ?>
