@@ -19,19 +19,13 @@
             <div class="col-lg-12">
                 <!-- Card de Empleados -->
                 <div class="card mb-4">
-                    <div class="card-header border-0">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title">Lista de Empleados</h3>
-                        </div>
-                    </div>
                     <div class="card-body table-responsive p-0">
                         <table class="table table-striped align-middle text-center"> <!-- Añadido text-center -->
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>DNI</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
-                                    <th>DNI</th>
                                     <th>Correo</th>
                                     <th>Teléfono</th>
                                     <th>Puesto</th>
@@ -44,10 +38,9 @@
                                 <?php if (!empty($usuarios)): ?>
                                     <?php foreach ($usuarios as $empleado): ?>
                                         <tr>
-                                            <td><?php echo $empleado['idEmpleado']; ?></td>
+                                            <td><?php echo $empleado['dni']; ?></td>
                                             <td><?php echo $empleado['nombres']; ?></td>
                                             <td><?php echo $empleado['apellidos']; ?></td>
-                                            <td><?php echo $empleado['dni']; ?></td>
                                             <td><?php echo $empleado['correo']; ?></td>
                                             <td><?php echo $empleado['telefono']; ?></td>
                                             <td><?php echo $empleado['puesto']; ?></td>
