@@ -42,8 +42,12 @@ if (urlParams.has('success') && urlParams.get('success') === 'true') {
     Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "Empleado creado exitosamente",
+        title: "Empleado editado exitosamente",
         showConfirmButton: false,
         timer: 1500
+    }).then(() => {
+        // Redirige a la misma página sin el parámetro 'success'
+        const newUrl = window.location.pathname + window.location.search.split('&')[0];  // Quitar solo 'success'
+        window.location.replace(newUrl);  // Redirige sin el parámetro 'success'
     });
 }

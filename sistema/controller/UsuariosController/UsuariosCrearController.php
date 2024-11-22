@@ -1,8 +1,4 @@
 <?php
-require_once __DIR__ . '/../../../vendor/autoload.php';
-
-
-use Picqer\Barcode\BarcodeGeneratorPNG;
 
 require_once '../BaseController.php';
 require_once __DIR__ . '/../../model/UsuarioModel/AgregarUsuarioModel.php';
@@ -40,8 +36,8 @@ class AgregarUsuarioController extends BaseController
         }
 
         // Validar correo electrónico
-        if (!filter_var($correo, FILTER_VALIDATE_EMAIL) || !preg_match('/\.(com|org|net|edu)$/', $correo)) {
-            $errores[] = "Correo inválido. Debe ser un correo válido con dominio permitido.";
+        if (!preg_match('/^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook)\.(com|org|net|edu)$/i', $correo)) {
+            $errores[] = "Correo inválido. Solo se permiten cuentas de Gmail, Hotmail u Outlook con dominios .com, .org, .net o .edu.";
         }
 
         // Validar teléfono (exactamente 9 dígitos)
@@ -54,45 +50,50 @@ class AgregarUsuarioController extends BaseController
 
     // Método para procesar la creación de un nuevo usuario
     public function agregarUsuario()
-{
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Obtener datos del formulario
-        $nombres = trim($_POST['nombres']);
-        $apellidos = trim($_POST['apellidos']);
-        $dni = trim($_POST['dni']);
-        $correo = trim($_POST['correo']);
-        $telefono = trim($_POST['telefono']);
-        $puesto = $_POST['puesto'];
-        $turno = $_POST['turno'];
-        $habilitado = isset($_POST['habilitado']) ? 1 : 0;
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Obtener datos del formulario
+            $nombres = trim($_POST['nombres']);
+            $apellidos = trim($_POST['apellidos']);
+            $dni = trim($_POST['dni']);
+            $correo = trim($_POST['correo']);
+            $telefono = trim($_POST['telefono']);
+            $puesto = $_POST['puesto'];
+            $turno = $_POST['turno'];
+            $habilitado = isset($_POST['habilitado']) ? 1 : 0;
 
-        $errores = $this->validarDatosUsuario($nombres, $apellidos, $dni, $correo, $telefono);
-        if (!empty($errores)) {
-            // Si hay errores, recargar la vista con mensajes de error
+            $idmarcar = strtolower(substr($nombres, 0, 2) . substr($apellidos, 0, 2));
+
+            // Generar la contraseña: los primeros 5 caracteres del hash MD5 del DNI
+            $passmarcar = substr(md5($dni), 0, 5);
+
+            $errores = $this->validarDatosUsuario($nombres, $apellidos, $dni, $correo, $telefono);
             $crearModel = new AgregarUsuarioModel();
-            $puestos = $crearModel->MostrarPuestos();
-            $turnos = $crearModel->MostrarTurnos();
+            if ($crearModel->verificarDniExistente($dni)) {
+                // Agregar el error si el DNI ya existe
+                $errores[] = "El DNI ya está registrado. Por favor ingresa un DNI diferente.";
+            }
+            if (!empty($errores)) {
+                // Si hay errores, recargar la vista con mensajes de error
+                $crearModel = new AgregarUsuarioModel();
+                $puestos = $crearModel->MostrarPuestos();
+                $turnos = $crearModel->MostrarTurnos();
 
-            $this->loadView('Usuarios.Crear', [
-                'puestos' => $puestos,
-                'turnos' => $turnos,
-                'errores' => $errores, // Pasar los errores a la vista
-            ]);
-            return;
-        }
+                $this->loadView('Usuarios.Crear', [
+                    'puestos' => $puestos,
+                    'turnos' => $turnos,
+                    'errores' => $errores, // Pasar los errores a la vista
+                ]);
+                return;
+            }
+            $crearModel->agregarUsuario($nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado, $idmarcar, $passmarcar);
 
-        // Ahora ya no se genera ni guarda el código de barras
-        // Solo se agregan los datos del usuario
-        $crearModel = new AgregarUsuarioModel();
-        $crearModel->agregarUsuario($nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado);
-
-        if (!headers_sent()) {
-            header('Location: /biometrico/sistema/controller/UsuariosController/UsuariosCrearController.php?action=VistaAgregarUsuario&success=true');
-            exit();
+            if (!headers_sent()) {
+                header('Location: /biometrico/sistema/controller/UsuariosController/UsuariosCrearController.php?action=VistaAgregarUsuario&success=true');
+                exit();
+            }
         }
     }
-}
-
 }
 if (isset($_GET['action'])) {
     $controller = new AgregarUsuarioController();
