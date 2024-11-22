@@ -36,9 +36,9 @@ document.addEventListener('DOMContentLoaded', function () {
     mostrarLista(empleadosGenerales);
 });
 
-function marcarEntrada(empleadoId) {
+function marcarEntrada(idEmpleado) {
     const formData = new FormData();
-    formData.append('empleadoId', empleadoId);
+    formData.append('idEmpleado', idEmpleado);
     formData.append('action', 'marcarEntrada');  // Acción para el backend
 
     fetch('/biometrico/sistema/controller/AsistenciasController/AsistenciasController.php?action=marcarEntrada', {
@@ -62,9 +62,9 @@ function marcarEntrada(empleadoId) {
     });
 }
 
-function marcarReceso(empleadoId) {
+function marcarReceso(idEmpleado) {
     const formData = new FormData();
-    formData.append('empleadoId', empleadoId);  // Empleado
+    formData.append('idEmpleado', idEmpleado);  // Empleado
     formData.append('action', 'marcarReceso');  // Acción
 
     fetch('/biometrico/sistema/controller/AsistenciasController/AsistenciasController.php?action=marcarReceso', {
@@ -87,10 +87,10 @@ function marcarReceso(empleadoId) {
         alert('Hubo un error al procesar la solicitud.');
     });
 }
-function marcarSalida(empleadoId) {
+function marcarSalida(idEmpleado) {
     // Crear un objeto FormData para enviar los datos
     const formData = new FormData();
-    formData.append('empleadoId', empleadoId);  // Asegúrate de pasar el id del empleado
+    formData.append('idEmpleado', idEmpleado);  // Asegúrate de pasar el id del empleado
     formData.append('action', 'marcarSalida');  // Acción que se debe ejecutar en el backend
 
     // Realizar la solicitud POST con fetch

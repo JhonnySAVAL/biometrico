@@ -15,10 +15,10 @@ class JustificacionesController extends BaseController
         $justificaciones = $this->justificacionesModel->obtenerJustificaciones();
         $this->loadView('Asistencias.Justificaciones', ['justificaciones' => $justificaciones]);
     }
-    public function solicitarJustificacion($empleadoId, $fecha, $motivo, $documento = null)
+    public function solicitarJustificacion($idEmpleado, $fecha, $motivo, $documento = null)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->justificacionesModel->insertarJustificacion($empleadoId, $fecha, $motivo, $documento);
+            $this->justificacionesModel->insertarJustificacion($idEmpleado, $fecha, $motivo, $documento);
             echo json_encode(['success' => true, 'message' => 'Justificación solicitada exitosamente.']);
         }
     }
@@ -45,10 +45,10 @@ class JustificacionesController extends BaseController
 if (isset($_GET['action'])) {
     $controller = new JustificacionesController();
     $action = $_GET['action'];
-    $empleadoId = $_POST['empleadoId'] ?? null;
+    $idEmpleado = $_POST['idEmpleado'] ?? null;
 
     if (method_exists($controller, $action)) {
-        $controller->$action($empleadoId);
+        $controller->$action($idEmpleado);
     } else {
         echo "Error: Acción no encontrada.";
     }

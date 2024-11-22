@@ -109,8 +109,8 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="empleadoId">Seleccionar Empleado</label>
-                                <select name="empleadoId" id="empleadoId" class="form-control" required>
+                                <label for="idEmpleado">Seleccionar Empleado</label>
+                                <select name="idEmpleado" id="idEmpleado" class="form-control" required>
                                    
                                     <?php foreach ($listaEmpleados as $empleado): ?>
                                         <option value="<?php echo $empleado['idEmpleado']; ?>"><?php echo $empleado['nombres']; ?></option>

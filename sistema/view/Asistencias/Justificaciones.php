@@ -20,7 +20,7 @@
         <div class="container">
     <h2>Solicitar Justificación</h2>
     <form action="/biometrico/sistema/controller/JustificacionesController.php?action=solicitarJustificacion" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="empleadoId" value="<!-- ID del empleado -->">
+        <input type="hidden" name="idEmpleado" value="<!-- ID del empleado -->">
         <div class="form-group">
             <label for="fecha">Fecha:</label>
             <input type="date" name="fecha" id="fecha" required>
@@ -51,7 +51,7 @@
         <tbody>
             <?php foreach ($justificaciones as $justificacion): ?>
                 <tr>
-                    <td><?php echo $justificacion['empleadoId']; ?></td>
+                    <td><?php echo $justificacion['idEmpleado']; ?></td>
                     <td><?php echo $justificacion['fecha']; ?></td>
                     <td><?php echo $justificacion['motivo']; ?></td>
                     <td>

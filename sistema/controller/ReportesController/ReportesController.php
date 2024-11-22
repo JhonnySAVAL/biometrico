@@ -16,30 +16,30 @@ class ReportesController extends BaseController
         $this->loadView('Asistencias.reporte_general', ['reporteGeneral' => $reporteGeneral]);
     }
     // Reporte de asistencia de un empleado específico
-    public function verAsistencia($empleadoId)
+    public function verAsistencia($idEmpleado)
     {
-        $asistencia = $this->reportesModel->obtenerAsistenciaEmpleado($empleadoId);
+        $asistencia = $this->reportesModel->obtenerAsistenciaEmpleado($idEmpleado);
         $this->loadView('Asistencias.reporte_asistencia', ['asistencia' => $asistencia]);
     }
 
     // Reporte de permisos de un empleado específico
-    public function verPermisos($empleadoId)
+    public function verPermisos($idEmpleado)
     {
-        $permisos = $this->reportesModel->obtenerPermisosEmpleado($empleadoId);
+        $permisos = $this->reportesModel->obtenerPermisosEmpleado($idEmpleado);
         $this->loadView('Asistencias.reporte_permisos', ['permisos' => $permisos]);
     }
 
     // Reporte de tardanzas de un empleado específico
-    public function verTardanzas($empleadoId)
+    public function verTardanzas($idEmpleado)
     {
-        $tardanzas = $this->reportesModel->obtenerTardanzasEmpleado($empleadoId);
+        $tardanzas = $this->reportesModel->obtenerTardanzasEmpleado($idEmpleado);
         $this->loadView('Asistencias.reporte_tardanzas', ['tardanzas' => $tardanzas]);
     }
 
     // Reporte de justificaciones de un empleado específico
-    public function verJustificaciones($empleadoId)
+    public function verJustificaciones($idEmpleado)
     {
-        $justificaciones = $this->reportesModel->obtenerJustificacionesEmpleado($empleadoId);
+        $justificaciones = $this->reportesModel->obtenerJustificacionesEmpleado($idEmpleado);
         $this->loadView('Asistencias.reporte_justificaciones', ['justificaciones' => $justificaciones]);
     }
 
@@ -49,10 +49,10 @@ class ReportesController extends BaseController
 if (isset($_GET['action'])) {
     $controller = new ReportesController();
     $action = $_GET['action'];
-    $empleadoId = $_POST['empleadoId'] ?? null;
+    $idEmpleado = $_POST['idEmpleado'] ?? null;
 
     if (method_exists($controller, $action)) {
-        $controller->$action($empleadoId);
+        $controller->$action($idEmpleado);
     } else {
         echo "Error: Acción no encontrada.";
     }

@@ -10,10 +10,10 @@ class Justificaciones extends Database {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     // Insertar una nueva justificación
-    public function insertarJustificacion($empleadoId, $fecha, $motivo, $documento = null) {
-        $sql = "INSERT INTO justificaciones (empleadoId, fecha, motivo, documento, estado) VALUES (:empleadoId, :fecha, :motivo, :documento, 'pendiente')";
+    public function insertarJustificacion($idEmpleado, $fecha, $motivo, $documento = null) {
+        $sql = "INSERT INTO justificaciones (idEmpleado, fecha, motivo, documento, estado) VALUES (:idEmpleado, :fecha, :motivo, :documento, 'pendiente')";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':empleadoId', $empleadoId);
+        $stmt->bindParam(':idEmpleado', $idEmpleado);
         $stmt->bindParam(':fecha', $fecha);
         $stmt->bindParam(':motivo', $motivo);
         $stmt->bindParam(':documento', $documento);

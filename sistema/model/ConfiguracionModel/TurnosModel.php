@@ -50,12 +50,12 @@ class Turnos extends Database {
     }
 
     //Usado por Asistencia este modelo
-    public function obtenerDuracionTurno($empleadoId) {
+    public function obtenerDuracionTurno($idEmpleado) {
         $sql = "SELECT t.duracion FROM turnos t
                 INNER JOIN empleados e ON e.idTurno = t.idTurno
-                WHERE e.idEmpleado = :empleadoId";
+                WHERE e.idEmpleado = :idEmpleado";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':empleadoId', $empleadoId);
+        $stmt->bindParam(':idEmpleado', $idEmpleado);
         $stmt->execute();
         return $stmt->fetchColumn(); // Devuelve la duración del turno en horas
     }

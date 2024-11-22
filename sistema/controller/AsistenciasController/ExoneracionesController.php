@@ -37,10 +37,10 @@ class ExoneracionesController extends BaseController
 if (isset($_GET['action'])) {
     $controller = new ExoneracionesController();
     $action = $_GET['action'];
-    $empleadoId = $_POST['empleadoId'] ?? null;
+    $idEmpleado = $_POST['idEmpleado'] ?? null;
 
     if (method_exists($controller, $action)) {
-        $controller->$action($empleadoId);
+        $controller->$action($idEmpleado);
     } else {
         echo "Error: Acción no encontrada.";
     }

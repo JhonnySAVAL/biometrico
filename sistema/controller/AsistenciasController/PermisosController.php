@@ -15,10 +15,10 @@ class PermisosController extends BaseController
         $permisos = $this->permisosModel->obtenerPermisos();
         $this->loadView('Asistencias.Permisos', ['permisos' => $permisos]);
     }
-    public function solicitarPermiso($empleadoId, $fechaInicio, $fechaFin, $motivo)
+    public function solicitarPermiso($idEmpleado, $fechaInicio, $fechaFin, $motivo)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->permisosModel->insertarPermiso($empleadoId, $fechaInicio, $fechaFin, $motivo);
+            $this->permisosModel->insertarPermiso($idEmpleado, $fechaInicio, $fechaFin, $motivo);
             echo json_encode(['success' => true, 'message' => 'Permiso solicitado exitosamente.']);
         }
     }
@@ -37,10 +37,10 @@ class PermisosController extends BaseController
 if (isset($_GET['action'])) {
     $controller = new PermisosController();
     $action = $_GET['action'];
-    $empleadoId = $_POST['empleadoId'] ?? null;
+    $idEmpleado = $_POST['idEmpleado'] ?? null;
 
     if (method_exists($controller, $action)) {
-        $controller->$action($empleadoId);
+        $controller->$action($idEmpleado);
     } else {
         echo "Error: Acción no encontrada.";
     }

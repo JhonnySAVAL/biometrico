@@ -28,9 +28,9 @@ if (isset($_GET['action'])) {
     $controller = new AsistenciaController();
     $action = $_GET['action'];
 
-    if ($action == 'marcarEntrada' && isset($_POST['empleadoId'])) {
+    if ($action == 'marcarEntrada' && isset($_POST['idEmpleado'])) {
       
-        $idEmpleado = $_POST['empleadoId'];
+        $idEmpleado = $_POST['idEmpleado'];
         $controller->$action($idEmpleado);  
     } else {
         if (method_exists($controller, $action)) {

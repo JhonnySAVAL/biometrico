@@ -21,7 +21,7 @@
         <div class="container">
     <h2>Solicitar Exoneración</h2>
     <form action="/biometrico/sistema/controller/ExoneracionesController.php?action=solicitarExoneracion" method="POST">
-        <input type="hidden" name="empleadoId" value="<!-- ID del empleado -->">
+        <input type="hidden" name="idEmpleado" value="<!-- ID del empleado -->">
         <div class="form-group">
             <label for="fecha">Fecha:</label>
             <input type="date" name="fecha" id="fecha" required>
@@ -56,7 +56,7 @@
         <tbody>
             <?php foreach ($exoneraciones as $exoneracion): ?>
                 <tr>
-                    <td><?php echo $exoneracion['empleadoId']; ?></td>
+                    <td><?php echo $exoneracion['idEmpleado']; ?></td>
                     <td><?php echo $exoneracion['fecha']; ?></td>
                     <td><?php echo $exoneracion['tipo_exoneracion']; ?></td>
                     <td><?php echo $exoneracion['motivo']; ?></td>
