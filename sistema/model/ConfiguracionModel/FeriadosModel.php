@@ -1,13 +1,28 @@
 <?php
 require_once __DIR__ . '/../conexion.php';
+
 class Feriados extends Database {
     public function __construct() {
         parent::__construct(); 
     }
 
-    public function crearFeriado($nombre, $fecha, $tipo = 'simple', $año) {
-        $sql = "INSERT INTO feriados (nombre, fecha, tipo, año)
-                VALUES (:nombre, :fecha, :tipo, :año)";
+    // Obtener todos los feriados anuales
+    public function obtenerFeriadosAnuales() {
+        $sql = "SELECT * FROM feriados WHERE tipo = 'anual' ORDER BY fecha";
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Obtener todos los feriados simples
+    public function obtenerFeriadosSimples() {
+        $sql = "SELECT * FROM feriados WHERE tipo = 'simple' ORDER BY fecha";
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Crear un nuevo feriado
+    public function crearFeriado($nombre, $fecha, $tipo, $año) {
+        $sql = "INSERT INTO feriados (nombre, fecha, tipo, año) VALUES (:nombre, :fecha, :tipo, :año)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':nombre', $nombre);
         $stmt->bindParam(':fecha', $fecha);
@@ -16,39 +31,27 @@ class Feriados extends Database {
         return $stmt->execute();
     }
 
-    public function crearFeriadoAnual($nombre, $fecha) {
-        $año = date('Y');
-        return $this->crearFeriado($nombre, $fecha, 'anual', $año);
-    }
-
-    public function copiarFeriadosPorAno($añoOrigen, $añoDestino) {
-        $sql = "INSERT INTO feriados (nombre, fecha, tipo, año)
-                SELECT nombre, 
-                       DATE_FORMAT(fecha, '%Y-') + :añoDestino, 
-                       tipo, :añoDestino
-                FROM feriados 
-                WHERE año = :añoOrigen AND tipo = 'anual'";
-
+    // Eliminar un feriado
+    public function eliminarFeriado($idFeriado) {
+        $sql = "DELETE FROM feriados WHERE idFeriado = :idFeriado";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':añoDestino', $añoDestino);
-        $stmt->bindParam(':añoOrigen', $añoOrigen);
+        $stmt->bindParam(':idFeriado', $idFeriado);
         return $stmt->execute();
     }
 
-    public function obtenerFeriadosPorAno($año) {
-        echo "Año recibido: " . $año;  
-        if (empty($año)) {
-            throw new Exception("El año no puede estar vacío.");
-        }
-        $sql = "SELECT * FROM feriados WHERE año = :año"; 
+    // Función para copiar feriados de un año a otro
+    public function copiarFeriadosDeAno($añoOrigen, $añoDestino) {
+        // Obtener feriados del año origen
+        $sql = "SELECT * FROM feriados WHERE año = :añoOrigen";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':año', $año); 
-        $stmt->execute(); 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);  
+        $stmt->bindParam(':añoOrigen', $añoOrigen);
+        $stmt->execute();
+        $feriados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Insertar feriados en el año destino
+        foreach ($feriados as $feriado) {
+            $this->crearFeriado($feriado['nombre'], $feriado['fecha'], $feriado['tipo'], $añoDestino);
+        }
     }
-    
 }
-
-
 ?>
-

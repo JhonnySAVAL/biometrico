@@ -9,67 +9,48 @@ class FeriadosController extends BaseController {
         $this->model = new Feriados();
     }
 
-    public function MostrarFeriadosPorAno() {
-        $año = isset($_GET['año']) ? $_GET['año'] : date('Y');  
-        $feriados = $this->model->obtenerFeriadosPorAno($año);
-        $this->loadView('Feriados.FeriadosPorAno', [
-            'feriados' => $feriados,
-            'año' => $año
+    // Acción para mostrar la vista de feriados
+    public function mostrarFeriados() {
+        $feriadosAnuales = $this->model->obtenerFeriadosAnuales();
+        $feriadosSimples = $this->model->obtenerFeriadosSimples();
+        $this->loadView('Feriados.Feriados', [
+            'feriadosAnuales' => $feriadosAnuales,
+            'feriadosSimples' => $feriadosSimples,
+
         ]);
     }
-    
 
-    public function CrearFeriado() {
+    // Acción para crear un nuevo feriado
+    public function crearFeriado() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nombre = $_POST['nombre'];
-            $fecha = $_POST['fecha']; 
-            $tipo = $_POST['tipo'];    
-            $año = $_POST['año'];     
+            $fecha = $_POST['fecha'];
+            $tipo = $_POST['tipo'];
+            $año = $_POST['año'];
 
             $this->model->crearFeriado($nombre, $fecha, $tipo, $año);
-            header('Location: /biometrico/sistema/controller/FeriadosController/FeriadosController.php?action=MostrarFeriadosPorAno&año=' . $año);
-            exit;
+            header("Location: /biometrico/sistema/controller/FeriadosController.php?action=MostrarFeriados");
         }
-        $this->loadView('Feriados.CrearFeriado');
     }
 
-    public function CrearFeriadoAnual() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nombre = $_POST['nombre'];
-            $fecha = $_POST['fecha'];  
-
-            $this->model->crearFeriadoAnual($nombre, $fecha);
-            header('Location: /biometrico/sistema/controller/FeriadosController/FeriadosController.php?action=MostrarFeriadosPorAno&año=' . date('Y'));
-            exit;
+    // Acción para eliminar un feriado
+    public function eliminarFeriado() {
+        if (isset($_GET['id'])) {
+            $idFeriado = $_GET['id'];
+            $this->model->eliminarFeriado($idFeriado);
+            header("Location: /biometrico/sistema/controller/FeriadosController.php?action=MostrarFeriados");
         }
-        $this->loadView('Feriados.CrearFeriadoAnual');
     }
 
-    public function CopiarFeriadosPorAno() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Acción para copiar feriados de un año a otro
+    public function copiarFeriadosDeAno() {
+        if (isset($_POST['añoOrigen']) && isset($_POST['añoDestino'])) {
             $añoOrigen = $_POST['añoOrigen'];
             $añoDestino = $_POST['añoDestino'];
 
-            $this->model->copiarFeriadosPorAno($añoOrigen, $añoDestino);
-            header('Location: /biometrico/sistema/controller/FeriadosController/FeriadosController.php?action=MostrarFeriadosPorAno&año=' . $añoDestino);
-            exit;
+            $this->model->copiarFeriadosDeAno($añoOrigen, $añoDestino);
+            header("Location: /biometrico/sistema/controller/FeriadosController.php?action=MostrarFeriados");
         }
-        $this->loadView('Feriados.CopiarFeriados');
-    }
-
-    
-
-}
-
-if (isset($_GET['action'])) {
-    $controller = new FeriadosController();
-    $action = $_GET['action'];
-
-    if (method_exists($controller, $action)) {
-        $controller->$action();  
-    } else {
-        echo "Error: Acción no encontrada.";
     }
 }
-
 ?>

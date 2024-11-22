@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2024 a las 05:26:57
+-- Tiempo de generación: 22-11-2024 a las 16:50:34
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -134,7 +134,7 @@ CREATE TABLE `empleados_roles` (
 
 CREATE TABLE `exoneraciones` (
   `idExoneracion` int(11) NOT NULL,
-  `empleadoId` int(11) NOT NULL,
+  `idEmpleado` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `motivo` text NOT NULL,
   `tipo_exoneracion` enum('asistencia','tardanza','receso') DEFAULT 'asistencia',
@@ -164,7 +164,7 @@ CREATE TABLE `feriados` (
 
 CREATE TABLE `justificaciones` (
   `idJustificacion` int(11) NOT NULL,
-  `empleadoId` int(11) NOT NULL,
+  `idEmpleado` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `motivo` text NOT NULL,
   `documento` varchar(255) DEFAULT NULL,
@@ -235,7 +235,7 @@ INSERT INTO `puestos` (`idPuesto`, `nombrePuesto`, `area`, `descripcion`) VALUES
 
 CREATE TABLE `reportes_asistencia` (
   `idReporte` int(11) NOT NULL,
-  `empleadoId` int(11) NOT NULL,
+  `idEmpleado` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `estado` enum('presente','ausente','falta','permiso','exonerado','tardanza') NOT NULL,
   `horaEntrada` time DEFAULT NULL,
@@ -301,47 +301,34 @@ CREATE TABLE `vacaciones` (
 --
 
 --
--- Indices de la tabla `admins`
---
-ALTER TABLE `admins`
-  ADD PRIMARY KEY (`codigo`);
-
---
 -- Indices de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  ADD PRIMARY KEY (`idAsistencia`),
-  ADD KEY `idEmpleado` (`idEmpleado`);
+  ADD PRIMARY KEY (`idAsistencia`);
 
 --
 -- Indices de la tabla `auditoria`
 --
 ALTER TABLE `auditoria`
-  ADD PRIMARY KEY (`idAuditoria`),
-  ADD KEY `idEmpleado` (`idEmpleado`);
+  ADD PRIMARY KEY (`idAuditoria`);
 
 --
 -- Indices de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  ADD PRIMARY KEY (`idEmpleado`),
-  ADD UNIQUE KEY `correo` (`correo`),
-  ADD KEY `idPuesto` (`idPuesto`),
-  ADD KEY `idTurno` (`idTurno`);
+  ADD PRIMARY KEY (`idEmpleado`);
 
 --
 -- Indices de la tabla `empleados_roles`
 --
 ALTER TABLE `empleados_roles`
-  ADD PRIMARY KEY (`idEmpleado`,`idRol`),
-  ADD KEY `idRol` (`idRol`);
+  ADD PRIMARY KEY (`idRol`);
 
 --
 -- Indices de la tabla `exoneraciones`
 --
 ALTER TABLE `exoneraciones`
-  ADD PRIMARY KEY (`idExoneracion`),
-  ADD KEY `empleadoId` (`empleadoId`);
+  ADD PRIMARY KEY (`idExoneracion`);
 
 --
 -- Indices de la tabla `feriados`
@@ -354,7 +341,7 @@ ALTER TABLE `feriados`
 --
 ALTER TABLE `justificaciones`
   ADD PRIMARY KEY (`idJustificacion`),
-  ADD KEY `empleadoId` (`empleadoId`);
+  ADD KEY `idEmpleado` (`idEmpleado`) USING BTREE;
 
 --
 -- Indices de la tabla `login_intentos`
@@ -380,7 +367,7 @@ ALTER TABLE `puestos`
 --
 ALTER TABLE `reportes_asistencia`
   ADD PRIMARY KEY (`idReporte`),
-  ADD KEY `empleadoId` (`empleadoId`);
+  ADD KEY `idEmpleado` (`idEmpleado`) USING BTREE;
 
 --
 -- Indices de la tabla `roles`
@@ -407,12 +394,6 @@ ALTER TABLE `vacaciones`
 --
 
 --
--- AUTO_INCREMENT de la tabla `admins`
---
-ALTER TABLE `admins`
-  MODIFY `codigo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
@@ -429,6 +410,12 @@ ALTER TABLE `auditoria`
 --
 ALTER TABLE `empleados`
   MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `empleados_roles`
+--
+ALTER TABLE `empleados_roles`
+  MODIFY `idRol` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `exoneraciones`
@@ -459,96 +446,6 @@ ALTER TABLE `login_intentos`
 --
 ALTER TABLE `permisos`
   MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `puestos`
---
-ALTER TABLE `puestos`
-  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `reportes_asistencia`
---
-ALTER TABLE `reportes_asistencia`
-  MODIFY `idReporte` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `roles`
---
-ALTER TABLE `roles`
-  MODIFY `idRol` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `turnos`
---
-ALTER TABLE `turnos`
-  MODIFY `idTurno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `vacaciones`
---
-ALTER TABLE `vacaciones`
-  MODIFY `idVacacion` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `asistencia`
---
-ALTER TABLE `asistencia`
-  ADD CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`);
-
---
--- Filtros para la tabla `auditoria`
---
-ALTER TABLE `auditoria`
-  ADD CONSTRAINT `auditoria_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`);
-
---
--- Filtros para la tabla `empleados`
---
-ALTER TABLE `empleados`
-  ADD CONSTRAINT `empleados_ibfk_2` FOREIGN KEY (`idPuesto`) REFERENCES `puestos` (`idPuesto`),
-  ADD CONSTRAINT `empleados_ibfk_3` FOREIGN KEY (`idTurno`) REFERENCES `turnos` (`idTurno`);
-
---
--- Filtros para la tabla `empleados_roles`
---
-ALTER TABLE `empleados_roles`
-  ADD CONSTRAINT `empleados_roles_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`),
-  ADD CONSTRAINT `empleados_roles_ibfk_2` FOREIGN KEY (`idRol`) REFERENCES `roles` (`idRol`);
-
---
--- Filtros para la tabla `exoneraciones`
---
-ALTER TABLE `exoneraciones`
-  ADD CONSTRAINT `exoneraciones_ibfk_1` FOREIGN KEY (`empleadoId`) REFERENCES `empleados` (`idEmpleado`);
-
---
--- Filtros para la tabla `justificaciones`
---
-ALTER TABLE `justificaciones`
-  ADD CONSTRAINT `justificaciones_ibfk_1` FOREIGN KEY (`empleadoId`) REFERENCES `empleados` (`idEmpleado`);
-
---
--- Filtros para la tabla `permisos`
---
-ALTER TABLE `permisos`
-  ADD CONSTRAINT `permisos_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`);
-
---
--- Filtros para la tabla `reportes_asistencia`
---
-ALTER TABLE `reportes_asistencia`
-  ADD CONSTRAINT `reportes_asistencia_ibfk_1` FOREIGN KEY (`empleadoId`) REFERENCES `empleados` (`idEmpleado`);
-
---
--- Filtros para la tabla `vacaciones`
---
-ALTER TABLE `vacaciones`
-  ADD CONSTRAINT `vacaciones_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
