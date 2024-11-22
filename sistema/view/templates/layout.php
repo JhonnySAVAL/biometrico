@@ -178,7 +178,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="/biometrico/sistema/controller/DashboardController/DashboardController.php" class="nav-link">
+                            <a href="/biometrico/sistema/controller/MarcarController/MarcarController.php?action=Marcado" class="nav-link">
                                 <i class="nav-icon bi bi-house-door"></i>
                                 <p> Marcar Asistencia </p>
                             </a>
