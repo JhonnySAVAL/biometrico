@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2024 a las 18:27:37
+-- Tiempo de generación: 22-11-2024 a las 20:55:48
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -56,14 +56,14 @@ INSERT INTO `admins` (`codigo`, `nombres`, `apellidos`, `dni`, `usergen`, `passg
 CREATE TABLE `asistencia` (
   `idAsistencia` int(11) NOT NULL,
   `idEmpleado` int(11) DEFAULT NULL,
-  `fechaRegistro` date NOT NULL,
-  `horaEntrada` time DEFAULT NULL,
-  `horaSalida` time DEFAULT NULL,
+  `fecha_registro` date NOT NULL,
+  `hora_entrada` time DEFAULT NULL,
+  `hora_salida` time DEFAULT NULL,
   `estado` varchar(45) DEFAULT NULL,
   `minutos_anticipados` int(11) DEFAULT 0,
   `minutos_tardanza` int(11) DEFAULT 0,
   `tipo_registro` enum('automatica','manual') DEFAULT 'automatica',
-  `horaReceso` time DEFAULT NULL,
+  `hora_receso` time DEFAULT NULL,
   `minutos_receso` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -77,7 +77,7 @@ CREATE TABLE `auditoria` (
   `idAuditoria` int(11) NOT NULL,
   `idEmpleado` int(11) DEFAULT NULL,
   `accion` varchar(100) DEFAULT NULL,
-  `fechaHora` timestamp NOT NULL DEFAULT current_timestamp()
+  `fecha_hora` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -198,7 +198,7 @@ CREATE TABLE `login_intentos` (
 
 INSERT INTO `login_intentos` (`id`, `usuario`, `intentos`, `ultimo_intento`) VALUES
 (1, '', 1, '2024-11-18 13:54:56'),
-(2, 'jume', 0, '2024-11-22 16:18:45');
+(2, 'jume', 0, '2024-11-22 19:27:43');
 
 -- --------------------------------------------------------
 
@@ -278,8 +278,8 @@ CREATE TABLE `turnos` (
   `salida` time DEFAULT NULL,
   `duracion` time DEFAULT NULL,
   `receso` time NOT NULL,
-  `tolerancia` int(11) DEFAULT 0,
-  `tolerancia_acumulada_mensual` int(11) DEFAULT 0
+  `tolerancia` time DEFAULT NULL,
+  `tolerancia_acumulada_mensual` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -287,7 +287,7 @@ CREATE TABLE `turnos` (
 --
 
 INSERT INTO `turnos` (`idTurno`, `descripcion`, `entrada`, `salida`, `duracion`, `receso`, `tolerancia`, `tolerancia_acumulada_mensual`) VALUES
-(1, 'Turno Mañana', '08:00:00', '16:00:00', '08:00:00', '00:30:00', 0, 0);
+(1, 'Turno Mañana', '08:00:00', '16:00:00', '08:00:00', '00:30:00', '00:00:00', '00:00:00');
 
 -- --------------------------------------------------------
 
