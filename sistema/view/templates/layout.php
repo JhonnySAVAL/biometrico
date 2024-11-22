@@ -38,7 +38,7 @@
         </nav>
 
 
-        <<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
             <div class="sidebar-brand">
                 <a href="/biometrico/sistema/controller/DashboardController/DashboardController.php?action=MostrarDashboard" class="brand-link">
                     <img src="../../resources/img/minaLogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow">
@@ -176,7 +176,7 @@
                                 </li>
                             </ul>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a href="/biometrico/sistema/controller/DashboardController/DashboardController.php" class="nav-link">
                                 <i class="nav-icon bi bi-house-door"></i>
@@ -195,20 +195,20 @@
                     </ul>
                 </nav>
             </div>
-            </aside>
+        </aside>
 
 
 
 
-            <main class="app-main">
-                <div class="app-content-header">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <?php include $viewPath; ?>
-                        </div>
+        <main class="app-main">
+            <div class="app-content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <?php include $viewPath; ?>
                     </div>
                 </div>
-            </main>
+            </div>
+        </main>
 
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
