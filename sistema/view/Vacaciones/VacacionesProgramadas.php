@@ -33,8 +33,8 @@
                             <?php foreach ($vacaciones as $vacacion): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($vacacion['nombres']) ?></td>
-                                    <td><?= $vacacion['fechaInicio'] ?></td>
-                                    <td><?= $vacacion['fechaFin'] ?></td>
+                                    <td><?= $vacacion['fecha_inicio'] ?></td>
+                                    <td><?= $vacacion['fecha_fin'] ?></td>
                                     <td><?= htmlspecialchars($vacacion['motivo']) ?></td>
                                     <td>
                                         <button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#modalEditarVacacion' data-idVacacion='<?= $vacacion['idVacacion'] ?>'>Editar</button>
@@ -65,12 +65,12 @@
                 <form id="formEditarVacacion" method="POST" action="/biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=EditarVacacion">
                     <input type="hidden" name="idVacacion" id="idVacacion">
                     <div class="mb-3">
-                        <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
-                        <input type="date" class="form-control" name="fechaInicio" id="fechaInicio" required>
+                        <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+                        <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" required>
                     </div>
                     <div class="mb-3">
-                        <label for="fechaFin" class="form-label">Fecha de Fin</label>
-                        <input type="date" class="form-control" name="fechaFin" id="fechaFin" required>
+                        <label for="fecha_fin" class="form-label">Fecha de Fin</label>
+                        <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" required>
                     </div>
                     <div class="mb-3">
                         <label for="motivo" class="form-label">Motivo</label>

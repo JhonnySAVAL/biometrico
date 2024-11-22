@@ -8,7 +8,7 @@ class Exoneraciones extends Database
     }
     public function obtenerExoneraciones()
     {
-        $sql = "SELECT e.idExoneracion, e.fechaInicio, e.fechaFin, e.motivo, e.estado, emp.nombre
+        $sql = "SELECT e.idExoneracion, e.fecha_inicio, e.fecha_fin, e.motivo, e.estado, emp.nombre
                 FROM exoneraciones e
                 JOIN empleados emp ON e.idEmpleado = emp.idEmpleado";
         $stmt = $this->conn->prepare($sql);
@@ -17,7 +17,7 @@ class Exoneraciones extends Database
     }
     public function getExoneracionesAprobadas()
     {
-        $sql = "SELECT e.idExoneracion, e.fechaInicio, e.fechaFin, e.motivo, e.estado, emp.nombre
+        $sql = "SELECT e.idExoneracion, e.fecha_inicio, e.fecha_fin, e.motivo, e.estado, emp.nombre
                 FROM exoneraciones e
                 JOIN empleados emp ON e.idEmpleado = emp.idEmpleado
                 WHERE e.estado = 'Aprobada'"; 
@@ -28,15 +28,15 @@ class Exoneraciones extends Database
 
 
 
-    public function agregarExoneracion($idEmpleado, $fechaInicio, $fechaFin, $motivo)
+    public function agregarExoneracion($idEmpleado, $fecha_inicio, $fecha_fin, $motivo)
     {
-        $sql = "INSERT INTO exoneraciones (idEmpleado, fechaInicio, fechaFin, motivo, estado)
-                VALUES (:idEmpleado, :fechaInicio, :fechaFin, :motivo, 'Pendiente')";
+        $sql = "INSERT INTO exoneraciones (idEmpleado, fecha_inicio, fecha_fin, motivo, estado)
+                VALUES (:idEmpleado, :fecha_inicio, :fecha_fin, :motivo, 'Pendiente')";
         
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':idEmpleado', $idEmpleado);
-        $stmt->bindParam(':fechaInicio', $fechaInicio);
-        $stmt->bindParam(':fechaFin', $fechaFin);
+        $stmt->bindParam(':fecha_inicio', $fecha_inicio);
+        $stmt->bindParam(':fecha_fin', $fecha_fin);
         $stmt->bindParam(':motivo', $motivo);
         return $stmt->execute();
     }

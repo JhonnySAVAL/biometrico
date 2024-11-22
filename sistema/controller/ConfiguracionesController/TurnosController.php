@@ -34,10 +34,9 @@ class TurnosController extends BaseController
             $descripcion = $_POST['descripcion'];
             $entrada = $_POST['entrada'];
             $salida = $_POST['salida'];
-            $duracion = $_POST['duracion'];
             $receso = $_POST['receso'];
 
-            $this->model->InsertarTurno($descripcion, $entrada, $salida, $duracion, $receso);
+            $this->model->InsertarTurno($descripcion, $entrada, $salida, $receso);
 
             header('Location: /biometrico/sistema/controller/ConfiguracionesController/TurnosController.php?action=MostrarTurnos');
             exit();
@@ -51,10 +50,9 @@ class TurnosController extends BaseController
             $descripcion = $_POST['descripcion'];
             $entrada = $_POST['entrada'];
             $salida = $_POST['salida'];
-            $duracion = $_POST['duracion'];
             $receso = $_POST['receso'];
 
-            $this->model->ActualizarTurno($idTurno, $descripcion, $entrada, $salida, $duracion, $receso);
+            $this->model->ActualizarTurno($idTurno, $descripcion, $entrada, $salida, $receso);
 
             header('Location: /biometrico/sistema/controller/ConfiguracionesController/TurnosController.php?action=MostrarTurnos');
             exit();

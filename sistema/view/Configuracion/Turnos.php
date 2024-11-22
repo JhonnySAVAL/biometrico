@@ -36,10 +36,6 @@
                                 <input type="time" class="form-control" id="salida" name="salida" required>
                             </div>
                             <div class="form-group">
-                                <label for="duracion">Duración</label>
-                                <input type="time" class="form-control" id="duracion" name="duracion" required>
-                            </div>
-                            <div class="form-group">
                                 <label for="receso">Receso</label>
                                 <input type="time" class="form-control" id="receso" name="receso" required>
                             </div>
@@ -61,7 +57,6 @@
                                     <th>Descripción</th>
                                     <th>Entrada</th>
                                     <th>Salida</th>
-                                    <th>Duración</th>
                                     <th>Receso</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -72,7 +67,6 @@
                                         <td><?= $Turno['descripcion'] ?></td>
                                         <td><?= $Turno['entrada'] ?></td>
                                         <td><?= $Turno['salida'] ?></td>
-                                        <td><?= $Turno['duracion'] ?></td>
                                         <td><?= $Turno['receso'] ?></td>
                                         <td>
                                             <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
@@ -80,7 +74,6 @@
                                                 data-descripcion="<?= $Turno['descripcion'] ?>"
                                                 data-entrada="<?= $Turno['entrada'] ?>"
                                                 data-salida="<?= $Turno['salida'] ?>"
-                                                data-duracion="<?= $Turno['duracion'] ?>"
                                                 data-receso="<?= $Turno['receso'] ?>">Editar</button>
                                             
                                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
@@ -117,10 +110,6 @@
                                 <div class="form-group">
                                     <label for="edit-salida">Salida</label>
                                     <input type="time" class="form-control" id="edit-salida" name="salida" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="edit-duracion">Duración</label>
-                                    <input type="time" class="form-control" id="edit-duracion" name="duracion" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="edit-receso">Receso</label>

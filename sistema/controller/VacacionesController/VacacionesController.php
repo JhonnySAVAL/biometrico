@@ -31,14 +31,14 @@ class VacacionesController extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $idEmpleado = $_POST['idEmpleado'];
-            $fechaInicio = $_POST['fechaInicio'];
-            $fechaFin = $_POST['fechaFin'];
+            $fecha_inicio = $_POST['fecha_inicio'];
+            $fecha_fin = $_POST['fecha_fin'];
             $motivo = $_POST['motivo'];
             if (empty($idEmpleado)) {
                 echo "Error: El idEmpleado está vacío.";
                 exit;
             }
-            $this->model->asignarVacacion($idEmpleado, $fechaInicio, $fechaFin, $motivo);
+            $this->model->asignarVacacion($idEmpleado, $fecha_inicio, $fecha_fin, $motivo);
             header('Location: /biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=MostrarEmpleadosSinVacaciones');
             exit;
         }
@@ -49,10 +49,10 @@ class VacacionesController extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $idVacacion = $_POST['idVacacion'];
-            $fechaInicio = $_POST['fechaInicio'];
-            $fechaFin = $_POST['fechaFin'];
+            $fecha_inicio = $_POST['fecha_inicio'];
+            $fecha_fin = $_POST['fecha_fin'];
 
-            $this->model->editarVacacion($idVacacion, $fechaInicio, $fechaFin);
+            $this->model->editarVacacion($idVacacion, $fecha_inicio, $fecha_fin);
 
             header('Location: /biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=MostrarVacacionesProgramadas');
             exit;

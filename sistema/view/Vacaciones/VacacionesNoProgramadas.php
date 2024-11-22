@@ -65,12 +65,12 @@
         <form id="formAsignarVacacion" method="POST" action="/biometrico/sistema/controller/VacacionesController/VacacionesController.php?action=AsignarVacacion">
           <input type="hidden" name="idEmpleado" id="idEmpleado"> 
           <div class="mb-3">
-            <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
-            <input type="date" class="form-control" name="fechaInicio" id="fechaInicio" required>
+            <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+            <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" required>
           </div>
           <div class="mb-3">
-            <label for="fechaFin" class="form-label">Fecha de Fin</label>
-            <input type="date" class="form-control" name="fechaFin" id="fechaFin" required>
+            <label for="fecha_fin" class="form-label">Fecha de Fin</label>
+            <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" required>
           </div>
           <div class="mb-3">
             <label for="motivo" class="form-label">Motivo</label>

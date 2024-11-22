@@ -14,24 +14,23 @@ class Turnos extends Database {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function InsertarTurno($descripcion, $entrada, $salida, $duracion, $receso) {
-        $sql = "INSERT INTO turnos (descripcion, entrada, salida, duracion, receso) 
-                VALUES (:descripcion, :entrada, :salida, :duracion, :receso)";
+    public function InsertarTurno($descripcion, $entrada, $salida, $receso) {
+        $sql = "INSERT INTO turnos (descripcion, entrada, salida, , receso) 
+                VALUES (:descripcion, :entrada, :salida, :receso)";
         
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':descripcion', $descripcion);
         $stmt->bindParam(':entrada', $entrada);
         $stmt->bindParam(':salida', $salida);
-        $stmt->bindParam(':duracion', $duracion);
         $stmt->bindParam(':receso', $receso);
         
         $stmt->execute();
     }
 
-    public function ActualizarTurno($idTurno, $descripcion, $entrada, $salida, $duracion, $receso) {
-        $sql = "UPDATE turnos SET descripcion = ?, entrada = ?, salida = ?, duracion = ?, receso = ? WHERE idTurno = ?";
+    public function ActualizarTurno($idTurno, $descripcion, $entrada, $salida, $receso) {
+        $sql = "UPDATE turnos SET descripcion = ?, entrada = ?, salida = ?, receso = ? WHERE idTurno = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([$descripcion, $entrada, $salida, $duracion, $receso, $idTurno]);
+        $stmt->execute([$descripcion, $entrada, $salida, $receso, $idTurno]);
     }
 
     public function EliminarTurno($idTurno) {
@@ -49,15 +48,6 @@ class Turnos extends Database {
         }
     }
 
-    //Usado por Asistencia este modelo
-    public function obtenerDuracionTurno($idEmpleado) {
-        $sql = "SELECT t.duracion FROM turnos t
-                INNER JOIN empleados e ON e.idTurno = t.idTurno
-                WHERE e.idEmpleado = :idEmpleado";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':idEmpleado', $idEmpleado);
-        $stmt->execute();
-        return $stmt->fetchColumn(); // Devuelve la duración del turno en horas
-    }
+    
 }
 ?>

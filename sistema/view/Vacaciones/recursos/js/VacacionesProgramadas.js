@@ -16,8 +16,8 @@ $('#modalEditarVacacion').on('show.bs.modal', function (event) {
             response = JSON.parse(response);
             
             // Asignar los valores a los campos del formulario
-            modal.find('#fechaInicio').val(response.fechaInicio); 
-            modal.find('#fechaFin').val(response.fechaFin); 
+            modal.find('#fecha_inicio').val(response.fecha_inicio); 
+            modal.find('#fecha_fin').val(response.fecha_fin); 
             modal.find('#motivo').val(response.motivo); 
         }
     });

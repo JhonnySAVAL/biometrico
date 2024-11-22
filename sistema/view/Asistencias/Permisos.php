@@ -23,12 +23,12 @@
     <form action="/biometrico/sistema/controller/PermisosController.php?action=solicitarPermiso" method="POST">
         <input type="hidden" name="idEmpleado" value="<!-- ID del empleado -->">
         <div class="form-group">
-            <label for="fechaInicio">Fecha de Inicio:</label>
-            <input type="date" name="fechaInicio" id="fechaInicio" required>
+            <label for="fecha_inicio">Fecha de Inicio:</label>
+            <input type="date" name="fecha_inicio" id="fecha_inicio" required>
         </div>
         <div class="form-group">
-            <label for="fechaFin">Fecha de Fin:</label>
-            <input type="date" name="fechaFin" id="fechaFin" required>
+            <label for="fecha_fin">Fecha de Fin:</label>
+            <input type="date" name="fecha_fin" id="fecha_fin" required>
         </div>
         <div class="form-group">
             <label for="motivo">Motivo:</label>
@@ -53,8 +53,8 @@
             <?php foreach ($permisos as $permiso): ?>
                 <tr>
                     <td><?php echo $permiso['idEmpleado']; ?></td>
-                    <td><?php echo $permiso['fechaInicio']; ?></td>
-                    <td><?php echo $permiso['fechaFin']; ?></td>
+                    <td><?php echo $permiso['fecha_inicio']; ?></td>
+                    <td><?php echo $permiso['fecha_fin']; ?></td>
                     <td><?php echo $permiso['motivo']; ?></td>
                     <td><?php echo $permiso['estado']; ?></td>
                     <td>

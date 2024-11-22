@@ -22,8 +22,8 @@
                             <?php foreach ($justificaciones as $justificacion): ?>
                                 <tr>
                                     <td><?= $justificacion['nombre'] ?></td>
-                                    <td><?= $justificacion['fechaInicio'] ?></td>
-                                    <td><?= $justificacion['fechaFin'] ?></td>
+                                    <td><?= $justificacion['fecha_inicio'] ?></td>
+                                    <td><?= $justificacion['fecha_fin'] ?></td>
                                     <td><?= $justificacion['motivo'] ?></td>
                                     <td><?= $justificacion['estado'] ?></td>
                                     <td>

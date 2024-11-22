@@ -15,10 +15,10 @@ class PermisosController extends BaseController
         $permisos = $this->permisosModel->obtenerPermisos();
         $this->loadView('Asistencias.Permisos', ['permisos' => $permisos]);
     }
-    public function solicitarPermiso($idEmpleado, $fechaInicio, $fechaFin, $motivo)
+    public function solicitarPermiso($idEmpleado, $fecha_inicio, $fecha_fin, $motivo)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->permisosModel->insertarPermiso($idEmpleado, $fechaInicio, $fechaFin, $motivo);
+            $this->permisosModel->insertarPermiso($idEmpleado, $fecha_inicio, $fecha_fin, $motivo);
             echo json_encode(['success' => true, 'message' => 'Permiso solicitado exitosamente.']);
         }
     }

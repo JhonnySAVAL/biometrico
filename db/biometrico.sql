@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2024 a las 20:55:48
+-- Tiempo de generación: 22-11-2024 a las 23:09:31
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -45,6 +45,11 @@ INSERT INTO `admins` (`codigo`, `nombres`, `apellidos`, `dni`, `usergen`, `passg
 (2, 'marta', 'juliana', '54355425', 'maju', '25f7f'),
 (3, 'elizabeth', 'mariana', '43243243', 'elma', '5b903'),
 (4, 'torreon', 'josemiro', '99789678', 'tojo', 'c93a5'),
+(5, 'jhonny', 'sanes', '75209245', 'jhsa', '85a54'),
+(1, 'julios', 'mendoza', '12345678', 'jume', '25d55'),
+(2, 'marta', 'juliana', '54355425', 'maju', '25f7f'),
+(3, 'elizabeth', 'mariana', '43243243', 'elma', '5b903'),
+(4, 'torreon', 'josemiro', '99789678', 'tojo', 'c93a5'),
 (5, 'jhonny', 'sanes', '75209245', 'jhsa', '85a54');
 
 -- --------------------------------------------------------
@@ -59,25 +64,10 @@ CREATE TABLE `asistencia` (
   `fecha_registro` date NOT NULL,
   `hora_entrada` time DEFAULT NULL,
   `hora_salida` time DEFAULT NULL,
-  `estado` varchar(45) DEFAULT NULL,
-  `minutos_anticipados` int(11) DEFAULT 0,
   `minutos_tardanza` int(11) DEFAULT 0,
   `tipo_registro` enum('automatica','manual') DEFAULT 'automatica',
   `hora_receso` time DEFAULT NULL,
-  `minutos_receso` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `auditoria`
---
-
-CREATE TABLE `auditoria` (
-  `idAuditoria` int(11) NOT NULL,
-  `idEmpleado` int(11) DEFAULT NULL,
-  `accion` varchar(100) DEFAULT NULL,
-  `fecha_hora` timestamp NOT NULL DEFAULT current_timestamp()
+  `horas_extras` time DEFAULT '00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -117,29 +107,16 @@ INSERT INTO `empleados` (`idEmpleado`, `nombres`, `apellidos`, `dni`, `correo`, 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `empleados_roles`
---
-
-CREATE TABLE `empleados_roles` (
-  `idEmpleado` int(11) NOT NULL,
-  `idRol` int(11) NOT NULL,
-  `fechaAsignacion` date DEFAULT curdate()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `exoneraciones`
 --
 
 CREATE TABLE `exoneraciones` (
-  `idExoneracion` int(11) NOT NULL,
-  `idEmpleado` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `motivo` text NOT NULL,
-  `tipo_exoneracion` enum('asistencia','tardanza','receso') DEFAULT 'asistencia',
-  `estado` enum('pendiente','aprobada','rechazada') DEFAULT 'pendiente',
-  `fecha_solicitud` datetime DEFAULT current_timestamp()
+  `idPermiso` int(11) NOT NULL,
+  `idEmpleado` int(11) DEFAULT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_fin` date DEFAULT NULL,
+  `motivo` varchar(100) DEFAULT NULL,
+  `documento` varchar(455) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -171,12 +148,12 @@ INSERT INTO `feriados` (`idFeriado`, `nombre`, `fecha`, `tipo`, `anio`) VALUES
 --
 
 CREATE TABLE `justificaciones` (
-  `idJustificacion` int(11) NOT NULL,
-  `idEmpleado` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `motivo` text NOT NULL,
-  `documento` varchar(255) DEFAULT NULL,
-  `estado` enum('pendiente','aprobada','rechazada') DEFAULT 'pendiente'
+  `idPermiso` int(11) NOT NULL,
+  `idEmpleado` int(11) DEFAULT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_fin` date DEFAULT NULL,
+  `motivo` varchar(100) DEFAULT NULL,
+  `documento` varchar(455) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -209,10 +186,10 @@ INSERT INTO `login_intentos` (`id`, `usuario`, `intentos`, `ultimo_intento`) VAL
 CREATE TABLE `permisos` (
   `idPermiso` int(11) NOT NULL,
   `idEmpleado` int(11) DEFAULT NULL,
-  `fechaInicio` date DEFAULT NULL,
-  `fechaFin` date DEFAULT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_fin` date DEFAULT NULL,
   `motivo` varchar(100) DEFAULT NULL,
-  `estado` varchar(45) DEFAULT NULL
+  `documento` varchar(455) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -256,38 +233,24 @@ CREATE TABLE `reportes_asistencia` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `roles`
---
-
-CREATE TABLE `roles` (
-  `idRol` int(11) NOT NULL,
-  `nombreRol` varchar(50) NOT NULL,
-  `descripcion` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `turnos`
 --
 
 CREATE TABLE `turnos` (
   `idTurno` int(11) NOT NULL,
   `descripcion` varchar(50) NOT NULL,
+  `entrada_previa` time NOT NULL,
   `entrada` time DEFAULT NULL,
   `salida` time DEFAULT NULL,
-  `duracion` time DEFAULT NULL,
-  `receso` time NOT NULL,
-  `tolerancia` time DEFAULT NULL,
-  `tolerancia_acumulada_mensual` time DEFAULT NULL
+  `receso` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `turnos`
 --
 
-INSERT INTO `turnos` (`idTurno`, `descripcion`, `entrada`, `salida`, `duracion`, `receso`, `tolerancia`, `tolerancia_acumulada_mensual`) VALUES
-(1, 'Turno Mañana', '08:00:00', '16:00:00', '08:00:00', '00:30:00', '00:00:00', '00:00:00');
+INSERT INTO `turnos` (`idTurno`, `descripcion`, `entrada_previa`, `entrada`, `salida`, `receso`) VALUES
+(1, 'Turno Mañana', '00:00:00', '08:00:00', '16:00:00', '00:30:00');
 
 -- --------------------------------------------------------
 
@@ -298,19 +261,18 @@ INSERT INTO `turnos` (`idTurno`, `descripcion`, `entrada`, `salida`, `duracion`,
 CREATE TABLE `vacaciones` (
   `idVacacion` int(11) NOT NULL,
   `idEmpleado` int(11) DEFAULT NULL,
-  `fechaInicio` date DEFAULT NULL,
-  `fechaFin` date DEFAULT NULL,
-  `motivo` varchar(100) DEFAULT NULL,
-  `estado` varchar(45) DEFAULT NULL
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_fin` date DEFAULT NULL,
+  `motivo` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `vacaciones`
 --
 
-INSERT INTO `vacaciones` (`idVacacion`, `idEmpleado`, `fechaInicio`, `fechaFin`, `motivo`, `estado`) VALUES
-(1, 1, '2024-11-22', '2024-11-24', 'vnb', NULL),
-(2, 2, '2024-11-22', '2024-11-24', 'c', NULL);
+INSERT INTO `vacaciones` (`idVacacion`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`) VALUES
+(1, 1, '2024-11-22', '2024-11-24', 'vnb'),
+(2, 2, '2024-11-22', '2024-11-24', 'c');
 
 --
 -- Índices para tablas volcadas
@@ -323,41 +285,16 @@ ALTER TABLE `asistencia`
   ADD PRIMARY KEY (`idAsistencia`);
 
 --
--- Indices de la tabla `auditoria`
---
-ALTER TABLE `auditoria`
-  ADD PRIMARY KEY (`idAuditoria`);
-
---
 -- Indices de la tabla `empleados`
 --
 ALTER TABLE `empleados`
   ADD PRIMARY KEY (`idEmpleado`);
 
 --
--- Indices de la tabla `empleados_roles`
---
-ALTER TABLE `empleados_roles`
-  ADD PRIMARY KEY (`idRol`);
-
---
--- Indices de la tabla `exoneraciones`
---
-ALTER TABLE `exoneraciones`
-  ADD PRIMARY KEY (`idExoneracion`);
-
---
 -- Indices de la tabla `feriados`
 --
 ALTER TABLE `feriados`
   ADD PRIMARY KEY (`idFeriado`);
-
---
--- Indices de la tabla `justificaciones`
---
-ALTER TABLE `justificaciones`
-  ADD PRIMARY KEY (`idJustificacion`),
-  ADD KEY `idEmpleado` (`idEmpleado`) USING BTREE;
 
 --
 -- Indices de la tabla `login_intentos`
@@ -386,13 +323,6 @@ ALTER TABLE `reportes_asistencia`
   ADD KEY `idEmpleado` (`idEmpleado`) USING BTREE;
 
 --
--- Indices de la tabla `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`idRol`),
-  ADD UNIQUE KEY `nombreRol` (`nombreRol`);
-
---
 -- Indices de la tabla `turnos`
 --
 ALTER TABLE `turnos`
@@ -416,40 +346,16 @@ ALTER TABLE `asistencia`
   MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `auditoria`
---
-ALTER TABLE `auditoria`
-  MODIFY `idAuditoria` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
   MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT de la tabla `empleados_roles`
---
-ALTER TABLE `empleados_roles`
-  MODIFY `idRol` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `exoneraciones`
---
-ALTER TABLE `exoneraciones`
-  MODIFY `idExoneracion` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `feriados`
 --
 ALTER TABLE `feriados`
   MODIFY `idFeriado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `justificaciones`
---
-ALTER TABLE `justificaciones`
-  MODIFY `idJustificacion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `login_intentos`

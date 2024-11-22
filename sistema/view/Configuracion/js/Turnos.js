@@ -6,7 +6,6 @@ $(document).ready(function () {
         var descripcion = button.data('descripcion');
         var entrada = button.data('entrada');
         var salida = button.data('salida');
-        var duracion = button.data('duracion');
         var receso = button.data('receso');
 
         var modal = $(this);
@@ -14,7 +13,8 @@ $(document).ready(function () {
         modal.find('#edit-descripcion').val(descripcion);
         modal.find('#edit-entrada').val(entrada);
         modal.find('#edit-salida').val(salida);
-        modal.find('#edit-duracion').val(duracion);
+
+        
         modal.find('#edit-receso').val(receso);
     });
 

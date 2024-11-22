@@ -15,10 +15,10 @@ class ExoneracionesController extends BaseController
         $exoneraciones = $this->exoneracionesModel->obtenerExoneraciones();
         $this->loadView('Asistencias.Exoneraciones', ['exoneraciones' => $exoneraciones]);
     }
-    public function solicitarExoneracion($idEmpleado, $fechaInicio, $fechaFin, $motivo)
+    public function solicitarExoneracion($idEmpleado, $fecha_inicio, $fecha_fin, $motivo)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->exoneracionesModel->agregarExoneracion($idEmpleado, $fechaInicio, $fechaFin, $motivo);
+            $this->exoneracionesModel->agregarExoneracion($idEmpleado, $fecha_inicio, $fecha_fin, $motivo);
             echo json_encode(['success' => true, 'message' => 'Exoneración solicitada exitosamente.']);
         }
     }

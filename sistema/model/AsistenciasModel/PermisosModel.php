@@ -6,13 +6,13 @@ class Permisos extends Database {
         parent::__construct(); 
     }
     // Insertar un nuevo permiso
-    public function insertarPermiso($idEmpleado, $fechaInicio, $fechaFin, $motivo) {
-        $sql = "INSERT INTO permisos (idEmpleado, fechaInicio, fechaFin, motivo, estado) 
-                VALUES (:idEmpleado, :fechaInicio, :fechaFin, :motivo, 'pendiente')";
+    public function insertarPermiso($idEmpleado, $fecha_inicio, $fecha_fin, $motivo) {
+        $sql = "INSERT INTO permisos (idEmpleado, fecha_inicio, fecha_fin, motivo, estado) 
+                VALUES (:idEmpleado, :fecha_inicio, :fecha_fin, :motivo, 'pendiente')";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':idEmpleado', $idEmpleado);
-        $stmt->bindParam(':fechaInicio', $fechaInicio);
-        $stmt->bindParam(':fechaFin', $fechaFin);
+        $stmt->bindParam(':fecha_inicio', $fecha_inicio);
+        $stmt->bindParam(':fecha_fin', $fecha_fin);
         $stmt->bindParam(':motivo', $motivo);
         $stmt->execute();
     }
@@ -27,10 +27,10 @@ class Permisos extends Database {
 
     // Obtener todos los permisos
     public function obtenerPermisos() {
-        $sql = "SELECT p.idPermiso, p.idEmpleado, e.nombres, p.fechaInicio, p.fechaFin, p.motivo, p.estado
+        $sql = "SELECT p.idPermiso, p.idEmpleado, e.nombres, p.fecha_inicio, p.fecha_fin, p.motivo, p.estado
                 FROM permisos p
                 JOIN empleados e ON p.idEmpleado = e.idEmpleado
-                ORDER BY p.fechaInicio DESC";
+                ORDER BY p.fecha_inicio DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -22,8 +22,8 @@
                             <?php foreach ($exoneraciones as $exoneracion): ?>
                                 <tr>
                                     <td><?= $exoneracion['nombre'] ?></td>
-                                    <td><?= $exoneracion['fechaInicio'] ?></td>
-                                    <td><?= $exoneracion['fechaFin'] ?></td>
+                                    <td><?= $exoneracion['fecha_inicio'] ?></td>
+                                    <td><?= $exoneracion['fecha_fin'] ?></td>
                                     <td><?= $exoneracion['motivo'] ?></td>
                                     <td><?= $exoneracion['estado'] ?></td>
                                     <td>

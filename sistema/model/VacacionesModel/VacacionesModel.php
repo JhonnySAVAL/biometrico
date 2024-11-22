@@ -22,7 +22,7 @@ class Vacaciones extends Database
     // Obtener todas las vacaciones programadas
     public function getVacacionesProgramadas()
     {
-        $sql = "SELECT v.idVacacion, v.fechaInicio, v.fechaFin, v.motivo, e.nombres 
+        $sql = "SELECT v.idVacacion, v.fecha_inicio, v.fecha_fin, v.motivo, e.nombres 
                 FROM vacaciones v
                 JOIN empleados e ON v.idEmpleado = e.idEmpleado";
         $stmt = $this->conn->prepare($sql);
@@ -31,20 +31,20 @@ class Vacaciones extends Database
     }
 
     // Asignar vacaciones a un empleado 
-    public function asignarVacacion($idEmpleado, $fechaInicio, $fechaFin, $motivo) {
-        if ($fechaInicio >= $fechaFin) {
+    public function asignarVacacion($idEmpleado, $fecha_inicio, $fecha_fin, $motivo) {
+        if ($fecha_inicio >= $fecha_fin) {
             return false;
         }
     
         // Verificar solapamientos
         $sqlCheck = "SELECT COUNT(*) AS num FROM vacaciones 
                      WHERE idEmpleado = :idEmpleado 
-                     AND NOT (:fechaFin <= fechaInicio OR :fechaInicio >= fechaFin)";
+                     AND NOT (:fecha_fin <= fecha_inicio OR :fecha_inicio >= fecha_fin)";
     
         $stmtCheck = $this->conn->prepare($sqlCheck);
         $stmtCheck->bindParam(':idEmpleado', $idEmpleado);
-        $stmtCheck->bindParam(':fechaInicio', $fechaInicio);
-        $stmtCheck->bindParam(':fechaFin', $fechaFin);
+        $stmtCheck->bindParam(':fecha_inicio', $fecha_inicio);
+        $stmtCheck->bindParam(':fecha_fin', $fecha_fin);
         $stmtCheck->execute();
         $result = $stmtCheck->fetch(PDO::FETCH_ASSOC);
     
@@ -53,35 +53,35 @@ class Vacaciones extends Database
         }
     
         // Insertar nueva vacación si no hay solapamientos y las fechas son correctas
-        $sql = "INSERT INTO vacaciones (idEmpleado, fechaInicio, fechaFin, motivo)
-                VALUES (:idEmpleado, :fechaInicio, :fechaFin, :motivo)";
+        $sql = "INSERT INTO vacaciones (idEmpleado, fecha_inicio, fecha_fin, motivo)
+                VALUES (:idEmpleado, :fecha_inicio, :fecha_fin, :motivo)";
         
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':idEmpleado', $idEmpleado);
-        $stmt->bindParam(':fechaInicio', $fechaInicio);
-        $stmt->bindParam(':fechaFin', $fechaFin);
+        $stmt->bindParam(':fecha_inicio', $fecha_inicio);
+        $stmt->bindParam(':fecha_fin', $fecha_fin);
         $stmt->bindParam(':motivo', $motivo);
         return $stmt->execute();
     }
     
 
     // Editar las vacaciones de un empleado
-    public function editarVacacion($idVacacion, $fechaInicio, $fechaFin)
+    public function editarVacacion($idVacacion, $fecha_inicio, $fecha_fin)
     {
         $sql = "UPDATE vacaciones 
-                SET fechaInicio = :fechaInicio, fechaFin = :fechaFin
+                SET fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin
                 WHERE idVacacion = :idVacacion";
         
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':idVacacion', $idVacacion);
-        $stmt->bindParam(':fechaInicio', $fechaInicio);
-        $stmt->bindParam(':fechaFin', $fechaFin);
+        $stmt->bindParam(':fecha_inicio', $fecha_inicio);
+        $stmt->bindParam(':fecha_fin', $fecha_fin);
         return $stmt->execute();
     }
 
     public function getVacacionById($idVacacion)
 {
-    $sql = "SELECT v.idVacacion, v.fechaInicio, v.fechaFin, v.motivo 
+    $sql = "SELECT v.idVacacion, v.fecha_inicio, v.fecha_fin, v.motivo 
             FROM vacaciones v 
             WHERE v.idVacacion = :idVacacion";
     

@@ -16,12 +16,12 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="fechaInicio">Fecha Inicio</label>
-                            <input type="date" name="fechaInicio" id="fechaInicio" class="form-control" required>
+                            <label for="fecha_inicio">Fecha Inicio</label>
+                            <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="fechaFin">Fecha Fin</label>
-                            <input type="date" name="fechaFin" id="fechaFin" class="form-control" required>
+                            <label for="fecha_fin">Fecha Fin</label>
+                            <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="motivo">Motivo</label>
