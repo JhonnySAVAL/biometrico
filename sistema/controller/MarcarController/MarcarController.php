@@ -11,7 +11,7 @@ class MarcarController extends BaseController
 
         // Obtener los datos de usuarios, puestos y turnos desde el modelo
         // $empleados = $listaModel->getUsuarios();
-        // $puesto = $listaModel->MostrarPuestos();
+        // $puesto = $listaModel->MostrarPuestos(); 
         // $turno = $listaModel->MostrarTurnos();
 
         // Cargar la vista con los datos
