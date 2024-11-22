@@ -22,7 +22,7 @@ class AgregarUsuarioModel extends Database
         return $resultado > 0;
     }
 
-    public function agregarUsuario($nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado)
+    public function agregarUsuario($nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado, $idmarcar, $passmarcar)
     {
         // Obtener el id del puesto
         $sqlPuesto = "SELECT idPuesto FROM puestos WHERE nombrePuesto = :puesto";
@@ -40,8 +40,8 @@ class AgregarUsuarioModel extends Database
 
         // Verificar que ambos IDs existen
         if ($idPuesto && $idTurno) {
-            $sql = "INSERT INTO empleados (nombres, apellidos, dni, correo, telefono, idPuesto, idTurno, habilitado, codigo_barras) 
-                    VALUES (:nombres, :apellidos, :dni, :correo, :telefono, :idPuesto, :idTurno, :habilitado, :codigo_barras)";
+            $sql = "INSERT INTO empleados (nombres, apellidos, dni, correo, telefono, idPuesto, idTurno, habilitado, idmarcar, passmarcar) 
+                    VALUES (:nombres, :apellidos, :dni, :correo, :telefono, :idPuesto, :idTurno, :habilitado, :idmarcar, :passmarcar)";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':nombres', $nombres);
@@ -52,7 +52,8 @@ class AgregarUsuarioModel extends Database
             $stmt->bindParam(':idPuesto', $idPuesto);
             $stmt->bindParam(':idTurno', $idTurno);
             $stmt->bindParam(':habilitado', $habilitado);
-            $stmt->bindParam(':codigo_barras', $codigoBarrasRuta);
+            $stmt->bindParam(':idmarcar', $idmarcar);
+            $stmt->bindParam(':passmarcar', $passmarcar);
 
             // Ejecutar la inserción y retornar el resultado
             return $stmt->execute();

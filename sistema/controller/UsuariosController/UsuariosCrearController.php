@@ -62,6 +62,11 @@ class AgregarUsuarioController extends BaseController
             $turno = $_POST['turno'];
             $habilitado = isset($_POST['habilitado']) ? 1 : 0;
 
+            $idmarcar = strtolower(substr($nombres, 0, 2) . substr($apellidos, 0, 2));
+
+            // Generar la contraseña: los primeros 5 caracteres del hash MD5 del DNI
+            $passmarcar = substr(md5($dni), 0, 5);
+
             $errores = $this->validarDatosUsuario($nombres, $apellidos, $dni, $correo, $telefono);
             $crearModel = new AgregarUsuarioModel();
             if ($crearModel->verificarDniExistente($dni)) {
@@ -81,7 +86,7 @@ class AgregarUsuarioController extends BaseController
                 ]);
                 return;
             }
-            $crearModel->agregarUsuario($nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado);
+            $crearModel->agregarUsuario($nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado, $idmarcar, $passmarcar);
 
             if (!headers_sent()) {
                 header('Location: /biometrico/sistema/controller/UsuariosController/UsuariosCrearController.php?action=VistaAgregarUsuario&success=true');
