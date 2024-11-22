@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2024 a las 16:50:34
+-- Tiempo de generación: 22-11-2024 a las 18:27:37
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -153,8 +153,16 @@ CREATE TABLE `feriados` (
   `nombre` varchar(255) NOT NULL,
   `fecha` date NOT NULL,
   `tipo` enum('simple','anual') DEFAULT 'simple',
-  `año` int(11) NOT NULL
+  `anio` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `feriados`
+--
+
+INSERT INTO `feriados` (`idFeriado`, `nombre`, `fecha`, `tipo`, `anio`) VALUES
+(2, 'sillass', '2024-11-22', 'anual', 2024),
+(3, 'sillas', '2024-11-23', 'anual', 2024);
 
 -- --------------------------------------------------------
 
@@ -190,7 +198,7 @@ CREATE TABLE `login_intentos` (
 
 INSERT INTO `login_intentos` (`id`, `usuario`, `intentos`, `ultimo_intento`) VALUES
 (1, '', 1, '2024-11-18 13:54:56'),
-(2, 'jume', 0, '2024-11-18 13:55:51');
+(2, 'jume', 0, '2024-11-22 16:18:45');
 
 -- --------------------------------------------------------
 
@@ -295,6 +303,14 @@ CREATE TABLE `vacaciones` (
   `motivo` varchar(100) DEFAULT NULL,
   `estado` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `vacaciones`
+--
+
+INSERT INTO `vacaciones` (`idVacacion`, `idEmpleado`, `fechaInicio`, `fechaFin`, `motivo`, `estado`) VALUES
+(1, 1, '2024-11-22', '2024-11-24', 'vnb', NULL),
+(2, 2, '2024-11-22', '2024-11-24', 'c', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -427,7 +443,7 @@ ALTER TABLE `exoneraciones`
 -- AUTO_INCREMENT de la tabla `feriados`
 --
 ALTER TABLE `feriados`
-  MODIFY `idFeriado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idFeriado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `justificaciones`
@@ -446,6 +462,12 @@ ALTER TABLE `login_intentos`
 --
 ALTER TABLE `permisos`
   MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `vacaciones`
+--
+ALTER TABLE `vacaciones`
+  MODIFY `idVacacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
