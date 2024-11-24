@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2024 a las 23:09:31
+-- Tiempo de generación: 24-11-2024 a las 05:48:11
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -70,6 +70,15 @@ CREATE TABLE `asistencia` (
   `horas_extras` time DEFAULT '00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `asistencia`
+--
+
+INSERT INTO `asistencia` (`idAsistencia`, `idEmpleado`, `fecha_registro`, `hora_entrada`, `hora_salida`, `minutos_tardanza`, `tipo_registro`, `hora_receso`, `horas_extras`) VALUES
+(1, 6, '2024-11-23', '05:36:58', '05:37:20', 0, 'manual', NULL, '00:00:00'),
+(2, 7, '2024-11-23', '05:43:42', '05:44:00', 0, 'manual', NULL, '00:00:00'),
+(3, 8, '2024-11-23', '23:47:21', '23:47:36', 0, 'manual', NULL, '00:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -102,7 +111,10 @@ INSERT INTO `empleados` (`idEmpleado`, `nombres`, `apellidos`, `dni`, `correo`, 
 (2, '432', '432', '432', '432@123', '432', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
 (3, 'mono', 'mano', '56451654', 'mono@gmail.com', '454151542', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
 (4, 'mene', 'mana', '34436547', 'mar@nose.com', '345643657', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(5, 'amaner', 'perezat', '43243243', 'roca@gmail.com', '555555555', 1, 1, 'Activo', 1, NULL, NULL, '', '');
+(5, 'amaner', 'perezat', '43243243', 'roca@gmail.com', '555555555', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
+(6, 'armando', 'paredez', '99999999', 'armandopar@gmail.com', '777777777', 1, 1, 'Activo', 1, NULL, NULL, 'arpa', 'ef775'),
+(7, 'mariano', 'melgar', '33333333', 'estadio@gmail.com', '313213213', 1, 1, 'Activo', 1, NULL, NULL, 'mame', 'd27d3'),
+(8, 'nosemerindo', 'laputamadre', '45645645', 'callamierda@gmail.com', '888457522', 1, 1, 'Activo', 1, NULL, NULL, 'nola', '55b4c');
 
 -- --------------------------------------------------------
 
@@ -343,13 +355,13 @@ ALTER TABLE `vacaciones`
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `feriados`

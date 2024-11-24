@@ -1,33 +1,43 @@
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="card mt-5">
-                <div class="card-header text-center">
-                    <h3>Iniciar Sesión</h3>
-                </div>
-                <div class="card-body">
-                    <form id="loginForm">
-                        <div class="row mb-4">
-                            <div class="form-group col-12">
-                                <label for="usuario" class="form-label">Usuario</label>
-                                <input type="text" class="form-control" id="usuario" name="usuario" maxlength="50" required>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="form-group col-12">
-                                <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="password" name="password" maxlength="50" required>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                            <a href="#" class="btn btn-secondary">Volver</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer text-center">
-                    <a href="#" class="btn btn-link">¿Olvidaste tu contraseña?</a>
-                </div>
+<div class="container-fluid vh-100 d-flex justify-content-center align-items-center bg-light">
+    <div class="col-lg-5 col-md-8 col-sm-10">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-primary text-white text-center">
+                <h3>Credenciales de Marcado</h3>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="../../controller/MarcarController/MarcarController.php?action=verificarCredenciales">
+                    <!-- Campo de ID -->
+                    <div class="mb-3">
+                        <label for="idmarcar" class="form-label">ID de Marcado:</label>
+                        <input 
+                            type="text" 
+                            id="idmarcar" 
+                            name="idmarcar" 
+                            class="form-control" 
+                            placeholder="Ingrese su ID" 
+                            required
+                        >
+                    </div>
+                    <!-- Campo de Contraseña -->
+                    <div class="mb-3">
+                        <label for="passmarcar" class="form-label">Contraseña de Marcado:</label>
+                        <input 
+                            type="password" 
+                            id="passmarcar" 
+                            name="passmarcar" 
+                            class="form-control" 
+                            placeholder="Ingrese su contraseña" 
+                            required
+                        >
+                    </div>
+                    <!-- Botón de Enviar -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Iniciar sesión</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center text-muted">
+                © 2024 Sistema Biométrico
             </div>
         </div>
     </div>
