@@ -5,29 +5,39 @@ class Permisos extends Database {
     public function __construct() {
         parent::__construct(); 
     }
-    
-    // Obtener todos los permisos
     public function obtenerPermisos() {
-        $query = "SELECT * FROM permisos";
+        $query = "SELECT 
+                      p.idPermiso, 
+                      p.fecha_inicio, 
+                      p.fecha_fin, 
+                      p.motivo, 
+                      p.documento, 
+                      e.dni AS dniEmpleado, 
+                      CONCAT(e.nombres, ' ', e.apellidos) AS nombreEmpleado
+                  FROM permisos p
+                  INNER JOIN empleados e ON p.idEmpleado = e.idEmpleado";
         $stmt = $this->conn->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    // Obtener un permiso específico
-    public function obtenerEmpleadoPorDni($dni) {
+    
+    public function obtenerEmpleadoPorDni($dniEmpleado) {
         $query = "SELECT * FROM empleados WHERE dni = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute([$dni]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->execute([$dniEmpleado]);
+        $empleado = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$empleado) {
+            throw new Exception("No se encontró un empleado con el DNI $dniEmpleado");
+        }
+    
+        return $empleado;
     }
-    // Crear un permiso
+
     public function crearPermisos($idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento) {
         $query = "INSERT INTO permisos (idEmpleado, fecha_inicio, fecha_fin, motivo, documento) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
         return $stmt->execute([$idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento]);
     }
 
-    // Actualizar un permiso
     public function actualizarPermisos($idPermiso, $idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento) {
         $query = "UPDATE permisos SET idEmpleado = ?, fecha_inicio = ?, fecha_fin = ?, motivo = ?, documento = ? WHERE idPermiso = ?";
         $stmt = $this->conn->prepare($query);

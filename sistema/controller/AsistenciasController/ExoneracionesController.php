@@ -13,19 +13,20 @@ class ExoneracionesController extends BaseController
 
     public function MostrarExoneraciones() {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $Exoneraciones = $this->model->obtenerExoneraciones(); 
-
+            $exoneraciones = $this->model->obtenerExoneraciones();
+            
             $this->loadView(
-                'Asistencias.Exoneraciones', 
-                ['Exoneraciones' => $Exoneraciones], 
+                'Asistencias.Exoneraciones',
+                ['exoneraciones' => $exoneraciones],
                 [], 
                 [
-                    '/biometrico/sistema/view/Asistencias/recursos/js/Exoneraciones.min.js' 
+                    '/biometrico/sistema/view/Asistencias/recursos/js/Exoneraciones.min.js'
                 ],
-                'Gestión de Exoneraciones' 
+                'Gestión de Exoneraciones'
             );
         }
     }
+    
     public function solicitarExoneracion() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $dniEmpleado = $_POST['dniEmpleado'] ?? null;
@@ -40,26 +41,50 @@ class ExoneracionesController extends BaseController
                 return;
             }
 
+          
             if (isset($_FILES['documento']) && $_FILES['documento']['error'] === UPLOAD_ERR_OK) {
-                $nombreArchivo = basename($_FILES['documento']['name']);
-                $rutaDestino = __DIR__ . '/../../uploads/' . $nombreArchivo;
-                if (move_uploaded_file($_FILES['documento']['tmp_name'], $rutaDestino)) {
-                    $documento = '/uploads/' . $nombreArchivo;
-                } else {
-                    echo "Error al subir el documento.";
-                    return;
-                }
+            $nombreArchivoOriginal = pathinfo($_FILES['documento']['name'], PATHINFO_FILENAME); 
+            $extension = pathinfo($_FILES['documento']['name'], PATHINFO_EXTENSION); 
+            $rutaCarpeta = __DIR__ . '/../../../uploads/'; 
+
+            if (!is_dir($rutaCarpeta)) {
+                mkdir($rutaCarpeta, 0777, true); 
             }
 
-            if ($this->model->crearExoneraciones($empleado['idEmpleado'], $fecha_inicio, $fecha_fin, $motivo, $documento)) {
-                echo "Exoneración solicitada exitosamente.";
+            $nombreArchivo = $nombreArchivoOriginal . '.' . $extension; 
+            $contador = 1;
+
+            // Verificar si ya existe un archivo con el mismo nombre
+            while (file_exists($rutaCarpeta . $nombreArchivo)) {
+                $nombreArchivo = $nombreArchivoOriginal . "($contador)." . $extension;
+                $contador++;
+            }
+
+            $rutaDestino = $rutaCarpeta . $nombreArchivo;
+
+            if (move_uploaded_file($_FILES['documento']['tmp_name'], $rutaDestino)) {
+                $documento = '/biometrico/uploads/' . $nombreArchivo; 
             } else {
-                echo "Error al solicitar la exoneración.";
+                echo "Error al subir el documento.";
+                return;
+            }
+        } else {
+            $documento = null;
+        }
+
+            
+    
+            // Crear el permiso
+            if ($this->model->crearExoneraciones($empleado['idEmpleado'], $fecha_inicio, $fecha_fin, $motivo, $documento)) {
+                echo "Permiso solicitado exitosamente.";
+            } else {
+                echo "Error al solicitar el permiso.";
             }
         } else {
             echo "Método no permitido.";
         }
     }
+    
     
     public function crear($idEmpleado) {
         $fecha_inicio = $_POST['fecha_inicio'] ?? null;

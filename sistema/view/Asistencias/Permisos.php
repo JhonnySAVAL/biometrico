@@ -18,10 +18,10 @@
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h3 class="card-title">Solicitar Permiso</h3>
+                        <h3 class="card-title">Crear Permiso</h3>
                     </div>
                     <div class="card-body">
-                        <form action="/biometrico/sistema/controller/PermisosController.php?action=solicitarPermiso" method="POST" enctype="multipart/form-data">
+                        <form action="/biometrico/sistema/controller/AsistenciasController/PermisosController.php?action=solicitarPermiso" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="dniEmpleado">DNI Empleado</label>
                                 <input type="text" class="form-control" id="dniEmpleado" name="dniEmpleado" placeholder="Ingrese el DNI del empleado" required>
@@ -40,7 +40,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="documento">Documento Adjunto</label>
-                                <input type="file" class="form-control" id="documento" name="documento">
+                                <input type="file" class="form-control" id="documento" name="documento" required>
                             </div>
                             <button type="submit" class="btn btn-primary mt-3">Solicitar Permiso</button>
                         </form>
@@ -55,7 +55,7 @@
                         <h3 class="card-title">Permisos Solicitados</h3>
                     </div>
                     <div class="card-body table-responsive">
-                        <table class="table table-striped">
+                        <table id="dataTable" class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>DNI Empleado</th>
@@ -64,11 +64,11 @@
                                     <th>Fecha Fin</th>
                                     <th>Días de Permiso</th>
                                     <th>Motivo</th>
+                                    <th>Documento</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Datos dinámicos -->
                                 <?php foreach ($Permisos as $permiso): ?>
                                     <tr>
                                         <td><?= $permiso['dniEmpleado'] ?></td>
@@ -83,19 +83,27 @@
                                         </td>
                                         <td><?= $permiso['motivo'] ?></td>
                                         <td>
+                                            <?php if (!empty($permiso['documento'])): ?>
+                                                <a href="<?= $permiso['documento'] ?>" target="_blank">Ver/Descargar</a>
+                                            <?php else: ?>
+                                                No adjunto
+                                            <?php endif; ?>
+                                        </td>
+                                        <td>
+                                            <!-- Botones de acción -->
                                             <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
                                                 data-id="<?= $permiso['idPermiso'] ?>"
                                                 data-dni="<?= $permiso['dniEmpleado'] ?>"
                                                 data-fechainicio="<?= $permiso['fecha_inicio'] ?>"
                                                 data-fechafin="<?= $permiso['fecha_fin'] ?>"
                                                 data-motivo="<?= $permiso['motivo'] ?>">Editar</button>
-
                                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                                 data-id="<?= $permiso['idPermiso'] ?>">Eliminar</button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
+
                         </table>
                     </div>
                 </div>
@@ -105,22 +113,16 @@
 </div>
 
 
-<!-- Modales -->
-<!-- Modal de Edición -->
+<!-- Modal edit -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Editar Permiso</h5>
+                <h5 class="modal-title" id="editModalLabel">Editar Registro</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="formEditPermiso" method="POST" action="/biometrico/sistema/controller/AsistenciasController/PermisosController.php?action=ActualizarPermiso">
+            <form id="formEdit" method="POST">
                 <div class="modal-body">
-                    <input type="hidden" id="edit-idPermiso" name="idPermiso">
-                    <div class="form-group">
-                        <label for="edit-idEmpleado">ID Empleado</label>
-                        <input type="text" class="form-control" id="edit-idEmpleado" name="idEmpleado" readonly>
-                    </div>
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="edit-fecha_inicio">Fecha Inicio</label>
@@ -145,21 +147,24 @@
     </div>
 </div>
 
-<!-- Modal de Eliminación -->
+<!-- Modal Genérico de Eliminación -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Eliminar Permiso</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Eliminar Registro</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <p>¿Está seguro de que desea eliminar este permiso?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="btn-delete">Eliminar</button>
-            </div>
+            <form id="formDelete" method="POST">
+                <div class="modal-body">
+                    <input type="hidden" id="delete-idRegistro" name="idRegistro">
+                    <p>¿Está seguro de que desea eliminar este registro?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-11-2024 a las 05:48:11
+-- Tiempo de generación: 24-11-2024 a las 07:43:10
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -70,15 +70,6 @@ CREATE TABLE `asistencia` (
   `horas_extras` time DEFAULT '00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `asistencia`
---
-
-INSERT INTO `asistencia` (`idAsistencia`, `idEmpleado`, `fecha_registro`, `hora_entrada`, `hora_salida`, `minutos_tardanza`, `tipo_registro`, `hora_receso`, `horas_extras`) VALUES
-(1, 6, '2024-11-23', '05:36:58', '05:37:20', 0, 'manual', NULL, '00:00:00'),
-(2, 7, '2024-11-23', '05:43:42', '05:44:00', 0, 'manual', NULL, '00:00:00'),
-(3, 8, '2024-11-23', '23:47:21', '23:47:36', 0, 'manual', NULL, '00:00:00');
-
 -- --------------------------------------------------------
 
 --
@@ -102,20 +93,6 @@ CREATE TABLE `empleados` (
   `passmarcar` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `empleados`
---
-
-INSERT INTO `empleados` (`idEmpleado`, `nombres`, `apellidos`, `dni`, `correo`, `telefono`, `idPuesto`, `idTurno`, `estado`, `habilitado`, `idApp`, `passwordApp`, `idmarcar`, `passmarcar`) VALUES
-(1, 'asd', 'asd', '12345678', 'qqq@gma', '123456789', 1, 1, 'Activo', 0, NULL, NULL, '', ''),
-(2, '432', '432', '432', '432@123', '432', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(3, 'mono', 'mano', '56451654', 'mono@gmail.com', '454151542', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(4, 'mene', 'mana', '34436547', 'mar@nose.com', '345643657', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(5, 'amaner', 'perezat', '43243243', 'roca@gmail.com', '555555555', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(6, 'armando', 'paredez', '99999999', 'armandopar@gmail.com', '777777777', 1, 1, 'Activo', 1, NULL, NULL, 'arpa', 'ef775'),
-(7, 'mariano', 'melgar', '33333333', 'estadio@gmail.com', '313213213', 1, 1, 'Activo', 1, NULL, NULL, 'mame', 'd27d3'),
-(8, 'nosemerindo', 'laputamadre', '45645645', 'callamierda@gmail.com', '888457522', 1, 1, 'Activo', 1, NULL, NULL, 'nola', '55b4c');
-
 -- --------------------------------------------------------
 
 --
@@ -123,12 +100,12 @@ INSERT INTO `empleados` (`idEmpleado`, `nombres`, `apellidos`, `dni`, `correo`, 
 --
 
 CREATE TABLE `exoneraciones` (
-  `idPermiso` int(11) NOT NULL,
-  `idEmpleado` int(11) DEFAULT NULL,
-  `fecha_inicio` date DEFAULT NULL,
-  `fecha_fin` date DEFAULT NULL,
-  `motivo` varchar(100) DEFAULT NULL,
-  `documento` varchar(455) DEFAULT NULL
+  `idExoneraciones` int(11) NOT NULL,
+  `idEmpleado` int(11) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `motivo` varchar(255) NOT NULL,
+  `documento` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -145,14 +122,6 @@ CREATE TABLE `feriados` (
   `anio` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `feriados`
---
-
-INSERT INTO `feriados` (`idFeriado`, `nombre`, `fecha`, `tipo`, `anio`) VALUES
-(2, 'sillass', '2024-11-22', 'anual', 2024),
-(3, 'sillas', '2024-11-23', 'anual', 2024);
-
 -- --------------------------------------------------------
 
 --
@@ -160,12 +129,12 @@ INSERT INTO `feriados` (`idFeriado`, `nombre`, `fecha`, `tipo`, `anio`) VALUES
 --
 
 CREATE TABLE `justificaciones` (
-  `idPermiso` int(11) NOT NULL,
-  `idEmpleado` int(11) DEFAULT NULL,
-  `fecha_inicio` date DEFAULT NULL,
-  `fecha_fin` date DEFAULT NULL,
-  `motivo` varchar(100) DEFAULT NULL,
-  `documento` varchar(455) DEFAULT NULL
+  `idJustificaciones` int(11) NOT NULL,
+  `idEmpleado` int(11) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `motivo` varchar(255) NOT NULL,
+  `documento` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -181,14 +150,6 @@ CREATE TABLE `login_intentos` (
   `ultimo_intento` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `login_intentos`
---
-
-INSERT INTO `login_intentos` (`id`, `usuario`, `intentos`, `ultimo_intento`) VALUES
-(1, '', 1, '2024-11-18 13:54:56'),
-(2, 'jume', 0, '2024-11-22 19:27:43');
-
 -- --------------------------------------------------------
 
 --
@@ -197,11 +158,11 @@ INSERT INTO `login_intentos` (`id`, `usuario`, `intentos`, `ultimo_intento`) VAL
 
 CREATE TABLE `permisos` (
   `idPermiso` int(11) NOT NULL,
-  `idEmpleado` int(11) DEFAULT NULL,
-  `fecha_inicio` date DEFAULT NULL,
-  `fecha_fin` date DEFAULT NULL,
-  `motivo` varchar(100) DEFAULT NULL,
-  `documento` varchar(455) DEFAULT NULL
+  `idEmpleado` int(11) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `motivo` varchar(255) NOT NULL,
+  `documento` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -216,13 +177,6 @@ CREATE TABLE `puestos` (
   `area` varchar(50) DEFAULT NULL,
   `descripcion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `puestos`
---
-
-INSERT INTO `puestos` (`idPuesto`, `nombrePuesto`, `area`, `descripcion`) VALUES
-(1, 'Electricista', 'Zona B mina 5', 'Encargado del mantneimiento en el area de electric');
 
 -- --------------------------------------------------------
 
@@ -257,13 +211,6 @@ CREATE TABLE `turnos` (
   `receso` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `turnos`
---
-
-INSERT INTO `turnos` (`idTurno`, `descripcion`, `entrada_previa`, `entrada`, `salida`, `receso`) VALUES
-(1, 'Turno Mañana', '00:00:00', '08:00:00', '16:00:00', '00:30:00');
-
 -- --------------------------------------------------------
 
 --
@@ -277,14 +224,6 @@ CREATE TABLE `vacaciones` (
   `fecha_fin` date DEFAULT NULL,
   `motivo` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `vacaciones`
---
-
-INSERT INTO `vacaciones` (`idVacacion`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`) VALUES
-(1, 1, '2024-11-22', '2024-11-24', 'vnb'),
-(2, 2, '2024-11-22', '2024-11-24', 'c');
 
 --
 -- Índices para tablas volcadas
@@ -303,10 +242,24 @@ ALTER TABLE `empleados`
   ADD PRIMARY KEY (`idEmpleado`);
 
 --
+-- Indices de la tabla `exoneraciones`
+--
+ALTER TABLE `exoneraciones`
+  ADD PRIMARY KEY (`idExoneraciones`),
+  ADD KEY `idEmpleado` (`idEmpleado`);
+
+--
 -- Indices de la tabla `feriados`
 --
 ALTER TABLE `feriados`
   ADD PRIMARY KEY (`idFeriado`);
+
+--
+-- Indices de la tabla `justificaciones`
+--
+ALTER TABLE `justificaciones`
+  ADD PRIMARY KEY (`idJustificaciones`),
+  ADD KEY `idEmpleado` (`idEmpleado`);
 
 --
 -- Indices de la tabla `login_intentos`
@@ -355,25 +308,37 @@ ALTER TABLE `vacaciones`
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `exoneraciones`
+--
+ALTER TABLE `exoneraciones`
+  MODIFY `idExoneraciones` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `feriados`
 --
 ALTER TABLE `feriados`
-  MODIFY `idFeriado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idFeriado` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `justificaciones`
+--
+ALTER TABLE `justificaciones`
+  MODIFY `idJustificaciones` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `login_intentos`
 --
 ALTER TABLE `login_intentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -385,7 +350,29 @@ ALTER TABLE `permisos`
 -- AUTO_INCREMENT de la tabla `vacaciones`
 --
 ALTER TABLE `vacaciones`
-  MODIFY `idVacacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idVacacion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `exoneraciones`
+--
+ALTER TABLE `exoneraciones`
+  ADD CONSTRAINT `exoneraciones_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`);
+
+--
+-- Filtros para la tabla `justificaciones`
+--
+ALTER TABLE `justificaciones`
+  ADD CONSTRAINT `justificaciones_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`);
+
+--
+-- Filtros para la tabla `permisos`
+--
+ALTER TABLE `permisos`
+  ADD CONSTRAINT `permisos_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

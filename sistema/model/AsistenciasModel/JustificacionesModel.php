@@ -8,13 +8,35 @@ class Justificaciones extends Database
     }
 
     public function obtenerJustificaciones() {
-        $query = "SELECT j.*, e.dni AS dniEmpleado FROM justificaciones j 
-                  INNER JOIN empleados e ON j.idEmpleado = e.id";
+        $query = "
+                SELECT 
+                      e.dni AS dniEmpleado, 
+                      CONCAT(e.nombres, ' ', e.apellidos) AS nombreEmpleado,
+                      j.fecha_inicio, 
+                      j.fecha_fin, 
+                      j.motivo, 
+                      j.documento,
+                      j.idJustificaciones
+                  FROM justificaciones j
+                  INNER JOIN empleados e ON j.idEmpleado = e.idEmpleado";
         $stmt = $this->conn->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
+    
 
-
+    public function obtenerEmpleadoPorDni($dniEmpleado) {
+        $query = "SELECT * FROM empleados WHERE dni = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$dniEmpleado]);
+        $empleado = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$empleado) {
+            throw new Exception("No se encontró un empleado con el DNI $dniEmpleado");
+        }
+    
+        return $empleado;
+    }
+    
     public function crearJustificaciones($idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento) {
         $query = "INSERT INTO justificaciones (idEmpleado, fecha_inicio, fecha_fin, motivo, documento) 
                   VALUES (?, ?, ?, ?, ?)";
@@ -35,10 +57,5 @@ class Justificaciones extends Database
         return $stmt->execute([$idJustificaciones]);
     }
 
-    public function obtenerEmpleadoPorDni($dniEmpleado) {
-        $query = "SELECT * FROM empleados WHERE dni = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute([$dniEmpleado]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
 }
+?>

@@ -40,33 +40,49 @@ class JustificacionesController extends BaseController
                 return;
             }
 
-            // Manejo del archivo subido
             if (isset($_FILES['documento']) && $_FILES['documento']['error'] === UPLOAD_ERR_OK) {
-                $nombreArchivo = basename($_FILES['documento']['name']);
-                $rutaDestino = __DIR__ . '/../../uploads/' . $nombreArchivo;
-                if (move_uploaded_file($_FILES['documento']['tmp_name'], $rutaDestino)) {
-                    $documento = '/uploads/' . $nombreArchivo;
-                } else {
-                    echo "Error al subir el documento.";
-                    return;
-                }
+            $nombreArchivoOriginal = pathinfo($_FILES['documento']['name'], PATHINFO_FILENAME);
+            $extension = pathinfo($_FILES['documento']['name'], PATHINFO_EXTENSION); 
+            $rutaCarpeta = __DIR__ . '/../../../uploads/'; 
+
+            if (!is_dir($rutaCarpeta)) {
+                mkdir($rutaCarpeta, 0777, true); 
             }
 
-            if (!$fecha_inicio || !$fecha_fin || !$motivo) {
-                echo "Error: Todos los campos son obligatorios.";
+            $nombreArchivo = $nombreArchivoOriginal . '.' . $extension; 
+            $contador = 1;
+
+            // Verificar si ya existe un archivo con el mismo nombre
+            while (file_exists($rutaCarpeta . $nombreArchivo)) {
+                $nombreArchivo = $nombreArchivoOriginal . "($contador)." . $extension; 
+                $contador++;
+            }
+
+            $rutaDestino = $rutaCarpeta . $nombreArchivo;
+
+            if (move_uploaded_file($_FILES['documento']['tmp_name'], $rutaDestino)) {
+                $documento = '/biometrico/uploads/' . $nombreArchivo; 
+            } else {
+                echo "Error al subir el documento.";
                 return;
             }
+        } else {
+            $documento = null; 
+        }
 
-            // Crear la justificación
+            
+    
+            // Crear el permiso
             if ($this->model->crearJustificaciones($empleado['idEmpleado'], $fecha_inicio, $fecha_fin, $motivo, $documento)) {
-                echo "Justificación solicitada exitosamente.";
+                echo "Permiso solicitado exitosamente.";
             } else {
-                echo "Error al solicitar la justificación.";
+                echo "Error al solicitar el permiso.";
             }
         } else {
             echo "Método no permitido.";
         }
     }
+    
 
     public function actualizarJustificaciones($dniEmpleado) {
         $idJustificaciones = $_POST['idJustificaciones'] ?? null;

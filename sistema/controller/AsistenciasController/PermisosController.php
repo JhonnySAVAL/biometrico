@@ -40,20 +40,40 @@ class PermisosController extends BaseController
                 return;
             }
     
-            // Manejo del archivo subido
             if (isset($_FILES['documento']) && $_FILES['documento']['error'] === UPLOAD_ERR_OK) {
-                $nombreArchivo = basename($_FILES['documento']['name']);
-                $rutaDestino = __DIR__ . '/../../uploads/' . $nombreArchivo;
-                if (move_uploaded_file($_FILES['documento']['tmp_name'], $rutaDestino)) {
-                    $documento = '/uploads/' . $nombreArchivo;
-                } else {
-                    echo "Error al subir el documento.";
-                    return;
-                }
+            $nombreArchivoOriginal = pathinfo($_FILES['documento']['name'], PATHINFO_FILENAME); 
+            $extension = pathinfo($_FILES['documento']['name'], PATHINFO_EXTENSION); 
+            $rutaCarpeta = __DIR__ . '/../../../uploads/'; 
+
+            if (!is_dir($rutaCarpeta)) {
+                mkdir($rutaCarpeta, 0777, true); 
             }
+
+            $nombreArchivo = $nombreArchivoOriginal . '.' . $extension; 
+            $contador = 1;
+
+            // Verificar si ya existe un archivo con el mismo nombre
+            while (file_exists($rutaCarpeta . $nombreArchivo)) {
+                $nombreArchivo = $nombreArchivoOriginal . "($contador)." . $extension; 
+                $contador++;
+            }
+
+            $rutaDestino = $rutaCarpeta . $nombreArchivo;
+
+            if (move_uploaded_file($_FILES['documento']['tmp_name'], $rutaDestino)) {
+                $documento = '/biometrico/uploads/' . $nombreArchivo; 
+            } else {
+                echo "Error al subir el documento.";
+                return;
+            }
+        } else {
+            $documento = null; 
+        }
+
+            
     
             // Crear el permiso
-            if ($this->model->crearPermisos($empleado['id'], $fecha_inicio, $fecha_fin, $motivo, $documento)) {
+            if ($this->model->crearPermisos($empleado['idEmpleado'], $fecha_inicio, $fecha_fin, $motivo, $documento)) {
                 echo "Permiso solicitado exitosamente.";
             } else {
                 echo "Error al solicitar el permiso.";
@@ -64,18 +84,6 @@ class PermisosController extends BaseController
     }
     
     
-    public function crear($idEmpleado) {
-        $fecha_inicio = $_POST['fecha_inicio'] ?? null;
-        $fecha_fin = $_POST['fecha_fin'] ?? null;
-        $motivo = $_POST['motivo'] ?? null;
-        $documento = $_POST['documento'] ?? null;
-
-        if ($this->model->crearPermisos($idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento)) {
-            echo "Permiso creado exitosamente.";
-        } else {
-            echo "Error al crear el permiso.";
-        }
-    }
 
     public function actualizar($idEmpleado) {
         $idPermiso = $_POST['idPermiso'] ?? null;
