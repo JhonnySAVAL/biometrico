@@ -5,43 +5,42 @@ class Permisos extends Database {
     public function __construct() {
         parent::__construct(); 
     }
-    // Insertar un nuevo permiso
-    public function insertarPermiso($idEmpleado, $fecha_inicio, $fecha_fin, $motivo) {
-        $sql = "INSERT INTO permisos (idEmpleado, fecha_inicio, fecha_fin, motivo, estado) 
-                VALUES (:idEmpleado, :fecha_inicio, :fecha_fin, :motivo, 'pendiente')";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':idEmpleado', $idEmpleado);
-        $stmt->bindParam(':fecha_inicio', $fecha_inicio);
-        $stmt->bindParam(':fecha_fin', $fecha_fin);
-        $stmt->bindParam(':motivo', $motivo);
-        $stmt->execute();
-    }
-
-    // Aprobar un permiso
-    public function aprobarPermiso($permisoId) {
-        $sql = "UPDATE permisos SET estado = 'aprobado' WHERE idPermiso = :permisoId";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':permisoId', $permisoId);
-        $stmt->execute();
-    }
-
+    
     // Obtener todos los permisos
     public function obtenerPermisos() {
-        $sql = "SELECT p.idPermiso, p.idEmpleado, e.nombres, p.fecha_inicio, p.fecha_fin, p.motivo, p.estado
-                FROM permisos p
-                JOIN empleados e ON p.idEmpleado = e.idEmpleado
-                ORDER BY p.fecha_inicio DESC";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
+        $query = "SELECT * FROM permisos";
+        $stmt = $this->conn->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Rechazar un permiso (Opcional)
-    public function rechazarPermiso($permisoId) {
-        $sql = "UPDATE permisos SET estado = 'rechazado' WHERE idPermiso = :permisoId";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':permisoId', $permisoId);
-        $stmt->execute();
+    // Obtener un permiso específico
+    public function obtenerEmpleadoPorDni($dni) {
+        $query = "SELECT * FROM empleados WHERE dni = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$dni]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Crear un permiso
+    public function crearPermisos($idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento) {
+        $query = "INSERT INTO permisos (idEmpleado, fecha_inicio, fecha_fin, motivo, documento) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute([$idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento]);
+    }
+
+    // Actualizar un permiso
+    public function actualizarPermisos($idPermiso, $idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento) {
+        $query = "UPDATE permisos SET idEmpleado = ?, fecha_inicio = ?, fecha_fin = ?, motivo = ?, documento = ? WHERE idPermiso = ?";
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute([$idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento, $idPermiso]);
+    }
+
+    // Eliminar un permiso
+    public function eliminarPermisos($idPermiso) {
+        $query = "DELETE FROM permisos WHERE idPermiso = ?";
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute([$idPermiso]);
+    }
+
+    
 }
 ?>

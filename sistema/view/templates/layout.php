@@ -89,13 +89,13 @@
                                         <p>Ver Asistencias</p>
                                     </a>
                                 </li>
-                                <!-- <li class="nav-item">
-                                    <a href="/biometrico/sistema/controller/AsistenciasController/PermisosController.php?action=listarPermisos" class="nav-link">
+                               <li class="nav-item">
+                                    <a href="/biometrico/sistema/controller/AsistenciasController/PermisosController.php?action=MostrarPermisos" class="nav-link">
                                         <i class="nav-icon bi bi-calendar-minus"></i>
                                         <p>Permisos</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                 <!-- <li class="nav-item">
                                     <a href="/biometrico/sistema/controller/AsistenciasController/JustificacionesController.php?action=listarJustificaciones" class="nav-link">
                                         <i class="nav-icon bi bi-calendar-check"></i>
                                         <p>Justificaciones</p>

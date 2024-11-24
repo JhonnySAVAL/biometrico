@@ -6,54 +6,40 @@ class Exoneraciones extends Database
     public function __construct() {
         parent::__construct(); 
     }
-    public function obtenerExoneraciones()
-    {
-        $sql = "SELECT e.idExoneracion, e.fecha_inicio, e.fecha_fin, e.motivo, e.estado, emp.nombre
-                FROM exoneraciones e
-                JOIN empleados emp ON e.idEmpleado = emp.idEmpleado";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    public function getExoneracionesAprobadas()
-    {
-        $sql = "SELECT e.idExoneracion, e.fecha_inicio, e.fecha_fin, e.motivo, e.estado, emp.nombre
-                FROM exoneraciones e
-                JOIN empleados emp ON e.idEmpleado = emp.idEmpleado
-                WHERE e.estado = 'Aprobada'"; 
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
+    public function obtenerExoneraciones() {
+        $query = "SELECT e.dni AS dniEmpleado, e.nombre AS nombreEmpleado, ex.* FROM exoneraciones ex 
+                  INNER JOIN empleados e ON ex.idEmpleado = e.id";
+        $stmt = $this->conn->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
-
-    public function agregarExoneracion($idEmpleado, $fecha_inicio, $fecha_fin, $motivo)
-    {
-        $sql = "INSERT INTO exoneraciones (idEmpleado, fecha_inicio, fecha_fin, motivo, estado)
-                VALUES (:idEmpleado, :fecha_inicio, :fecha_fin, :motivo, 'Pendiente')";
-        
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':idEmpleado', $idEmpleado);
-        $stmt->bindParam(':fecha_inicio', $fecha_inicio);
-        $stmt->bindParam(':fecha_fin', $fecha_fin);
-        $stmt->bindParam(':motivo', $motivo);
-        return $stmt->execute();
+    public function obtenerEmpleadoPorDni($dniEmpleado) {
+        $query = "SELECT * FROM empleados WHERE dni = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$dniEmpleado]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function aprobarExoneracion($idExoneracion)
-    {
-        $sql = "UPDATE exoneraciones SET estado = 'Aprobada' WHERE idExoneracion = :idExoneracion";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':idExoneracion', $idExoneracion);
-        return $stmt->execute();
+    public function crearExoneraciones($idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento) {
+        $query = "INSERT INTO exoneraciones (idEmpleado, fecha_inicio, fecha_fin, motivo, documento) 
+                  VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute([$idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento]);
     }
 
-    public function rechazarExoneracion($idExoneracion)
-    {
-        $sql = "UPDATE exoneraciones SET estado = 'Rechazada' WHERE idExoneracion = :idExoneracion";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':idExoneracion', $idExoneracion);
-        return $stmt->execute();
+    public function actualizarExoneraciones($idExoneraciones, $idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento) {
+        $query = "UPDATE exoneraciones SET idEmpleado = ?, fecha_inicio = ?, fecha_fin = ?, motivo = ?, documento = ? WHERE idExoneraciones = ?";
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute([$idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento, $idExoneraciones]);
     }
+
+    public function eliminarExoneraciones($idExoneraciones) {
+        $query = "DELETE FROM exoneraciones WHERE idExoneraciones = ?";
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute([$idExoneraciones]);
+    }
+
+    
 }
+?>
+
