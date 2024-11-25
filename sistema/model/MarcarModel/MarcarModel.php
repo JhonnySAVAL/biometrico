@@ -91,7 +91,7 @@ class MarcarModel extends Database
         if ($stmt->rowCount() == 0) {
             // Insertamos la entrada
             $sql = "INSERT INTO asistencia (idEmpleado, fecha_registro, hora_entrada, tipo_registro)
-                VALUES (:idEmpleado, CURDATE(), :horaEntrada, 'automatico')";
+                VALUES (:idEmpleado, CURDATE(), :horaEntrada, 'automatica')";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':idEmpleado', $idEmpleado);
@@ -151,5 +151,6 @@ class MarcarModel extends Database
             return ['success' => false, 'message' => 'No puedes marcar salida sin haber marcado entrada.'];
         }
     }
+    
     
 }
