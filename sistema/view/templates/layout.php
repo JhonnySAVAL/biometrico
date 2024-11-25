@@ -9,7 +9,7 @@
     <meta name="author" content="ColorlibHQ">
     <meta name="description" content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS.">
     <meta name="keywords" content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard"><!--end::Primary Meta Tags--><!--begin::Fonts-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha256-tAJd9aMy2uLWbOX1s+Nlrz1h4XbGPV4IMkuKb2u7wZ0=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/styles/overlayscrollbars.min.css">
@@ -87,7 +87,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="/biometrico/sistema/controller/AsistenciasController/AsistenciasController.php?action=mostrarAsistencia" class="nav-link">
+                                    <a href="/biometrico/sistema/controller/AsistenciasController/AsistenciasController.php?action=mostrarEstadoAsistencias" class="nav-link">
                                         <i class="nav-icon bi bi-calendar-event"></i>
                                         <p>Ver Asistencias</p>
                                     </a>
@@ -177,7 +177,18 @@
                                         <p>Turnos</p>
                                     </a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a href="/biometrico/sistema/controller/ReportesController/ReportesController.php?action=mostrarReportes" class="nav-link">
+                                        <i class="nav-icon bi bi-clock"></i>
+                                        <p>Reportes</p>
+                                    </a>
+                                </li>
+
                             </ul>
+
+
+
                         </li>
 
                         <li class="nav-item">
@@ -214,9 +225,14 @@
         </main>
 
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
+    <!-- Other JS libraries and scripts -->
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>

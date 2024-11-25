@@ -1,60 +1,70 @@
 <?php
 require_once '../BaseController.php';
-require_once __DIR__ . '/../../model/Reportes.php';
+require_once '../../model/ReportesModel/ReportesModel.php';
 
 class ReportesController extends BaseController
 {
-    private $reportesModel;
+    private $model;
 
     public function __construct()
     {
-        $this->reportesModel = new Reportes();
+        $this->model = new Reportes();
     }
-    public function generarReporteGeneral()
-    {
-        $reporteGeneral = $this->reportesModel->obtenerReporteGeneral();
-        $this->loadView('Asistencias.reporte_general', ['reporteGeneral' => $reporteGeneral]);
+    public function mostrarReportes() {
+
+        $this->loadView('Reportes.Reportes', [
+
+        ], [], [
+            //'/biometrico/sistema/view/Reportes/recursos/js/Reportes.min.js'
+        ], 'Gestión de Reportes');
     }
-    // Reporte de asistencia de un empleado específico
-    public function verAsistencia($idEmpleado)
-    {
-        $asistencia = $this->reportesModel->obtenerAsistenciaEmpleado($idEmpleado);
-        $this->loadView('Asistencias.reporte_asistencia', ['asistencia' => $asistencia]);
+    
+    public function generarReporteTabla()
+{
+    $tipo = $_GET['tipo'] ?? null;
+    $fechas = json_decode($_GET['fechas'] ?? '[]', true);
+
+    if (!$tipo || empty($fechas)) {
+        $this->loadView('Reportes.Tabla', [
+            'error' => 'No se seleccionaron fechas o tipo de reporte.',
+            'datos' => []
+        ]);
+        return;
     }
 
-    // Reporte de permisos de un empleado específico
-    public function verPermisos($idEmpleado)
-    {
-        $permisos = $this->reportesModel->obtenerPermisosEmpleado($idEmpleado);
-        $this->loadView('Asistencias.reporte_permisos', ['permisos' => $permisos]);
+    if (!method_exists($this->model, "obtener" . ucfirst($tipo))) {
+        $this->loadView('Reportes.Tabla', [
+            'error' => 'Tipo de reporte no válido.',
+            'datos' => []
+        ]);
+        return;
     }
 
-    // Reporte de tardanzas de un empleado específico
-    public function verTardanzas($idEmpleado)
-    {
-        $tardanzas = $this->reportesModel->obtenerTardanzasEmpleado($idEmpleado);
-        $this->loadView('Asistencias.reporte_tardanzas', ['tardanzas' => $tardanzas]);
-    }
+    $metodo = "obtener" . ucfirst($tipo);
+    $datos = $this->model->$metodo($fechas);
 
-    // Reporte de justificaciones de un empleado específico
-    public function verJustificaciones($idEmpleado)
-    {
-        $justificaciones = $this->reportesModel->obtenerJustificacionesEmpleado($idEmpleado);
-        $this->loadView('Asistencias.reporte_justificaciones', ['justificaciones' => $justificaciones]);
-    }
-
-    // Generar reporte general de todos los empleados
-
+    $this->loadView('Reportes.Tabla', [
+        'error' => null,
+        'tipo' => $tipo,
+        'datos' => $datos
+    ]);
 }
+
+
+    
+    
+
+    
+}
+     
+
 if (isset($_GET['action'])) {
     $controller = new ReportesController();
     $action = $_GET['action'];
-    $idEmpleado = $_POST['idEmpleado'] ?? null;
 
     if (method_exists($controller, $action)) {
-        $controller->$action($idEmpleado);
+        $controller->$action();
     } else {
-        echo "Error: Acción no encontrada.";
+        echo json_encode(['error' => 'Acción no válida.']);
     }
 }
-?>

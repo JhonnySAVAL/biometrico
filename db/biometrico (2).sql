@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-11-2024 a las 07:43:10
+-- Tiempo de generación: 25-11-2024 a las 04:50:52
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -70,6 +70,13 @@ CREATE TABLE `asistencia` (
   `horas_extras` time DEFAULT '00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `asistencia`
+--
+
+INSERT INTO `asistencia` (`idAsistencia`, `idEmpleado`, `fecha_registro`, `hora_entrada`, `hora_salida`, `minutos_tardanza`, `tipo_registro`, `hora_receso`, `horas_extras`) VALUES
+(1, 7, '2024-11-24', '22:13:25', '22:13:40', 0, 'manual', NULL, '00:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -93,6 +100,19 @@ CREATE TABLE `empleados` (
   `passmarcar` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `empleados`
+--
+
+INSERT INTO `empleados` (`idEmpleado`, `nombres`, `apellidos`, `dni`, `correo`, `telefono`, `idPuesto`, `idTurno`, `estado`, `habilitado`, `idApp`, `passwordApp`, `idmarcar`, `passmarcar`) VALUES
+(1, 'asd', 'asd', '12345678', 'qqq@gma', '123456789', 1, 1, 'Activo', 0, NULL, NULL, '', ''),
+(2, '432', '432', '432', '432@123', '432', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
+(3, 'mono', 'mano', '56451654', 'mono@gmail.com', '454151542', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
+(4, 'mene', 'mana', '34436547', 'mar@nose.com', '345643657', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
+(5, 'amaner', 'perezat', '43243243', 'roca@gmail.com', '555555555', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
+(6, 'jhonny arturo', 'sanes valdivia', '75209807', 'jhonny-529@outlook.com', '970780460', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
+(7, 'cxcxds', 'sadas', '88888888', 'admin@gmail.com', '999999999', 1, 1, 'Activo', 1, NULL, NULL, 'cxsa', '8ddcf');
+
 -- --------------------------------------------------------
 
 --
@@ -108,6 +128,13 @@ CREATE TABLE `exoneraciones` (
   `documento` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `exoneraciones`
+--
+
+INSERT INTO `exoneraciones` (`idExoneraciones`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`, `documento`) VALUES
+(1, 6, '2024-11-24', '2024-11-25', 'LN,JKM', '/biometrico/uploads/1.png');
+
 -- --------------------------------------------------------
 
 --
@@ -121,6 +148,14 @@ CREATE TABLE `feriados` (
   `tipo` enum('simple','anual') DEFAULT 'simple',
   `anio` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `feriados`
+--
+
+INSERT INTO `feriados` (`idFeriado`, `nombre`, `fecha`, `tipo`, `anio`) VALUES
+(2, 'sillass', '2024-11-22', 'anual', 2024),
+(3, 'sillas', '2024-11-23', 'anual', 2024);
 
 -- --------------------------------------------------------
 
@@ -137,6 +172,13 @@ CREATE TABLE `justificaciones` (
   `documento` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `justificaciones`
+--
+
+INSERT INTO `justificaciones` (`idJustificaciones`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`, `documento`) VALUES
+(1, 6, '2024-11-24', '2024-11-25', 'fh', '/biometrico/uploads/1.png');
+
 -- --------------------------------------------------------
 
 --
@@ -149,6 +191,14 @@ CREATE TABLE `login_intentos` (
   `intentos` int(11) DEFAULT 0,
   `ultimo_intento` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `login_intentos`
+--
+
+INSERT INTO `login_intentos` (`id`, `usuario`, `intentos`, `ultimo_intento`) VALUES
+(1, '', 1, '2024-11-18 13:54:56'),
+(2, 'jume', 0, '2024-11-24 00:16:42');
 
 -- --------------------------------------------------------
 
@@ -165,6 +215,16 @@ CREATE TABLE `permisos` (
   `documento` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `permisos`
+--
+
+INSERT INTO `permisos` (`idPermiso`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`, `documento`) VALUES
+(1, 6, '2024-11-24', '2024-11-25', 'sdf', NULL),
+(2, 6, '2024-11-27', '2024-11-28', 'adfs', '/uploads/1.png'),
+(3, 6, '2024-11-25', '2024-11-25', 'hgj', '/biometrico/uploads/121.png'),
+(4, 6, '2024-11-25', '2024-11-25', 'dfg', '/biometrico/uploads/1(1).png');
+
 -- --------------------------------------------------------
 
 --
@@ -177,6 +237,13 @@ CREATE TABLE `puestos` (
   `area` varchar(50) DEFAULT NULL,
   `descripcion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `puestos`
+--
+
+INSERT INTO `puestos` (`idPuesto`, `nombrePuesto`, `area`, `descripcion`) VALUES
+(1, 'Electricista', 'Zona B mina 5', 'Encargado del mantneimiento en el area de electric');
 
 -- --------------------------------------------------------
 
@@ -211,6 +278,13 @@ CREATE TABLE `turnos` (
   `receso` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `turnos`
+--
+
+INSERT INTO `turnos` (`idTurno`, `descripcion`, `entrada_previa`, `entrada`, `salida`, `receso`) VALUES
+(1, 'Turno Mañana', '00:00:00', '08:00:00', '16:00:00', '00:30:00');
+
 -- --------------------------------------------------------
 
 --
@@ -224,6 +298,15 @@ CREATE TABLE `vacaciones` (
   `fecha_fin` date DEFAULT NULL,
   `motivo` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `vacaciones`
+--
+
+INSERT INTO `vacaciones` (`idVacacion`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`) VALUES
+(1, 1, '2024-11-22', '2024-11-24', 'vnb'),
+(2, 2, '2024-11-22', '2024-11-24', 'c'),
+(3, 3, '2024-11-22', '2024-11-26', 'safsad');
 
 --
 -- Índices para tablas volcadas
@@ -308,49 +391,67 @@ ALTER TABLE `vacaciones`
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `exoneraciones`
 --
 ALTER TABLE `exoneraciones`
-  MODIFY `idExoneraciones` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idExoneraciones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `feriados`
 --
 ALTER TABLE `feriados`
-  MODIFY `idFeriado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idFeriado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `justificaciones`
 --
 ALTER TABLE `justificaciones`
-  MODIFY `idJustificaciones` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idJustificaciones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `login_intentos`
 --
 ALTER TABLE `login_intentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `puestos`
+--
+ALTER TABLE `puestos`
+  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `reportes_asistencia`
+--
+ALTER TABLE `reportes_asistencia`
+  MODIFY `idReporte` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `turnos`
+--
+ALTER TABLE `turnos`
+  MODIFY `idTurno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `vacaciones`
 --
 ALTER TABLE `vacaciones`
-  MODIFY `idVacacion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idVacacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas

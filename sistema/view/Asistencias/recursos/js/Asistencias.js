@@ -1,128 +1,174 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const btnTodosEmpleados = document.getElementById('btnTodosEmpleados');
-    const btnEmpleadosConEntrada = document.getElementById('btnEmpleadosConEntrada');
-    const btnEmpleadosAusentes = document.getElementById('btnEmpleadosAusentes');
-    const btnEmpleadosConFalta = document.getElementById('btnEmpleadosConFalta');
-
-    const empleadosGenerales = document.getElementById('empleadosGenerales');
-    const empleadosEntrada = document.getElementById('empleadosEntrada');
-    const empleadosAusentes = document.getElementById('empleadosAusentes');
-    const empleadosConFalta = document.getElementById('empleadosConFalta');
-
-    btnTodosEmpleados.addEventListener('click', function () {
-        mostrarLista(empleadosGenerales);
-    });
-
-    btnEmpleadosConEntrada.addEventListener('click', function () {
-        mostrarLista(empleadosEntrada);
-    });
-
-    btnEmpleadosAusentes.addEventListener('click', function () {
-        mostrarLista(empleadosAusentes);
-    });
-
-    btnEmpleadosConFalta.addEventListener('click', function () {
-        mostrarLista(empleadosConFalta);
-    });
-
-    function mostrarLista(listaAmostrar) {
-        empleadosGenerales.style.display = 'none';
-        empleadosEntrada.style.display = 'none';
-        empleadosAusentes.style.display = 'none';
-        empleadosConFalta.style.display = 'none';
-        listaAmostrar.style.display = 'block';
+    const formMarcarEntrada = document.querySelector('#formMarcarEntrada');
+    if (formMarcarEntrada) {
+        formMarcarEntrada.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const dni = document.querySelector('#dniEntrada').value;
+            const horaEntrada = document.querySelector('#horaEntrada').value; 
+        
+            fetch('/biometrico/sistema/controller/AsistenciasController/AsistenciasController.php?action=marcarEntrada', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ dni: dni, horaEntrada: horaEntrada, tipo: 'manual' })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                Swal.fire({
+                    title: data.error ? 'Error!' : '¡Éxito!',
+                    text: data.message,
+                    icon: data.error ? 'error' : 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (!data.error) {
+                            window.location.reload(); // Recarga para mostrar los cambios.
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error al marcar la entrada:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'No se pudo procesar la solicitud.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        });
+        
     }
 
-    mostrarLista(empleadosGenerales);
+
+    const formMarcarReceso = document.querySelector('#formMarcarReceso');
+    if (formMarcarReceso) {
+        formMarcarReceso.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const dni = document.querySelector('#dniReceso').value;
+            const horaReceso = document.querySelector('#horaReceso').value;
+
+            fetch('/biometrico/sistema/controller/AsistenciasController/AsistenciasController.php?action=marcarReceso', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ dni: dni, horaReceso: horaReceso })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                Swal.fire({
+                    title: data.error ? 'Error!' : '¡Éxito!',
+                    text: data.message,
+                    icon: data.error ? 'error' : 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed && !data.error) {
+                        window.location.reload(); // Recargar para mostrar cambios
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error al marcar el receso:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'No se pudo procesar la solicitud.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        });
+    }
+
+    const formMarcarFinReceso = document.querySelector('#formMarcarFinReceso');
+
+    if (formMarcarFinReceso) {
+        formMarcarFinReceso.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const dni = document.querySelector('#dniFinReceso').value;
+            const horaRecesoFinal = document.querySelector('#horaFinReceso').value;
+
+            fetch('/biometrico/sistema/controller/AsistenciasController/AsistenciasController.php?action=marcarFinalReceso', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ dniRecesoFinal: dni, horaRecesoFinal: horaRecesoFinal })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                Swal.fire({
+                    title: data.error ? 'Error!' : '¡Éxito!',
+                    text: data.message,
+                    icon: data.error ? 'error' : 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed && !data.error) {
+                        window.location.reload(); // Recargar para mostrar cambios
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error al marcar el fin del receso:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'No se pudo procesar la solicitud.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        });
+    }
+    const formMarcarSalida = document.querySelector('#formMarcarSalida');
+
+    if (formMarcarSalida) {
+        formMarcarSalida.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const dni = document.querySelector('#dniSalida').value;
+            const horaSalida = document.querySelector('#horaSalida').value;
+
+            fetch('/biometrico/sistema/controller/AsistenciasController/AsistenciasController.php?action=marcarSalida', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ dniSalida: dni, horaSalida: horaSalida })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                Swal.fire({
+                    title: data.error ? 'Error!' : '¡Éxito!',
+                    text: data.message,
+                    icon: data.error ? 'error' : 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed && !data.error) {
+                        window.location.reload(); // Recargar para mostrar cambios
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error al marcar la salida:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'No se pudo procesar la solicitud.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        });
+    }
 });
-
-function marcarEntrada(idEmpleado) {
-    const formData = new FormData();
-    formData.append('idEmpleado', idEmpleado);
-    formData.append('action', 'marcarEntrada');  // Acción para el backend
-
-    fetch('/biometrico/sistema/controller/AsistenciasController/AsistenciasController.php?action=marcarEntrada', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())  // Convertimos la respuesta a formato JSON
-    .then(data => {
-        if (data.success) {
-            alert(data.message);  // Mensaje de éxito
-            if (data.redirect) {
-                window.location.href = data.redirect;  // Redirección a la URL proporcionada en la respuesta
-            }
-        } else {
-            alert('Error: ' + data.message);  // Si no fue exitoso, mostramos el mensaje de error
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);  // Si ocurre un error en la solicitud
-        alert('Hubo un error al procesar la solicitud.');
-    });
-}
-
-function marcarReceso(idEmpleado) {
-    const formData = new FormData();
-    formData.append('idEmpleado', idEmpleado);  // Empleado
-    formData.append('action', 'marcarReceso');  // Acción
-
-    fetch('/biometrico/sistema/controller/AsistenciasController/AsistenciasController.php?action=marcarReceso', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())  // Convertimos la respuesta a formato JSON
-    .then(data => {
-        if (data.success) {
-            alert(data.message);  // Mensaje de éxito
-            if (data.redirect) {
-                window.location.href = data.redirect;  // Redirección
-            }
-        } else {
-            alert('Error: ' + data.message);  // Mensaje de error
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);  // Error
-        alert('Hubo un error al procesar la solicitud.');
-    });
-}
-function marcarSalida(idEmpleado) {
-    // Crear un objeto FormData para enviar los datos
-    const formData = new FormData();
-    formData.append('idEmpleado', idEmpleado);  // Asegúrate de pasar el id del empleado
-    formData.append('action', 'marcarSalida');  // Acción que se debe ejecutar en el backend
-
-    // Realizar la solicitud POST con fetch
-    fetch('/biometrico/sistema/controller/AsistenciasController/AsistenciasController.php?action=marcarSalida', {
-        method: 'POST',   // El método de la solicitud
-        body: formData    // Los datos que se enviarán al servidor
-    })
-    .then(response => {
-        // Verifica si la respuesta es exitosa
-        return response.json();  // Convertimos la respuesta a formato JSON
-    })
-    .then(data => {
-        if (data.success) {
-            // Si la respuesta es exitosa, mostramos el mensaje
-            alert(data.message);  // Muestra un mensaje de éxito
-
-            // Si hay una URL de redirección, la redirigimos
-            if (data.redirect) {
-                window.location.href = data.redirect;  // Redirige a la URL que devuelve el servidor
-            }
-        } else {
-            // Si la respuesta es negativa, mostramos el mensaje de error
-            alert('Error: ' + data.message);  // Muestra un mensaje de error
-        }
-    })
-    .catch(error => {
-        // Si hubo un error en la solicitud, mostramos el error
-        console.error('Error:', error);  // Muestra el error en la consola
-        alert('Hubo un error al procesar la solicitud.');
-    });
-}
-
-
-
-

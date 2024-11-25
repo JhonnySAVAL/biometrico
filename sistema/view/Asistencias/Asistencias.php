@@ -1,160 +1,189 @@
+<?php
+date_default_timezone_set('America/Lima'); // Establece la zona horaria de Perú
+?>
+<div class="col-sm-6">
+    <h3 class="mb-0">Asistencias</h3>
+</div>
+<div class="col-sm-6">
+    <ol class="breadcrumb float-sm-end">
+        <li class="breadcrumb-item"><a href="/biometrico/sistema/controller/DashboardController/DashboardController.php?action=MostrarDashboard">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Asistencias
+        </li>
+    </ol>
+</div>
 <div class="app-content">
     <div class="container-fluid">
-    <div class="d-flex justify-content-between mb-3">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#marcarEntradaModal">Registrar Entrada</button>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#marcarSalidaModal">Registrar Salida</button>
-        </div>
-        <div class="d-flex justify-content-between mb-3">
-            <button class="btn btn-primary" id="btnTodosEmpleados">Todos los Empleados</button>
-            <button class="btn btn-primary" id="btnEmpleadosConEntrada">Empleados con Entrada Marcada</button>
-            <button class="btn btn-primary" id="btnEmpleadosAusentes">Empleados Ausentes</button>
-            <button class="btn btn-primary" id="btnEmpleadosConFalta">Empleados con Falta</button>
-        </div>
-
-        <div class="row" id="empleadosListado">
-            <div class="col-lg-12" id="empleadosGenerales">
-                <div class="card mb-4">
-                    <div class="card-header border-0">
-                        <h4>Lista de Empleados</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            <?php foreach ($listaEmpleados as $empleado): ?>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <?php echo $empleado['nombres']; ?>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row" id="empleadosEntrada" style="display:none;">
+        <div class="row">
             <div class="col-lg-12">
-                <div class="card mb-4">
-                    <div class="card-header border-0">
-                        <h4>Empleados con Entrada Marcada</h4>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3 class="card-title">Asistencias</h3>
                     </div>
                     <div class="card-body">
-                        <ul class="list-group">
-                            <?php foreach ($empleadosEntrada as $empleado): ?>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <?php echo $empleado['nombres']; ?>
-                                    <span>
-                                        
-                                        <?php ?>
-                                            <span class="badge badge-success">A Tiempo</span>
-                                        <?php  ?>
-                                    </span>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
+                    <div class="d-flex mb-3">
+                        <button class="btn btn-success btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#modalMarcarEntrada">Marcar Entrada</button>
+                        <button class="btn btn-warning btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#modalMarcarReceso">Marcar Receso</button>
+                        <button class="btn btn-warning btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#modalMarcarFinReceso">Marcar FIN Receso</button>
+                        <button class="btn btn-danger btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#modalMarcarSalida">Marcar Salida</button>
+                    </div>
+
+
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>DNI</th>
+                                        <th>Empleado</th>
+                                        <th>Puesto</th>
+                                        <th>Turno</th>
+                                        <th>Estado</th>
+                                        <th>Hora de Ingreso</th>
+                                        <th>Hora Receso</th>
+                                        <th>Hora Fin Receso</th>
+                                        <th>Hora de Salida</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($estadoAsistencias as $asistencia): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($asistencia['dni']) ?></td>
+                                            <td><?= htmlspecialchars($asistencia['nombres'] . ' ' . $asistencia['apellidos']) ?></td>
+                                            <td><?= htmlspecialchars($asistencia['puesto']) ?></td>
+                                            <td><?= htmlspecialchars($asistencia['turno']) ?></td>
+                                            <td><?= htmlspecialchars($asistencia['estado']) ?></td>
+                                            <td><?= htmlspecialchars($asistencia['hora_entrada']) ?></td>
+                                            <td><?= htmlspecialchars($asistencia['hora_receso']) ?></td>
+                                            <td><?= htmlspecialchars($asistencia['hora_receso_final']) ?></td>
+                                            <td><?= htmlspecialchars($asistencia['hora_salida']) ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row" id="empleadosAusentes" style="display:none;">
-            <div class="col-lg-12">
-                <div class="card mb-4">
-                    <div class="card-header border-0">
-                        <h4>Empleados Ausentes</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            <?php foreach ($empleadosAusentes as $empleado): ?>
-                                <li class="list-group-item">
-                                    <?php echo $empleado['nombres']; ?>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row" id="empleadosConFalta" style="display:none;">
-            <div class="col-lg-12">
-                <div class="card mb-4">
-                    <div class="card-header border-0">
-                        <h4>Empleados con Falta</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            <?php foreach ($empleadosConFalta as $empleado): ?>
-                                <li class="list-group-item">
-                                    <?php echo $empleado['nombres']; ?>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                </div>
-            </div>
         </div>
-        
-        
-
     </div>
 </div>
-  <div class="modal fade" id="marcarEntradaModal" tabindex="-1" role="dialog" aria-labelledby="marcarEntradaModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form action="/biometrico/sistema/controller/AsistenciasController/AsistenciasController.php?action=marcarEntrada" method="POST">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="marcarEntradaModalLabel">Registrar Entrada Manual</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="idEmpleado">Seleccionar Empleado</label>
-                                <select name="idEmpleado" id="idEmpleado" class="form-control" required>
-                                   
-                                    <?php foreach ($listaEmpleados as $empleado): ?>
-                                        <option value="<?php echo $empleado['idEmpleado']; ?>"><?php echo $empleado['nombres']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Registrar Entrada</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-<!-- Modal para registrar la salida -->
-<div class="modal fade" id="marcarSalidaModal" tabindex="-1" role="dialog" aria-labelledby="marcarSalidaModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+
+
+<!-- Modal para marcar entrada -->
+<div class="modal fade" id="modalMarcarEntrada" tabindex="-1" aria-labelledby="modalMarcarEntradaLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <form action="javascript:void(0)" method="POST"> <!-- No recargamos la página -->
+            <form id="formMarcarEntrada">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="marcarSalidaModalLabel">Registrar Salida Manual</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="modalMarcarEntradaLabel">Marcar Entrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="empleadoIdSalida">Seleccionar Empleado</label>
-                        <select id="empleadoIdSalida" class="form-control" required>
-                            <?php foreach ($listaEmpleados as $empleado): ?>
-                                <option value="<?php echo $empleado['idEmpleado']; ?>"><?php echo $empleado['nombres']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                    <!-- Campo para ingresar DNI del empleado -->
+                    <div class="mb-3">
+                        <label for="dniEntrada" class="form-label">DNI del Empleado</label>
+                        <input type="text" class="form-control" id="dniEntrada" name="dni" required maxlength="8" minlength="8" pattern="\d{8}" placeholder="Ingrese DNI de 8 dígitos">
+                    </div>
+                    <div class="mb-3">
+                        <label for="horaEntrada" class="form-label">Hora de Entrada</label>
+                        <input type="text" class="form-control" id="horaEntrada" name="horaEntrada" value="<?php echo date('H:i'); ?>" readonly disabled>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="marcarSalida(document.getElementById('empleadoIdSalida').value)">Registrar Salida</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Registrar Entrada</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+<!-- Modal para marcar receso -->
+<div class="modal fade" id="modalMarcarReceso" tabindex="-1" aria-labelledby="modalMarcarRecesoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formMarcarReceso">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalMarcarRecesoLabel">Marcar Receso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="dniReceso" class="form-label">DNI del Empleado</label>
+                        <input type="text" class="form-control" id="dniReceso" name="dniReceso" required maxlength="8" minlength="8" pattern="\d{8}" placeholder="Ingrese DNI de 8 dígitos">
+                    </div>
+                    <div class="mb-3">
+                        <label for="horaReceso" class="form-label">Hora de Inicio de Receso</label>
+                        <input type="text" class="form-control" id="horaReceso" name="horaReceso" value="<?php echo date('H:i'); ?>" readonly disabled>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-warning">Registrar Receso</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+<!-- Modal para marcar fin de receso -->
+<div class="modal fade" id="modalMarcarFinReceso" tabindex="-1" aria-labelledby="modalMarcarFinRecesoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formMarcarFinReceso">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalMarcarFinRecesoLabel">Marcar Fin de Receso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="dniFinReceso" class="form-label">DNI del Empleado</label>
+                        <input type="text" class="form-control" id="dniFinReceso" name="dniFinReceso" required maxlength="8" minlength="8" pattern="\d{8}" placeholder="Ingrese DNI de 8 dígitos">
+                    </div>
+                    <div class="mb-3">
+                        <label for="horaFinReceso" class="form-label">Hora de Fin de Receso</label>
+                        <input type="text" class="form-control" id="horaFinReceso" name="horaFinReceso" value="<?php echo date('H:i'); ?>" readonly disabled>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-warning">Registrar Fin de Receso</button>
+                </div>
+            </form>
         </div>
+    </div>
+</div>
+
+<!-- Modal para marcar salida -->
+<div class="modal fade" id="modalMarcarSalida" tabindex="-1" aria-labelledby="modalMarcarSalidaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formMarcarSalida">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalMarcarSalidaLabel">Marcar Salida</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="dniSalida" class="form-label">DNI del Empleado</label>
+                        <input type="text" class="form-control" id="dniSalida" name="dniSalida" required maxlength="8" minlength="8" pattern="\d{8}" placeholder="Ingrese DNI de 8 dígitos">
+                    </div>
+                    <div class="mb-3">
+                        <label for="horaSalida" class="form-label">Hora de Salida</label>
+                        <input type="text" class="form-control" id="horaSalida" name="horaSalida" value="<?php echo date('H:i'); ?>" readonly disabled>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Registrar Salida</button>
+                </div>
+            </form>
         </div>
-        </div>
+    </div>
+</div>
