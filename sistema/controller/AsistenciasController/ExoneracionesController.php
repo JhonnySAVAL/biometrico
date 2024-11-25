@@ -76,7 +76,8 @@ class ExoneracionesController extends BaseController
     
             // Crear el permiso
             if ($this->model->crearExoneraciones($empleado['idEmpleado'], $fecha_inicio, $fecha_fin, $motivo, $documento)) {
-                echo "Permiso solicitado exitosamente.";
+                header("Location: /biometrico/sistema/controller/AsistenciasController/ExoneracionesController.php?action=MostrarExoneraciones");
+                exit();
             } else {
                 echo "Error al solicitar el permiso.";
             }

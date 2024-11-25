@@ -1,25 +1,20 @@
 <div class="col-sm-6">
-    <h3 class="mb-0">Dashboard</h3>
+    <h3 class="mb-0">Vacaciones Programadas</h3>
 </div>
 <div class="col-sm-6">
     <ol class="breadcrumb float-sm-end">
         <li class="breadcrumb-item"><a href="/biometrico/sistema/controller/DashboardController/DashboardController.php?action=MostrarDashboard">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">
-            Dashboard v3
+           
         </li>
     </ol>
-</div>
-</div>
-</div>
 </div>
 <div class="app-content">
     <div class="container-fluid">
         <div class="row">
-
             <div class="container-fluid">
                 <div class="row">
-                    <h3>Vacaciones Programadas</h3>
-                    <table class="table">
+                    <table id="tablaVacaciones" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Empleado</th>
@@ -37,7 +32,7 @@
                                     <td><?= $vacacion['fecha_fin'] ?></td>
                                     <td><?= htmlspecialchars($vacacion['motivo']) ?></td>
                                     <td>
-                                        <button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#modalEditarVacacion' data-idVacacion='<?= $vacacion['idVacacion'] ?>'>Editar</button>
+                                        <button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#modalEditarVacacion' data-idvacacion='<?= $vacacion['idVacacion'] ?>'>Editar</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -45,15 +40,9 @@
                     </table>
                 </div>
             </div>
-
-
-
-
-
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="modalEditarVacacion" tabindex="-1" aria-labelledby="modalEditarVacacionLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -85,3 +74,37 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Inicializar DataTable con opciones
+    $('#tablaVacaciones').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'print',
+                text: 'Imprimir',
+                title: 'Vacaciones Programadas'
+            },
+            {
+                extend: 'excel',
+                text: 'Exportar a Excel',
+                title: 'Vacaciones Programadas'
+            }
+        ],
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+        },
+        pageLength: 50
+    });
+
+    // Pasar ID de vacaciones al modal para editar
+    const modalEditar = document.getElementById('modalEditarVacacion');
+    modalEditar.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const idVacacion = button.getAttribute('data-idvacacion');
+        const inputIdVacacion = modalEditar.querySelector('#idVacacion');
+        inputIdVacacion.value = idVacacion;
+    });
+});
+</script>

@@ -1,6 +1,8 @@
 <?php
 require_once '../BaseController.php';
 require_once __DIR__ . '/../../model/DashboardModel/Dashboard.php';
+require_once __DIR__ . '/../../model/AsistenciasModel/AsistenciasModel.php';
+
 class DashboardController extends BaseController
 {
     private $model;
@@ -9,12 +11,16 @@ class DashboardController extends BaseController
     {
         $this->model = new Dashboard();
     }
+
+
         public function MostrarDashboard()
-    {
-
+    {  $estadoAsistencias = $this->model->obtenerEstadoAsistencias();
+        
         $this->loadView('Dashboard.Dashboard', [
-
-        ], [], [], 'Dashboard');
+            'estadoAsistencias' => $estadoAsistencias,
+        ],  [],  [
+            '/biometrico/sistema/view/Asistencias/recursos/js/Asistencias.min.js'
+        ], 'Gestion Asistencias');
     }
 }
 

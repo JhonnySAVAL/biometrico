@@ -27,7 +27,7 @@
                 setTimeout(() => {
                     alert('Entrada marcada correctamente.');
                     window.location.href = '/biometrico/sistema/controller/MarcarController/MarcarController.php?action=Marcado'; // Redirigir
-                }, 5000); // 5 segundos
+                }, 3000); // 5 segundos
             } else {
                 alert(data.message); // Mostrar el mensaje de error
             }
@@ -46,7 +46,7 @@ document.getElementById('btnSalida').addEventListener('click', function() {
                 setTimeout(() => {
                     alert('Salida marcada correctamente.');
                     window.location.href = '/biometrico/sistema/controller/MarcarController/MarcarController.php?action=Marcado'; // Redirigir
-                }, 5000);  // Redirigir
+                }, 3000);  // Redirigir
             } else {
                 alert(data.message); // Mostrar el mensaje de error
             }

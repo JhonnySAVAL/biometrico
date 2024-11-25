@@ -15,7 +15,8 @@ class AgregarUsuarioController extends BaseController
         $this->loadView('Usuarios.Crear', [
             'puestos' => $puestos,
             'turnos' => $turnos,
-        ], [], ['/biometrico/sistema/view/usuarios/js/limpiar.min.js'], 'Usuarios');
+        ], [], [
+            '/biometrico/sistema/view/Usuarios/js/limpiar.min.js'], 'Usuarios');
     }
 
     private function validarDatosUsuario($nombres, $apellidos, $dni, $correo, $telefono)
@@ -61,12 +62,12 @@ class AgregarUsuarioController extends BaseController
             $puesto = $_POST['puesto'];
             $turno = $_POST['turno'];
             $habilitado = isset($_POST['habilitado']) ? 1 : 0;
-
+    
             $idmarcar = strtolower(substr($nombres, 0, 2) . substr($apellidos, 0, 2));
-
+    
             // Generar la contraseña: los primeros 5 caracteres del hash MD5 del DNI
             $passmarcar = substr(md5($dni), 0, 5);
-
+    
             $errores = $this->validarDatosUsuario($nombres, $apellidos, $dni, $correo, $telefono);
             $crearModel = new AgregarUsuarioModel();
             if ($crearModel->verificarDniExistente($dni)) {
@@ -78,7 +79,7 @@ class AgregarUsuarioController extends BaseController
                 $crearModel = new AgregarUsuarioModel();
                 $puestos = $crearModel->MostrarPuestos();
                 $turnos = $crearModel->MostrarTurnos();
-
+    
                 $this->loadView('Usuarios.Crear', [
                     'puestos' => $puestos,
                     'turnos' => $turnos,
@@ -87,13 +88,16 @@ class AgregarUsuarioController extends BaseController
                 return;
             }
             $crearModel->agregarUsuario($nombres, $apellidos, $dni, $correo, $telefono, $puesto, $turno, $habilitado, $idmarcar, $passmarcar);
-
+    
+            // Redirigir al listado de usuarios
             if (!headers_sent()) {
-                header('Location: /biometrico/sistema/controller/UsuariosController/UsuariosCrearController.php?action=VistaAgregarUsuario&success=true');
+                header('Location: http://localhost/biometrico/sistema/controller/UsuariosController/UsuariosController.php?action=MostrarUsuario&success=true');
                 exit();
             }
         }
     }
+    
+    
 }
 if (isset($_GET['action'])) {
     $controller = new AgregarUsuarioController();

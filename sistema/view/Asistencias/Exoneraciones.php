@@ -55,7 +55,7 @@
                     </div>
                     <div class="card-body table-responsive">
                         <table id="dataTable" class="table table-striped">
-                            <thead>
+                        <thead>
                                 <tr>
                                     <th>DNI Empleado</th>
                                     <th>Nombre</th>
@@ -64,9 +64,10 @@
                                     <th>Días de Exoneración</th>
                                     <th>Motivo</th>
                                     <th>Documento</th>
-                                    <th>Acciones</th>
+                                    <!-- <th>Acciones</th> -->
                                 </tr>
                             </thead>
+
                             <tbody>
                                 <?php if (!empty($exoneraciones)): ?>
                                     <?php foreach ($exoneraciones as $exoneracion): ?>
@@ -89,7 +90,7 @@
                                                     No adjunto
                                                 <?php endif; ?>
                                             </td>
-                                            <td>
+                                            <!-- <td>
                                                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
                                                     data-id="<?= $exoneracion['idExoneraciones'] ?>"
                                                     data-dni="<?= $exoneracion['dniEmpleado'] ?>"
@@ -99,7 +100,7 @@
 
                                                 <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                                     data-id="<?= $exoneracion['idExoneraciones'] ?>">Eliminar</button>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>

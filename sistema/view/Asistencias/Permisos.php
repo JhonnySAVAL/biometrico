@@ -65,7 +65,7 @@
                                     <th>Días de Permiso</th>
                                     <th>Motivo</th>
                                     <th>Documento</th>
-                                    <th>Acciones</th>
+                                    <!-- <th>Acciones</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,17 +89,17 @@
                                                 No adjunto
                                             <?php endif; ?>
                                         </td>
-                                        <td>
-                                            <!-- Botones de acción -->
-                                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
-                                                data-id="<?= $permiso['idPermiso'] ?>"
-                                                data-dni="<?= $permiso['dniEmpleado'] ?>"
-                                                data-fechainicio="<?= $permiso['fecha_inicio'] ?>"
-                                                data-fechafin="<?= $permiso['fecha_fin'] ?>"
-                                                data-motivo="<?= $permiso['motivo'] ?>">Editar</button>
-                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                                data-id="<?= $permiso['idPermiso'] ?>">Eliminar</button>
-                                        </td>
+                                        <!-- <td>
+                                        <!-- <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
+                                            data-id="<?= $permiso['idPermiso'] ?>"
+                                            data-dni="<?= $permiso['dniEmpleado'] ?>"
+                                            data-fechainicio="<?= $permiso['fecha_inicio'] ?>"
+                                            data-fechafin="<?= $permiso['fecha_fin'] ?>"
+                                            data-motivo="<?= $permiso['motivo'] ?>">Editar</button>
+
+                                        <button class="btn btn-danger btn-sm">Eliminar</button>
+
+                                        </td> -->
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -112,59 +112,75 @@
     </div>
 </div>
 
-
-<!-- Modal edit -->
+<!-- Modal de edición -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Editar Registro</h5>
+                <h5 class="modal-title" id="editModalLabel">Editar Permiso</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="formEdit" method="POST">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="edit-fecha_inicio">Fecha Inicio</label>
-                            <input type="date" class="form-control" id="edit-fecha_inicio" name="fecha_inicio" required>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="edit-fecha_fin">Fecha Fin</label>
-                            <input type="date" class="form-control" id="edit-fecha_fin" name="fecha_fin" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-motivo">Motivo</label>
-                        <textarea class="form-control" id="edit-motivo" name="motivo" rows="3" required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                </div>
-            </form>
+            <form id="editForm" method="POST" enctype="multipart/form-data" action="/biometrico/sistema/controller/AsistenciasController/PermisosController.php?action=actualizar">
+    <div class="modal-body">
+        <input type="hidden" id="idPermiso" name="idPermiso">
+        <input type="hidden" id="documentoActual" name="documentoActual"> <!-- Campo para mantener el documento actual -->
+
+        <div class="form-group">
+            <label for="editDniEmpleado">DNI Empleado</label>
+            <input type="text" class="form-control" id="editDniEmpleado" name="idEmpleado" readonly>
+        </div>
+        <div class="form-group">
+            <label for="editFechaInicio">Fecha Inicio</label>
+            <input type="date" class="form-control" id="editFechaInicio" name="fecha_inicio" required>
+        </div>
+        <div class="form-group">
+            <label for="editFechaFin">Fecha Fin</label>
+            <input type="date" class="form-control" id="editFechaFin" name="fecha_fin" required>
+        </div>
+        <div class="form-group">
+            <label for="editMotivo">Motivo</label>
+            <textarea class="form-control" id="editMotivo" name="motivo" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="editDocumento">Documento Adjunto</label>
+            <input type="file" class="form-control" id="editDocumento" name="documento">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    </div>
+</form>
+
         </div>
     </div>
 </div>
 
-<!-- Modal Genérico de Eliminación -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Eliminar Registro</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="formDelete" method="POST">
-                <div class="modal-body">
-                    <input type="hidden" id="delete-idRegistro" name="idRegistro">
-                    <p>¿Está seguro de que desea eliminar este registro?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<script>
+    // Cargar datos en el modal
+    const editModal = document.getElementById('editModal');
+    editModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget; // Botón que disparó el modal
+        document.getElementById('idPermiso').value = button.getAttribute('data-id');
+        document.getElementById('editDniEmpleado').value = button.getAttribute('data-dni');
+        document.getElementById('editFechaInicio').value = button.getAttribute('data-fechainicio');
+        document.getElementById('editFechaFin').value = button.getAttribute('data-fechafin');
+        document.getElementById('editMotivo').value = button.getAttribute('data-motivo');
+    });
+
+    // Enviar datos del formulario
+    document.getElementById('editForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        fetch('/biometrico/sistema/controller/AsistenciasController/PermisosController.php?action=actualizar', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            location.reload(); // Recargar la página tras éxito
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>

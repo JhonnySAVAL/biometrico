@@ -13,7 +13,7 @@
 <div class="app-content">
     <div class="container-fluid">
         <div class="row">
-
+        <div class="d-flex mb-3">
             <!-- Botón para Crear Feriado Simple -->
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCrearFeriado" onclick="document.getElementById('tipo').value = 'simple'; document.getElementById('anioDiv').style.display = 'none';">
                 Crear Feriado
@@ -22,7 +22,7 @@
             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalCopiarFeriado" onclick="copiarFeriados(2024)">
                 Copiar Feriado Anual
             </button>
-
+            </div>
             <div class="col-lg-5">
                 <div class="card mb-3">
                     <div class="card-header">

@@ -51,3 +51,15 @@ if (urlParams.has('success') && urlParams.get('success') === 'true') {
         window.location.replace(newUrl);  // Redirige sin el parámetro 'success'
     });
 }
+    $(document).ready(function () {
+        $('#tablaEmpleados').DataTable({
+            // Configuración opcional de DataTables
+            paging: true,
+            searching: true,
+            ordering: true,
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+            }
+        });
+    });
+

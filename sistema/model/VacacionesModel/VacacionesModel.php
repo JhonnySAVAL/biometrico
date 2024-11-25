@@ -10,14 +10,18 @@ class Vacaciones extends Database
     // Obtener empleados sin vacaciones programadas
     public function getEmpleadosSinVacaciones()
     {
-        $sql = "SELECT e.idEmpleado, e.nombres
+        $sql = "SELECT 
+                    e.idEmpleado, 
+                    e.dni, 
+                    CONCAT(e.nombres, ' ', e.apellidos) AS nombres
                 FROM empleados e
                 LEFT JOIN vacaciones v ON e.idEmpleado = v.idEmpleado
-                WHERE v.idVacacion IS NULL";  
+                WHERE v.idVacacion IS NULL";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 
     // Obtener todas las vacaciones programadas
     public function getVacacionesProgramadas()

@@ -29,18 +29,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-document.getElementById('formEditEmpleado').addEventListener('submit', function(event) {
+document.getElementById("formEditEmpleado").addEventListener("submit", function (event) {
     event.preventDefault(); // Evita el envío inmediato del formulario
 
     Swal.fire({
-        title: '¿Estás seguro?',
+        title: "¿Estás seguro?",
         text: "¿Quieres editar este empleado?",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, crear!',
-        cancelButtonText: 'Cancelar'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, editar!",
+        cancelButtonText: "Cancelar",
     }).then((result) => {
         if (result.isConfirmed) {
             // Envía el formulario al confirmar
@@ -50,16 +50,42 @@ document.getElementById('formEditEmpleado').addEventListener('submit', function(
 });
 
 const urlParams = new URLSearchParams(window.location.search);
-if (urlParams.has('success') && urlParams.get('success') === 'true') {
+if (urlParams.has("success") && urlParams.get("success") === "true") {
     Swal.fire({
         position: "top-end",
         icon: "success",
         title: "Empleado editado exitosamente",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
     }).then(() => {
         // Redirige a la misma página sin el parámetro 'success'
-        const newUrl = window.location.pathname + window.location.search.split('&')[0];  // Quitar solo 'success'
-        window.location.replace(newUrl);  // Redirige sin el parámetro 'success'
+        urlParams.delete("success");
+        const newUrl = window.location.pathname + "?" + urlParams.toString();
+        window.location.replace(newUrl);
     });
 }
+
+$(document).ready(function () {
+    $("#tablaEmpleados").DataTable({
+        dom: "Bfrtip",
+        buttons: [
+            {
+                extend: "print",
+                text: "Imprimir",
+                exportOptions: {
+                    columns: ":not(:last-child):not(:nth-last-child(2))", // Excluir las últimas dos columnas
+                },
+            },
+            {
+                extend: "excel",
+                text: "Exportar a Excel",
+                exportOptions: {
+                    columns: ":not(:last-child):not(:nth-last-child(2))",
+                },
+            },
+        ],
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json", // Traducción al español
+        },
+    });
+});

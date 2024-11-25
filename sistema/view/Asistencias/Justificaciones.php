@@ -65,7 +65,7 @@
                                     <th>Fecha Fin</th>
                                     <th>Motivo</th>
                                     <th>Documento</th>
-                                    <th>Acciones</th>
+                                    <!-- <th>Acciones</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,7 +84,7 @@
                                                     No adjunto
                                                 <?php endif; ?>
                                             </td>
-                                            <td>
+                                            <!-- <td>
                                                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
                                                     data-id="<?= $justificacion['idJustificaciones'] ?>"
                                                     data-dni="<?= $justificacion['dniEmpleado'] ?>"
@@ -93,7 +93,7 @@
                                                     data-motivo="<?= $justificacion['motivo'] ?>">Editar</button>
                                                 <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                                     data-id="<?= $justificacion['idJustificaciones'] ?>">Eliminar</button>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>

@@ -13,42 +13,35 @@
 <div class="app-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="container-fluid">
-                <div class="row">
-
-                    <div class="col-lg-6">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <h3>Empleados Sin Vacaciones Programadas</h3>
-                            </div>
-                            <div class="card-body">
-
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Empleado</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($empleados as $empleado): ?>
-                                            <tr>
-                                                <td><?= htmlspecialchars($empleado['nombres']) ?></td>
-                                                <td>
-                                                <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#modalAsignarVacacion' data-idEmpleado='<?= $empleado['idEmpleado'] ?>'>Asignar Vacaciones</button>
-
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>  
+            <div class="col-lg-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3>Empleados Sin Vacaciones Programadas</h3>
+                    </div>
+                    <div class="card-body">
+                        <table id="tablaEmpleados" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>DNI</th>
+                                    <th>Empleado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($empleados as $empleado): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($empleado['dni']) ?></td>
+                                        <td><?= htmlspecialchars($empleado['nombres']) ?></td>
+                                        <td>
+                                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAsignarVacacion" data-idempleado="<?= $empleado['idEmpleado'] ?>">Asignar Vacaciones</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -86,3 +79,37 @@
   </div>
 </div>
 
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Inicializar DataTable con opciones
+    $('#tablaEmpleados').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'print',
+                text: 'Imprimir',
+                title: 'Empleados Sin Vacaciones Programadas'
+            },
+            {
+                extend: 'excel',
+                text: 'Exportar a Excel',
+                title: 'Empleados Sin Vacaciones Programadas'
+            }
+        ],
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+        },
+        pageLength: 50
+    });
+
+    // Pasar ID del empleado al modal
+    const modalAsignar = document.getElementById('modalAsignarVacacion');
+    modalAsignar.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const idEmpleado = button.getAttribute('data-idempleado');
+        const inputIdEmpleado = modalAsignar.querySelector('#idEmpleado');
+        inputIdEmpleado.value = idEmpleado;
+    });
+});
+</script>

@@ -25,12 +25,15 @@ class Permisos extends Database {
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$dniEmpleado]);
         $empleado = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Retornar false si no se encuentra
         if (!$empleado) {
-            throw new Exception("No se encontró un empleado con el DNI $dniEmpleado");
+            return false; // Evita arrojar excepción
         }
     
         return $empleado;
     }
+    
 
     public function crearPermisos($idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento) {
         $query = "INSERT INTO permisos (idEmpleado, fecha_inicio, fecha_fin, motivo, documento) VALUES (?, ?, ?, ?, ?)";

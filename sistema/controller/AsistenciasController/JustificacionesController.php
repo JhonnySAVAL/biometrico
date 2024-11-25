@@ -74,7 +74,8 @@ class JustificacionesController extends BaseController
     
             // Crear el permiso
             if ($this->model->crearJustificaciones($empleado['idEmpleado'], $fecha_inicio, $fecha_fin, $motivo, $documento)) {
-                echo "Permiso solicitado exitosamente.";
+                header("Location: /biometrico/sistema/controller/AsistenciasController/JustificacionesController.php?action=MostrarJustificaciones");
+                exit();
             } else {
                 echo "Error al solicitar el permiso.";
             }

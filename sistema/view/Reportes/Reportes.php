@@ -61,7 +61,6 @@
                             <button id="btnVacaciones" class="btn btn-primary mx-1" style="display: none;">Reporte de Vacaciones</button>
                             <button id="btnAsistencias" class="btn btn-success mx-1" style="display: none;">Reporte de Asistencias</button>
                             <button id="btnFeriados" class="btn btn-warning mx-1" style="display: none;">Reporte de Feriados</button>
-                            <button id="btnTurnos" class="btn btn-info mx-1" style="display: none;">Reporte de Turnos</button>
                             <button id="btnPermisos" class="btn btn-secondary mx-1" style="display: none;">Reporte de Permisos</button>
                             <button id="btnExoneraciones" class="btn btn-danger mx-1" style="display: none;">Reporte de Exoneraciones</button>
                         </div>
@@ -119,7 +118,6 @@
         vacaciones: document.getElementById('btnVacaciones'),
         asistencias: document.getElementById('btnAsistencias'),
         feriados: document.getElementById('btnFeriados'),
-        turnos: document.getElementById('btnTurnos'),
         permisos: document.getElementById('btnPermisos'),
         exoneraciones: document.getElementById('btnExoneraciones'),
     };
@@ -181,7 +179,6 @@
     botonesReportes.asistencias.addEventListener('click', () => redirigirReporte('asistencias'));
     botonesReportes.vacaciones.addEventListener('click', () => redirigirReporte('vacaciones'));
     botonesReportes.feriados.addEventListener('click', () => redirigirReporte('feriados'));
-    botonesReportes.turnos.addEventListener('click', () => redirigirReporte('turnos'));
     botonesReportes.permisos.addEventListener('click', () => redirigirReporte('permisos'));
     botonesReportes.exoneraciones.addEventListener('click', () => redirigirReporte('exoneraciones'));
 });

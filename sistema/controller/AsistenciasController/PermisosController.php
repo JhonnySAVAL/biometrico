@@ -74,9 +74,58 @@ class PermisosController extends BaseController
     
             // Crear el permiso
             if ($this->model->crearPermisos($empleado['idEmpleado'], $fecha_inicio, $fecha_fin, $motivo, $documento)) {
-                echo "Permiso solicitado exitosamente.";
+              
+                header("Location: /biometrico/sistema/controller/AsistenciasController/PermisosController.php?action=MostrarPermisos");
+                exit(); // Asegúrate de incluir exit() después de header() para detener la ejecución del script.
             } else {
                 echo "Error al solicitar el permiso.";
+            }
+            
+        } else {
+            echo "Método no permitido.";
+        }
+    }
+    
+    public function actualizar() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $idPermiso = $_POST['idPermiso'] ?? null;
+            $idEmpleado = $_POST['idEmpleado'] ?? null; // Si también necesitas actualizar este campo
+            $fecha_inicio = $_POST['fecha_inicio'] ?? null;
+            $fecha_fin = $_POST['fecha_fin'] ?? null;
+            $motivo = $_POST['motivo'] ?? null;
+            $documento = null;
+    
+            // Manejar el documento si se sube uno nuevo
+            if (isset($_FILES['documento']) && $_FILES['documento']['error'] === UPLOAD_ERR_OK) {
+                $nombreArchivoOriginal = pathinfo($_FILES['documento']['name'], PATHINFO_FILENAME);
+                $extension = pathinfo($_FILES['documento']['name'], PATHINFO_EXTENSION);
+                $rutaCarpeta = __DIR__ . '/../../../uploads/';
+    
+                if (!is_dir($rutaCarpeta)) {
+                    mkdir($rutaCarpeta, 0777, true);
+                }
+    
+                $nombreArchivo = $nombreArchivoOriginal . '.' . $extension;
+                $contador = 1;
+    
+                while (file_exists($rutaCarpeta . $nombreArchivo)) {
+                    $nombreArchivo = $nombreArchivoOriginal . "($contador)." . $extension;
+                    $contador++;
+                }
+    
+                $rutaDestino = $rutaCarpeta . $nombreArchivo;
+    
+                if (move_uploaded_file($_FILES['documento']['tmp_name'], $rutaDestino)) {
+                    $documento = '/biometrico/uploads/' . $nombreArchivo;
+                }
+            } else {
+                $documento = $_POST['documentoActual'] ?? null; // Mantén el archivo existente si no se sube uno nuevo
+            }
+    
+            if ($this->model->actualizarPermisos($idPermiso, $idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento)) {
+                echo "Permiso actualizado exitosamente.";
+            } else {
+                echo "Error al actualizar el permiso.";
             }
         } else {
             echo "Método no permitido.";
@@ -84,20 +133,6 @@ class PermisosController extends BaseController
     }
     
     
-
-    public function actualizar($idEmpleado) {
-        $idPermiso = $_POST['idPermiso'] ?? null;
-        $fecha_inicio = $_POST['fecha_inicio'] ?? null;
-        $fecha_fin = $_POST['fecha_fin'] ?? null;
-        $motivo = $_POST['motivo'] ?? null;
-        $documento = $_POST['documento'] ?? null;
-
-        if ($this->model->actualizarPermisos($idPermiso, $idEmpleado, $fecha_inicio, $fecha_fin, $motivo, $documento)) {
-            echo "Permiso actualizado exitosamente.";
-        } else {
-            echo "Error al actualizar el permiso.";
-        }
-    }
 
     public function eliminar($idEmpleado) {
         $idPermiso = $_POST['idPermiso'] ?? null;

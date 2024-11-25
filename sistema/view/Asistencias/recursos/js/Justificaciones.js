@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const motivo = this.dataset.motivo;
 
             // Establece los valores en los campos del modal
-            formEdit.action = `/biometrico/sistema/controller/AsistenciasController/JustificacionesController.php?action=ActualizarJustificacion&id=${id}`;
+            formEdit.action = `/biometrico/sistema/controller/AsistenciasController/JustificacionesController.php?action=actualizarJustificaciones&id=${id}`;
             formEdit.querySelector("#edit-fecha_inicio").value = fechaInicio;
             formEdit.querySelector("#edit-fecha_fin").value = fechaFin;
             formEdit.querySelector("#edit-motivo").value = motivo;

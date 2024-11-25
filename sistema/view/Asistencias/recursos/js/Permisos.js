@@ -39,55 +39,34 @@ $(document).ready(function () {
         }
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const editModal = document.getElementById('editModal');
+    editModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget; // Botón que disparó el modal
+        console.log('Modal abierto'); // Depuración
+        console.log(button); // Verificar el botón
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Variables para los modales y formularios
-    const editModal = document.getElementById("editModal");
-    const deleteModal = document.getElementById("deleteModal");
-    const formEdit = document.getElementById("formEdit");
-    const formDelete = document.getElementById("formDelete");
-
-    // Evento para rellenar el modal de edición
-    document.querySelectorAll("[data-bs-target='#editModal']").forEach(button => {
-        button.addEventListener("click", function () {
-            // Rellenar campos del modal de edición
-            const id = this.dataset.id;
-            const fechaInicio = this.dataset.fechainicio;
-            const fechaFin = this.dataset.fechafin;
-            const motivo = this.dataset.motivo;
-
-            // Establece los valores en los campos del modal
-            formEdit.action = `/biometrico/sistema/controller/AsistenciasController/PermisosController.php?action=ActualizarPermiso&id=${id}`;
-            formEdit.querySelector("#edit-fecha_inicio").value = fechaInicio;
-            formEdit.querySelector("#edit-fecha_fin").value = fechaFin;
-            formEdit.querySelector("#edit-motivo").value = motivo;
-        });
+        document.getElementById('idPermiso').value = button.getAttribute('data-id');
+        document.getElementById('editDniEmpleado').value = button.getAttribute('data-dni');
+        document.getElementById('editFechaInicio').value = button.getAttribute('data-fechainicio');
+        document.getElementById('editFechaFin').value = button.getAttribute('data-fechafin');
+        document.getElementById('editMotivo').value = button.getAttribute('data-motivo');
     });
+});
 
-    // Evento para gestionar la eliminación con SweetAlert
-    document.querySelectorAll("[data-bs-target='#deleteModal']").forEach(button => {
-        button.addEventListener("click", function (e) {
-            e.preventDefault();
 
-            const id = this.dataset.id;
-
-            // Confirmación con SweetAlert
-            Swal.fire({
-                title: "¿Estás seguro?",
-                text: "No podrás deshacer esta acción.",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Sí, eliminar",
-                cancelButtonText: "Cancelar"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Enviar formulario de eliminación
-                    formDelete.action = `/biometrico/sistema/controller/AsistenciasController/PermisosController.php?action=EliminarPermiso&id=${id}`;
-                    formDelete.submit();
-                }
-            });
-        });
-    });
+// Enviar datos del formulario
+document.getElementById('editForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    fetch('/biometrico/sistema/controller/AsistenciasController/PermisosController.php?action=actualizar', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert(data);
+        location.reload(); // Recargar la página tras éxito
+    })
+    .catch(error => console.error('Error:', error));
 });
