@@ -49,7 +49,7 @@ class MarcarModel extends Database
     if ($stmt->rowCount() == 0) {
         // Insertamos la entrada
         $sql = "INSERT INTO asistencia (idEmpleado, fecha_registro, hora_entrada, tipo_registro)
-            VALUES (:idEmpleado, CURDATE(), :horaEntrada, 'manual')";
+            VALUES (:idEmpleado, CURDATE(), :horaEntrada, 'automatico')";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':idEmpleado', $idEmpleado);
