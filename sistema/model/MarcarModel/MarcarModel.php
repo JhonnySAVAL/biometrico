@@ -87,11 +87,11 @@ class MarcarModel extends Database
         $stmt->bindParam(':idEmpleado', $idEmpleado);
         $stmt->execute();
 
-        // Si no hay registro, lo insertamos
-        if ($stmt->rowCount() == 0) {
-            // Insertamos la entrada
-            $sql = "INSERT INTO asistencia (idEmpleado, fecha_registro, hora_entrada, tipo_registro)
-                VALUES (:idEmpleado, CURDATE(), :horaEntrada, 'automatica')";
+    // Si no hay registro, lo insertamos
+    if ($stmt->rowCount() == 0) {
+        // Insertamos la entrada
+        $sql = "INSERT INTO asistencia (idEmpleado, fecha_registro, hora_entrada, tipo_registro)
+            VALUES (:idEmpleado, CURDATE(), :horaEntrada, 'automatica')";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':idEmpleado', $idEmpleado);
@@ -140,17 +140,15 @@ class MarcarModel extends Database
             $stmt->bindParam(':idEmpleado', $idEmpleado);
             $stmt->bindParam(':horaSalida', $horaSalida);
 
-            // Ejecutar la consulta
-            if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Salida marcada correctamente.'];
-            } else {
-                return ['success' => false, 'message' => 'Hubo un error al marcar la salida.'];
-            }
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            return ['success' => true, 'message' => 'Salida marcada correctamente.'];
         } else {
-            // Si no hay registro de entrada para hoy
-            return ['success' => false, 'message' => 'No puedes marcar salida sin haber marcado entrada.'];
+            return ['success' => false, 'message' => 'Hubo un error al marcar la salida.'];
         }
+    } else {
+        // Si no hay registro de entrada para hoy
+        return ['success' => false, 'message' => 'No puedes marcar salida sin haber marcado entrada.'];
     }
-    
-    
+}
 }
