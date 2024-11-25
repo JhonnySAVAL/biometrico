@@ -5,15 +5,16 @@
     <ol class="breadcrumb float-sm-end">
         <li class="breadcrumb-item"><a href="/biometrico/sistema/controller/DashboardController/DashboardController.php?action=MostrarDashboard">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">
-           
+        Vacaciones Programadas
         </li>
     </ol>
 </div>
 <div class="app-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="container-fluid">
-                <div class="row">
+        <div class="col-lg-12">
+                <div class="card mb-3">
+                    <div class="card-body">
                     <table id="tablaVacaciones" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -43,6 +44,8 @@
         </div>
     </div>
 </div>
+</div>
+
 <div class="modal fade" id="modalEditarVacacion" tabindex="-1" aria-labelledby="modalEditarVacacionLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

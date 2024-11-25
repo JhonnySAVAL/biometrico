@@ -1,8 +1,8 @@
 function copiarFeriados(añoOrigen) {
     document.getElementById("anioOriginal").value = añoOrigen;
     
-    fetch(`/biometrico/sistema/controller/ConfiguracionesController/FeriadosController.php?action=ObtenerFeriadosPorAno&anio=${añoOrigen}`)
-        .then(response => response.json())
+    fetch(`/biometrico/sistema/controller/ConfiguracionesController/FeriadosController.php?action=obtenerFeriadosPorAnio&anio=${añoOrigen}`)
+    .then(response => response.json())
         .then(data => {
             const listaFeriados = document.getElementById("feriadosLista");
             listaFeriados.innerHTML = ""; // Limpiar la lista antes de agregar los nuevos elementos

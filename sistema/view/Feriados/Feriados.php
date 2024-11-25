@@ -5,7 +5,7 @@
     <ol class="breadcrumb float-sm-end">
         <li class="breadcrumb-item"><a href="/biometrico/sistema/controller/DashboardController/DashboardController.php?action=MostrarDashboard">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">
-            Vacaciones sin programar
+            Feriados
         </li>
     </ol>
 </div>
@@ -19,9 +19,9 @@
                 Crear Feriado
             </button>
             <!-- Botón para Crear Feriado Anual -->
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalCopiarFeriado" onclick="copiarFeriados(2024)">
+            <!-- <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalCopiarFeriado" onclick="copiarFeriados(2024)">
                 Copiar Feriado Anual
-            </button>
+            </button> -->
             </div>
             <div class="col-lg-5">
                 <div class="card mb-3">
