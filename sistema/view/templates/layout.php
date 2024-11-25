@@ -187,9 +187,9 @@
                             </a>
                         </li>
 
-                        <li class="nav-header">-------------------------------------------</li>
+                        <li class="nav-header">---------------------------------</li>
                         <li class="nav-item">
-                            <a href="#" id="cerrarSesion" class="nav-link">
+                            <a href="/biometrico/sistema/controller/AutenticacionController/logout.php" id="cerrarSesion" class="nav-link">
                                 <i class="nav-icon bi bi-box-arrow-in-right"></i>
                                 <p>Cerrar Sesión</p>
                             </a>

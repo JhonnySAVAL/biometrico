@@ -15,7 +15,7 @@ class Turnos extends Database {
     }
 
     public function InsertarTurno($descripcion, $entrada, $salida, $receso) {
-        $sql = "INSERT INTO turnos (descripcion, entrada, salida, , receso) 
+        $sql = "INSERT INTO turnos (descripcion, entrada, salida, receso) 
                 VALUES (:descripcion, :entrada, :salida, :receso)";
         
         $stmt = $this->conn->prepare($sql);
