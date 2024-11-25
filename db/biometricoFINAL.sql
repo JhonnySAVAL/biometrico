@@ -3,11 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
-<<<<<<<< HEAD:db/biometrico (2).sql
--- Tiempo de generación: 25-11-2024 a las 04:50:52
-========
--- Tiempo de generación: 25-11-2024 a las 04:48:25
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+-- Tiempo de generación: 25-11-2024 a las 18:19:10
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -70,8 +66,9 @@ CREATE TABLE `asistencia` (
   `hora_salida` time DEFAULT NULL,
   `minutos_tardanza` int(11) DEFAULT 0,
   `tipo_registro` enum('automatica','manual') DEFAULT 'automatica',
+  `estado` enum('Sin acciones','presente','receso','regreso','tarde','salida','falto') DEFAULT 'Sin acciones',
   `hora_receso` time DEFAULT NULL,
-  `hora_receso_final` time DEFAULT NULL,
+  `hora_receso_final` time NOT NULL,
   `horas_extras` time DEFAULT '00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -79,13 +76,49 @@ CREATE TABLE `asistencia` (
 -- Volcado de datos para la tabla `asistencia`
 --
 
-<<<<<<<< HEAD:db/biometrico (2).sql
-INSERT INTO `asistencia` (`idAsistencia`, `idEmpleado`, `fecha_registro`, `hora_entrada`, `hora_salida`, `minutos_tardanza`, `tipo_registro`, `hora_receso`, `horas_extras`) VALUES
-(1, 7, '2024-11-24', '22:13:25', '22:13:40', 0, 'manual', NULL, '00:00:00');
-========
-INSERT INTO `asistencia` (`idAsistencia`, `idEmpleado`, `fecha_registro`, `hora_entrada`, `hora_salida`, `minutos_tardanza`, `tipo_registro`, `hora_receso`, `hora_receso_final`, `horas_extras`) VALUES
-(1, 1, '2024-11-24 00:00:00', '22:14:02', '22:14:20', 0, 'manual', NULL, NULL, '00:00:00');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+INSERT INTO `asistencia` (`idAsistencia`, `idEmpleado`, `fecha_registro`, `hora_entrada`, `hora_salida`, `minutos_tardanza`, `tipo_registro`, `estado`, `hora_receso`, `hora_receso_final`, `horas_extras`) VALUES
+(1, 1, '2024-10-01 08:00:00', '08:00:00', '17:00:00', 0, 'automatica', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(2, 2, '2024-10-02 08:15:00', '08:15:00', '17:00:00', 15, 'manual', 'tarde', '12:30:00', '13:00:00', '01:00:00'),
+(3, 3, '2024-10-03 07:50:00', '07:50:00', '17:00:00', 0, 'automatica', 'presente', '12:00:00', '12:45:00', '00:00:00'),
+(4, 4, '2024-10-04 09:00:00', '09:00:00', '17:00:00', 30, 'manual', 'tarde', '12:00:00', '12:30:00', '00:00:00'),
+(5, 5, '2024-10-05 08:00:00', '08:00:00', '17:00:00', 0, 'automatica', 'presente', '12:30:00', '13:00:00', '00:00:00'),
+(6, 6, '2024-10-06 08:00:00', '08:00:00', '17:00:00', 0, 'manual', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(7, 7, '2024-10-07 08:05:00', '08:05:00', '17:00:00', 5, 'automatica', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(8, 8, '2024-10-08 09:00:00', '09:00:00', '17:00:00', 30, 'manual', 'tarde', '12:30:00', '13:00:00', '01:00:00'),
+(9, 9, '2024-10-09 08:00:00', '08:00:00', '17:00:00', 0, 'automatica', 'presente', '12:00:00', '12:45:00', '00:00:00'),
+(10, 10, '2024-10-10 08:10:00', '08:10:00', '17:00:00', 10, 'manual', 'tarde', '12:00:00', '12:30:00', '00:00:00'),
+(11, 11, '2024-10-11 08:00:00', '08:00:00', '17:00:00', 0, 'automatica', 'presente', '12:30:00', '13:00:00', '00:00:00'),
+(12, 12, '2024-10-12 08:00:00', '08:00:00', '17:00:00', 0, 'manual', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(13, 13, '2024-10-13 08:20:00', '08:20:00', '17:00:00', 20, 'automatica', 'tarde', '12:00:00', '12:30:00', '00:00:00'),
+(14, 14, '2024-10-14 08:00:00', '08:00:00', '17:00:00', 0, 'manual', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(15, 15, '2024-10-15 08:00:00', '08:00:00', '17:00:00', 0, 'automatica', 'presente', '12:30:00', '13:00:00', '01:00:00'),
+(16, 16, '2024-10-16 09:00:00', '09:00:00', '17:00:00', 30, 'manual', 'tarde', '12:00:00', '12:30:00', '00:00:00'),
+(17, 17, '2024-10-17 08:00:00', '08:00:00', '17:00:00', 0, 'automatica', 'presente', '12:30:00', '13:00:00', '00:00:00'),
+(18, 18, '2024-10-18 08:10:00', '08:10:00', '17:00:00', 10, 'manual', 'tarde', '12:00:00', '12:30:00', '01:00:00'),
+(19, 19, '2024-10-19 08:00:00', '08:00:00', '17:00:00', 0, 'automatica', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(20, 20, '2024-10-20 08:00:00', '08:00:00', '17:00:00', 0, 'manual', 'presente', '12:30:00', '13:00:00', '00:00:00'),
+(41, 1, '2024-11-01 08:05:00', '08:05:00', '17:00:00', 5, 'automatica', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(42, 2, '2024-11-02 08:30:00', '08:30:00', '17:00:00', 30, 'manual', 'tarde', '12:15:00', '12:45:00', '01:00:00'),
+(43, 3, '2024-11-03 08:15:00', '08:15:00', '17:00:00', 15, 'automatica', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(44, 4, '2024-11-04 08:00:00', '08:00:00', '17:00:00', 0, 'manual', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(45, 5, '2024-11-05 08:40:00', '08:40:00', '17:00:00', 40, 'automatica', 'tarde', '12:15:00', '12:45:00', '01:00:00'),
+(46, 6, '2024-11-06 08:05:00', '08:05:00', '17:00:00', 5, 'manual', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(47, 7, '2024-11-07 08:30:00', '08:30:00', '17:00:00', 30, 'automatica', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(48, 8, '2024-11-08 08:00:00', '08:00:00', '17:00:00', 0, 'manual', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(49, 9, '2024-11-09 08:20:00', '08:20:00', '17:00:00', 20, 'automatica', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(50, 10, '2024-11-10 08:50:00', '08:50:00', '17:00:00', 50, 'manual', 'tarde', '12:15:00', '12:45:00', '01:30:00'),
+(51, 11, '2024-11-11 08:00:00', '08:00:00', '17:00:00', 0, 'automatica', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(52, 12, '2024-11-12 08:30:00', '08:30:00', '17:00:00', 30, 'manual', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(53, 13, '2024-11-13 08:00:00', '08:00:00', '17:00:00', 0, 'automatica', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(54, 14, '2024-11-14 08:15:00', '08:15:00', '17:00:00', 15, 'manual', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(55, 15, '2024-11-15 08:25:00', '08:25:00', '17:00:00', 25, 'automatica', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(56, 16, '2024-11-16 08:40:00', '08:40:00', '17:00:00', 40, 'manual', 'tarde', '12:15:00', '12:45:00', '01:00:00'),
+(57, 17, '2024-11-17 08:30:00', '08:30:00', '17:00:00', 30, 'automatica', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(58, 18, '2024-11-18 08:05:00', '08:05:00', '17:00:00', 5, 'manual', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(59, 19, '2024-11-19 08:00:00', '08:00:00', '17:00:00', 0, 'automatica', 'presente', '12:00:00', '12:30:00', '00:00:00'),
+(60, 20, '2024-11-20 08:10:00', '08:10:00', '17:00:00', 10, 'manual', 'tarde', '12:15:00', '12:45:00', '01:00:00'),
+(61, 2, '2024-11-25 09:10:31', '09:09:00', NULL, 0, 'manual', 'regreso', '09:12:00', '09:12:00', '00:00:00'),
+(62, 4, '2024-11-25 00:00:00', '10:43:45', '10:46:05', 0, 'automatica', 'Sin acciones', NULL, '00:00:00', '00:00:00');
 
 -- --------------------------------------------------------
 
@@ -115,17 +148,28 @@ CREATE TABLE `empleados` (
 --
 
 INSERT INTO `empleados` (`idEmpleado`, `nombres`, `apellidos`, `dni`, `correo`, `telefono`, `idPuesto`, `idTurno`, `estado`, `habilitado`, `idApp`, `passwordApp`, `idmarcar`, `passmarcar`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(1, 'asd', 'asd', '12345678', 'qqq@gma', '123456789', 1, 1, 'Activo', 0, NULL, NULL, '', ''),
-(2, '432', '432', '432', '432@123', '432', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(3, 'mono', 'mano', '56451654', 'mono@gmail.com', '454151542', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(4, 'mene', 'mana', '34436547', 'mar@nose.com', '345643657', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(5, 'amaner', 'perezat', '43243243', 'roca@gmail.com', '555555555', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(6, 'jhonny arturo', 'sanes valdivia', '75209807', 'jhonny-529@outlook.com', '970780460', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(7, 'cxcxds', 'sadas', '88888888', 'admin@gmail.com', '999999999', 1, 1, 'Activo', 1, NULL, NULL, 'cxsa', '8ddcf');
-========
-(1, 'mfdsafda', 'grwgrw', '43243243', 'gfreger@gmail.com', '123456789', 0, 0, 'Activo', 0, NULL, NULL, 'wsder', 'dfghy');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+(1, 'Juan Carlos', 'Pérez Rodríguez', '12345678', 'juancarlosperez@gmail.com', '987654321', 1, 1, 'Activo', 1, NULL, NULL, 'jupe', 'e99a1'),
+(2, 'Laura María', 'Gómez Torres', '23456789', 'lauragomeztorres@gmail.com', '987654322', 2, 2, 'Activo', 1, NULL, NULL, 'lago', 'd2d2d'),
+(3, 'Roberto Luis', 'Fernández Martínez', '34567890', 'robertoluisfernandez@gmail.com', '987654323', 3, 3, 'Activo', 1, NULL, NULL, 'rofe', 'b9f83'),
+(4, 'Ana Isabel', 'Vargas López', '45678901', 'anaisabelvargas@gmail.com', '987654324', 1, 4, 'Activo', 1, NULL, NULL, 'anva', '11a8c'),
+(5, 'Carlos Eduardo', 'Ramírez Sánchez', '56789012', 'carloseduardoramirez@gmail.com', '987654325', 2, 2, 'Activo', 1, NULL, NULL, 'cara', 'aadf2'),
+(6, 'Sofía Fernanda', 'López Hernández', '67890123', 'sofiafernandalopez@gmail.com', '987654326', 3, 3, 'Activo', 1, NULL, NULL, 'sofe', 'acbd1'),
+(7, 'Pedro Alejandro', 'González Pérez', '78901234', 'pedroalejandrogonzalez@gmail.com', '987654327', 1, 1, 'Activo', 1, NULL, NULL, 'pego', '98a04'),
+(8, 'María Eugenia', 'Martínez García', '89012345', 'mariaeugeniamartinez@gmail.com', '987654328', 2, 2, 'Activo', 1, NULL, NULL, 'mama', 'b32c9'),
+(9, 'Miguel Ángel', 'Jiménez Ruiz', '90123456', 'miguelangeljimenez@gmail.com', '987654329', 3, 3, 'Activo', 1, NULL, NULL, 'miji', '2a4e4'),
+(10, 'Lucía Beatriz', 'Morales Díaz', '12341234', 'luciabeatrizmorales@gmail.com', '987654330', 1, 1, 'Activo', 1, NULL, NULL, 'lumo', 'e4e9b'),
+(11, 'David Francisco', 'Torres Romero', '23452345', 'davidfranciscotorres@gmail.com', '987654331', 2, 2, 'Activo', 1, NULL, NULL, 'dato', '3f1d0'),
+(12, 'Gloria Patricia', 'Sánchez Vargas', '34563456', 'gloriapatriciasanchez@gmail.com', '987654332', 3, 3, 'Activo', 1, NULL, NULL, 'glsa', '56e9f'),
+(13, 'Andrés Felipe', 'Cruz Martínez', '45674567', 'andresfelipecruz@gmail.com', '987654333', 1, 1, 'Activo', 1, NULL, NULL, 'ancr', 'f7639'),
+(14, 'Natalia Mariana', 'Pérez García', '56785678', 'nataliamarianaperez@gmail.com', '987654334', 2, 2, 'Activo', 1, NULL, NULL, 'nape', '4bd91'),
+(15, 'Eduardo Augusto', 'Sosa Molina', '67896789', 'eduardoaugustososa@gmail.com', '987654335', 3, 3, 'Activo', 1, NULL, NULL, 'edso', '02d2e'),
+(16, 'Cristina Elvira', 'García Gómez', '78907890', 'cristinaelviragarcia@gmail.com', '987654336', 1, 1, 'Activo', 1, NULL, NULL, 'crga', 'e0e8f'),
+(17, 'Héctor Javier', 'Rivera Delgado', '89018901', 'hectorjavierrivera@gmail.com', '987654337', 2, 2, 'Activo', 1, NULL, NULL, 'heri', '33de5'),
+(18, 'Vanessa Carolina', 'Ramírez Castillo', '90129012', 'vanessacarolinaramirez@gmail.com', '987654338', 3, 3, 'Activo', 1, NULL, NULL, 'vaca', 'a38fd'),
+(19, 'Francisco Javier', 'Torres Martínez', '12355678', 'franciscojaviertorres@gmail.com', '987654339', 1, 1, 'Activo', 1, NULL, NULL, 'frto', '542cf'),
+(20, 'Patricia Beatriz', 'González Ramírez', '23466789', 'patriciabeatrizgonzalez@gmail.com', '987654340', 2, 2, 'Activo', 1, NULL, NULL, 'pabe', '6e774'),
+(21, 'jose', 'perez', '12125555', 'jose@gmail.com', '312312345', 6, 5, 'Activo', 1, NULL, NULL, 'jope', '3cb7a'),
+(22, 'mario', 'gomez', '55548787', 'mario@gmail.com', '321329879', 2, 2, 'Activo', 1, NULL, NULL, 'mago', '6bb61');
 
 -- --------------------------------------------------------
 
@@ -147,11 +191,7 @@ CREATE TABLE `exoneraciones` (
 --
 
 INSERT INTO `exoneraciones` (`idExoneraciones`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`, `documento`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(1, 6, '2024-11-24', '2024-11-25', 'LN,JKM', '/biometrico/uploads/1.png');
-========
-(1, 1, '2024-11-22', '2024-11-30', 'y54tytryhr', '/biometrico/uploads/468079443_1146371870437793_3548631805690819992_n(2).jpg');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+(1, 14, '2024-11-25', '2024-11-26', 'sda', NULL);
 
 -- --------------------------------------------------------
 
@@ -172,15 +212,7 @@ CREATE TABLE `feriados` (
 --
 
 INSERT INTO `feriados` (`idFeriado`, `nombre`, `fecha`, `tipo`, `anio`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(2, 'sillass', '2024-11-22', 'anual', 2024),
-(3, 'sillas', '2024-11-23', 'anual', 2024);
-========
-(1, 'dia libre', '2024-11-23', 'simple', 2024),
-(2, 'htrgesbnfg', '2024-11-24', 'anual', 2024),
-(3, 'hghtygehtge', '2024-11-25', 'simple', 2024),
-(4, 'jytkyukuyjkyutik', '2024-11-24', 'simple', 2024);
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+(4, 'feriado', '2024-11-25', 'anual', 2024);
 
 -- --------------------------------------------------------
 
@@ -202,7 +234,9 @@ CREATE TABLE `justificaciones` (
 --
 
 INSERT INTO `justificaciones` (`idJustificaciones`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`, `documento`) VALUES
-(1, 6, '2024-11-24', '2024-11-25', 'fh', '/biometrico/uploads/1.png');
+(1, 14, '2024-11-25', '2024-11-26', 'asd', '/biometrico/uploads/1(1).png'),
+(2, 14, '2024-11-25', '2024-11-26', 'asd', '/biometrico/uploads/1(2).png'),
+(3, 14, '2024-11-25', '2024-11-26', 'asd', '/biometrico/uploads/1(3).png');
 
 -- --------------------------------------------------------
 
@@ -216,14 +250,6 @@ CREATE TABLE `login_intentos` (
   `intentos` int(11) DEFAULT 0,
   `ultimo_intento` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `login_intentos`
---
-
-INSERT INTO `login_intentos` (`id`, `usuario`, `intentos`, `ultimo_intento`) VALUES
-(1, '', 1, '2024-11-18 13:54:56'),
-(2, 'jume', 0, '2024-11-24 00:16:42');
 
 -- --------------------------------------------------------
 
@@ -245,15 +271,10 @@ CREATE TABLE `permisos` (
 --
 
 INSERT INTO `permisos` (`idPermiso`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`, `documento`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(1, 6, '2024-11-24', '2024-11-25', 'sdf', NULL),
-(2, 6, '2024-11-27', '2024-11-28', 'adfs', '/uploads/1.png'),
-(3, 6, '2024-11-25', '2024-11-25', 'hgj', '/biometrico/uploads/121.png'),
-(4, 6, '2024-11-25', '2024-11-25', 'dfg', '/biometrico/uploads/1(1).png');
-========
-(1, 1, '2024-11-25', '2024-11-26', 'tjthygjthy', '/biometrico/uploads/468079443_1146371870437793_3548631805690819992_n.jpg'),
-(2, 1, '2024-11-18', '2024-12-05', 'htyjntyjuyt', '/biometrico/uploads/468079443_1146371870437793_3548631805690819992_n(1).jpg');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+(1, 5, '2024-11-25', '2024-11-26', 'sda', '/biometrico/uploads/Presentación Mi proyecto Final Femenino Delicado Rosa y Nude_20240809_141009_0000.pdf'),
+(2, 8, '2024-11-25', '2024-11-26', 'a', '/biometrico/uploads/tefa.docx'),
+(3, 14, '2024-11-25', '2024-11-26', 'as', '/biometrico/uploads/1.png'),
+(4, 22, '2024-11-25', '2024-11-26', 'permiso por salud', '/biometrico/uploads/WhatsApp Image 2024-11-16 at 10.47.37 AM.jpeg');
 
 -- --------------------------------------------------------
 
@@ -273,11 +294,13 @@ CREATE TABLE `puestos` (
 --
 
 INSERT INTO `puestos` (`idPuesto`, `nombrePuesto`, `area`, `descripcion`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(1, 'Electricista', 'Zona B mina 5', 'Encargado del mantneimiento en el area de electric');
-========
-(0, 'marioneta', 'pinga', 'nose');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+(1, 'Supervisor de Operaciones', 'Operaciones', 'Encargado de supervisar las operaciones diarias en'),
+(2, 'Ingeniero de Minas', 'Ingeniería', 'Responsable de la planificación, diseño y ejecució'),
+(3, 'Técnico de Perforación', 'Operaciones', 'Realiza la perforación de los bloques de roca segú'),
+(4, 'Operador de Excavadora', 'Operaciones', 'Operador de maquinaria pesada para la excavación y'),
+(5, 'Encargado de Seguridad Minera', 'Seguridad', 'Asegura que se cumplan las normativas de seguridad'),
+(6, 'prueba', 'b', 'zonab'),
+(7, 'puesto prueba', 'c', 'prueba c');
 
 -- --------------------------------------------------------
 
@@ -317,11 +340,11 @@ CREATE TABLE `turnos` (
 --
 
 INSERT INTO `turnos` (`idTurno`, `descripcion`, `entrada_previa`, `entrada`, `salida`, `receso`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(1, 'Turno Mañana', '00:00:00', '08:00:00', '16:00:00', '00:30:00');
-========
-(0, 'waca', '00:00:00', '08:20:00', '10:20:00', '07:20:00');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+(1, 'Turno Mañana', '07:00:00', '08:00:00', '16:00:00', '01:00:00'),
+(2, 'Turno Tarde', '14:00:00', '15:00:00', '23:00:00', '00:30:00'),
+(3, 'Turno Noche', '22:00:00', '23:00:00', '07:00:00', '01:00:00'),
+(4, 'TurnoPuerba', '00:00:00', '09:00:00', '10:46:00', '09:20:00'),
+(5, 'turno prueba A', '00:00:00', '12:00:00', '18:00:00', '14:00:00');
 
 -- --------------------------------------------------------
 
@@ -342,13 +365,9 @@ CREATE TABLE `vacaciones` (
 --
 
 INSERT INTO `vacaciones` (`idVacacion`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(1, 1, '2024-11-22', '2024-11-24', 'vnb'),
-(2, 2, '2024-11-22', '2024-11-24', 'c'),
-(3, 3, '2024-11-22', '2024-11-26', 'safsad');
-========
-(1, 1, '2024-11-12', '2024-12-04', 'vacaciones');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+(1, 1, '2024-11-14', '2024-12-06', 'dsa'),
+(2, 2, '2024-11-25', '2024-11-28', 'J'),
+(3, 21, '2024-11-25', '2024-11-26', 'vacaciones planeadas');
 
 --
 -- Índices para tablas volcadas
@@ -433,17 +452,13 @@ ALTER TABLE `vacaciones`
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-<<<<<<<< HEAD:db/biometrico (2).sql
-  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-========
-  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `exoneraciones`
@@ -455,36 +470,31 @@ ALTER TABLE `exoneraciones`
 -- AUTO_INCREMENT de la tabla `feriados`
 --
 ALTER TABLE `feriados`
-<<<<<<<< HEAD:db/biometrico (2).sql
-  MODIFY `idFeriado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-========
   MODIFY `idFeriado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
 
 --
 -- AUTO_INCREMENT de la tabla `justificaciones`
 --
 ALTER TABLE `justificaciones`
-  MODIFY `idJustificaciones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idJustificaciones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `login_intentos`
 --
 ALTER TABLE `login_intentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-<<<<<<<< HEAD:db/biometrico (2).sql
   MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `puestos`
 --
 ALTER TABLE `puestos`
-  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `reportes_asistencia`
@@ -496,20 +506,13 @@ ALTER TABLE `reportes_asistencia`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `idTurno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-========
-  MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+  MODIFY `idTurno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `vacaciones`
 --
 ALTER TABLE `vacaciones`
-<<<<<<<< HEAD:db/biometrico (2).sql
   MODIFY `idVacacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-========
-  MODIFY `idVacacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
 
 --
 -- Restricciones para tablas volcadas
