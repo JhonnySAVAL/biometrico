@@ -82,27 +82,27 @@ class MarcarController extends BaseController
 
     // Método para marcar la salida
     public function marcarSalida()
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        $idEmpleado = $_SESSION['idEmpleado'] ?? null;
-
-        if ($idEmpleado) {
-            $resultado = $this->marcarModel->marcarSalida($idEmpleado); // Aquí llamamos al método para marcar la salida
-
-            if ($resultado) {
-                // Enviar una respuesta de éxito para que el cliente maneje la redirección
-                echo json_encode(['success' => true, 'message' => 'Salida marcada correctamente.']);
-            } else {
-                // Enviar un mensaje de error si ya se marcó la salida
-                echo json_encode(['success' => false, 'message' => 'Ya has marcado tu salida hoy.']);
-            }
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Error: No se encontró el ID del empleado en la sesión.']);
-        }
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
     }
+
+    $idEmpleado = $_SESSION['idEmpleado'] ?? null;
+
+    if ($idEmpleado) {
+        $resultado = $this->marcarModel->marcarSalida($idEmpleado); // Aquí llamamos al método para marcar la salida
+
+        // Verificamos si el resultado es un array y contiene la clave 'success'
+        if (isset($resultado['success'])) {
+            echo json_encode(['success' => $resultado['success'], 'message' => $resultado['message']]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Hubo un error al marcar la salida.']);
+        }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Error: No se encontró el ID del empleado en la sesión.']);
+    }
+}
+
 }
 
 // Ejecutar el controlador si la acción está definida

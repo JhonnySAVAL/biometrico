@@ -25,7 +25,8 @@
             if (data.success) {
                 // Esperamos 5 segundos antes de redirigir
                 setTimeout(() => {
-                    window.location.href = '/biometrico/sistema/view/Marcado/MarcadoVista.php'; // Redirigir
+                    alert('Entrada marcada correctamente.');
+                    window.location.href = '/biometrico/sistema/controller/MarcarController/MarcarController.php?action=Marcado'; // Redirigir
                 }, 5000); // 5 segundos
             } else {
                 alert(data.message); // Mostrar el mensaje de error
@@ -42,8 +43,10 @@ document.getElementById('btnSalida').addEventListener('click', function() {
         .then(response => response.json())  // Convertir la respuesta en JSON
         .then(data => {
             if (data.success) {
-                alert('Salida marcada correctamente.');
-                window.location.href = '/biometrico/sistema/view/Marcado/MarcadoVista.php'; // Redirigir
+                setTimeout(() => {
+                    alert('Salida marcada correctamente.');
+                    window.location.href = '/biometrico/sistema/controller/MarcarController/MarcarController.php?action=Marcado'; // Redirigir
+                }, 5000);  // Redirigir
             } else {
                 alert(data.message); // Mostrar el mensaje de error
             }

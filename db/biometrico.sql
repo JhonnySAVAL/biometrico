@@ -3,11 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
-<<<<<<<< HEAD:db/biometrico (2).sql
--- Tiempo de generación: 25-11-2024 a las 04:50:52
-========
--- Tiempo de generación: 25-11-2024 a las 04:48:25
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+-- Tiempo de generación: 25-11-2024 a las 08:15:49
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -70,8 +66,9 @@ CREATE TABLE `asistencia` (
   `hora_salida` time DEFAULT NULL,
   `minutos_tardanza` int(11) DEFAULT 0,
   `tipo_registro` enum('automatica','manual') DEFAULT 'automatica',
+  `estado` enum('Sin acciones','presente','en_receso','tarde','salida','falto') DEFAULT 'Sin acciones',
   `hora_receso` time DEFAULT NULL,
-  `hora_receso_final` time DEFAULT NULL,
+  `hora_receso_final` time NOT NULL,
   `horas_extras` time DEFAULT '00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -79,13 +76,9 @@ CREATE TABLE `asistencia` (
 -- Volcado de datos para la tabla `asistencia`
 --
 
-<<<<<<<< HEAD:db/biometrico (2).sql
-INSERT INTO `asistencia` (`idAsistencia`, `idEmpleado`, `fecha_registro`, `hora_entrada`, `hora_salida`, `minutos_tardanza`, `tipo_registro`, `hora_receso`, `horas_extras`) VALUES
-(1, 7, '2024-11-24', '22:13:25', '22:13:40', 0, 'manual', NULL, '00:00:00');
-========
-INSERT INTO `asistencia` (`idAsistencia`, `idEmpleado`, `fecha_registro`, `hora_entrada`, `hora_salida`, `minutos_tardanza`, `tipo_registro`, `hora_receso`, `hora_receso_final`, `horas_extras`) VALUES
-(1, 1, '2024-11-24 00:00:00', '22:14:02', '22:14:20', 0, 'manual', NULL, NULL, '00:00:00');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+INSERT INTO `asistencia` (`idAsistencia`, `idEmpleado`, `fecha_registro`, `hora_entrada`, `hora_salida`, `minutos_tardanza`, `tipo_registro`, `estado`, `hora_receso`, `hora_receso_final`, `horas_extras`) VALUES
+(2, 2, '2024-11-25 00:00:00', '01:14:10', '01:17:40', 0, '', 'Sin acciones', NULL, '00:00:00', '00:00:00'),
+(3, 6, '2024-11-25 00:00:00', '01:43:37', '01:43:51', 0, '', 'Sin acciones', NULL, '00:00:00', '00:00:00');
 
 -- --------------------------------------------------------
 
@@ -115,17 +108,11 @@ CREATE TABLE `empleados` (
 --
 
 INSERT INTO `empleados` (`idEmpleado`, `nombres`, `apellidos`, `dni`, `correo`, `telefono`, `idPuesto`, `idTurno`, `estado`, `habilitado`, `idApp`, `passwordApp`, `idmarcar`, `passmarcar`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(1, 'asd', 'asd', '12345678', 'qqq@gma', '123456789', 1, 1, 'Activo', 0, NULL, NULL, '', ''),
-(2, '432', '432', '432', '432@123', '432', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(3, 'mono', 'mano', '56451654', 'mono@gmail.com', '454151542', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(4, 'mene', 'mana', '34436547', 'mar@nose.com', '345643657', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(5, 'amaner', 'perezat', '43243243', 'roca@gmail.com', '555555555', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(6, 'jhonny arturo', 'sanes valdivia', '75209807', 'jhonny-529@outlook.com', '970780460', 1, 1, 'Activo', 1, NULL, NULL, '', ''),
-(7, 'cxcxds', 'sadas', '88888888', 'admin@gmail.com', '999999999', 1, 1, 'Activo', 1, NULL, NULL, 'cxsa', '8ddcf');
-========
-(1, 'mfdsafda', 'grwgrw', '43243243', 'gfreger@gmail.com', '123456789', 0, 0, 'Activo', 0, NULL, NULL, 'wsder', 'dfghy');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+(2, 'mariano', 'escobedo', '78563589', 'mariano@gmail.com', '225656588', 1, 1, 'Activo', 1, NULL, NULL, 'maes', 'ea695'),
+(3, 'jose', 'torres', '98989898', 'amaro@gmail.com', '159487777', 1, 1, 'Activo', 1, NULL, NULL, 'joto', '5a7b2'),
+(4, 'omar', 'araujo', '33326262', 'araujo@gmail.com', '555874857', 1, 1, 'Activo', 1, NULL, NULL, 'omar', '88f49'),
+(5, 'menendez', 'amir', '12313212', 'general@gmail.com', '787979879', 1, 1, 'Activo', 1, NULL, NULL, 'meam', '0d1bf'),
+(6, 'prueba', 'tres', '45483645', 'memememe@gmail.com', '715654746', 1, 1, 'Activo', 1, NULL, NULL, 'prtr', '836b1');
 
 -- --------------------------------------------------------
 
@@ -147,11 +134,7 @@ CREATE TABLE `exoneraciones` (
 --
 
 INSERT INTO `exoneraciones` (`idExoneraciones`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`, `documento`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(1, 6, '2024-11-24', '2024-11-25', 'LN,JKM', '/biometrico/uploads/1.png');
-========
-(1, 1, '2024-11-22', '2024-11-30', 'y54tytryhr', '/biometrico/uploads/468079443_1146371870437793_3548631805690819992_n(2).jpg');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+(1, 4, '2024-11-23', '2024-11-27', 'no desea', '/biometrico/uploads/81hp447i1fL._AC_UF894,1000_QL80_(2).jpg');
 
 -- --------------------------------------------------------
 
@@ -166,21 +149,6 @@ CREATE TABLE `feriados` (
   `tipo` enum('simple','anual') DEFAULT 'simple',
   `anio` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `feriados`
---
-
-INSERT INTO `feriados` (`idFeriado`, `nombre`, `fecha`, `tipo`, `anio`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(2, 'sillass', '2024-11-22', 'anual', 2024),
-(3, 'sillas', '2024-11-23', 'anual', 2024);
-========
-(1, 'dia libre', '2024-11-23', 'simple', 2024),
-(2, 'htrgesbnfg', '2024-11-24', 'anual', 2024),
-(3, 'hghtygehtge', '2024-11-25', 'simple', 2024),
-(4, 'jytkyukuyjkyutik', '2024-11-24', 'simple', 2024);
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
 
 -- --------------------------------------------------------
 
@@ -197,13 +165,6 @@ CREATE TABLE `justificaciones` (
   `documento` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `justificaciones`
---
-
-INSERT INTO `justificaciones` (`idJustificaciones`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`, `documento`) VALUES
-(1, 6, '2024-11-24', '2024-11-25', 'fh', '/biometrico/uploads/1.png');
-
 -- --------------------------------------------------------
 
 --
@@ -216,14 +177,6 @@ CREATE TABLE `login_intentos` (
   `intentos` int(11) DEFAULT 0,
   `ultimo_intento` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `login_intentos`
---
-
-INSERT INTO `login_intentos` (`id`, `usuario`, `intentos`, `ultimo_intento`) VALUES
-(1, '', 1, '2024-11-18 13:54:56'),
-(2, 'jume', 0, '2024-11-24 00:16:42');
 
 -- --------------------------------------------------------
 
@@ -245,15 +198,7 @@ CREATE TABLE `permisos` (
 --
 
 INSERT INTO `permisos` (`idPermiso`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`, `documento`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(1, 6, '2024-11-24', '2024-11-25', 'sdf', NULL),
-(2, 6, '2024-11-27', '2024-11-28', 'adfs', '/uploads/1.png'),
-(3, 6, '2024-11-25', '2024-11-25', 'hgj', '/biometrico/uploads/121.png'),
-(4, 6, '2024-11-25', '2024-11-25', 'dfg', '/biometrico/uploads/1(1).png');
-========
-(1, 1, '2024-11-25', '2024-11-26', 'tjthygjthy', '/biometrico/uploads/468079443_1146371870437793_3548631805690819992_n.jpg'),
-(2, 1, '2024-11-18', '2024-12-05', 'htyjntyjuyt', '/biometrico/uploads/468079443_1146371870437793_3548631805690819992_n(1).jpg');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+(1, 3, '2024-11-23', '2024-11-26', 'enfermo', '/biometrico/uploads/81hp447i1fL._AC_UF894,1000_QL80_(1).jpg');
 
 -- --------------------------------------------------------
 
@@ -273,11 +218,7 @@ CREATE TABLE `puestos` (
 --
 
 INSERT INTO `puestos` (`idPuesto`, `nombrePuesto`, `area`, `descripcion`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(1, 'Electricista', 'Zona B mina 5', 'Encargado del mantneimiento en el area de electric');
-========
-(0, 'marioneta', 'pinga', 'nose');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+(1, 't345t54t', 'hgregtre', 'gtregtregtre');
 
 -- --------------------------------------------------------
 
@@ -317,11 +258,7 @@ CREATE TABLE `turnos` (
 --
 
 INSERT INTO `turnos` (`idTurno`, `descripcion`, `entrada_previa`, `entrada`, `salida`, `receso`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(1, 'Turno Mañana', '00:00:00', '08:00:00', '16:00:00', '00:30:00');
-========
-(0, 'waca', '00:00:00', '08:20:00', '10:20:00', '07:20:00');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+(1, 'tretrwtrewrw', '00:00:00', '03:04:00', '05:43:00', '05:43:00');
 
 -- --------------------------------------------------------
 
@@ -342,13 +279,7 @@ CREATE TABLE `vacaciones` (
 --
 
 INSERT INTO `vacaciones` (`idVacacion`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `motivo`) VALUES
-<<<<<<<< HEAD:db/biometrico (2).sql
-(1, 1, '2024-11-22', '2024-11-24', 'vnb'),
-(2, 2, '2024-11-22', '2024-11-24', 'c'),
-(3, 3, '2024-11-22', '2024-11-26', 'safsad');
-========
-(1, 1, '2024-11-12', '2024-12-04', 'vacaciones');
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+(1, 5, '2024-11-12', '2024-12-04', 'vacaciones');
 
 --
 -- Índices para tablas volcadas
@@ -433,17 +364,13 @@ ALTER TABLE `vacaciones`
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-<<<<<<<< HEAD:db/biometrico (2).sql
-  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-========
-  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `exoneraciones`
@@ -455,30 +382,25 @@ ALTER TABLE `exoneraciones`
 -- AUTO_INCREMENT de la tabla `feriados`
 --
 ALTER TABLE `feriados`
-<<<<<<<< HEAD:db/biometrico (2).sql
-  MODIFY `idFeriado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-========
-  MODIFY `idFeriado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
+  MODIFY `idFeriado` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `justificaciones`
 --
 ALTER TABLE `justificaciones`
-  MODIFY `idJustificaciones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idJustificaciones` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `login_intentos`
 --
 ALTER TABLE `login_intentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-<<<<<<<< HEAD:db/biometrico (2).sql
-  MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `puestos`
@@ -497,19 +419,12 @@ ALTER TABLE `reportes_asistencia`
 --
 ALTER TABLE `turnos`
   MODIFY `idTurno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-========
-  MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
 
 --
 -- AUTO_INCREMENT de la tabla `vacaciones`
 --
 ALTER TABLE `vacaciones`
-<<<<<<<< HEAD:db/biometrico (2).sql
-  MODIFY `idVacacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-========
   MODIFY `idVacacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
->>>>>>>> 35e28d9e85137a58700178e977ff539a4e4b4ec7:db/biometricopruebaOLD.sql
 
 --
 -- Restricciones para tablas volcadas
