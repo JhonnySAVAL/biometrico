@@ -105,11 +105,12 @@ public function obtenerExoneraciones(array $fechas)
     $sql = "SELECT 
                 empleados.dni AS 'DNI',
                 CONCAT(empleados.nombres, ' ', empleados.apellidos) AS 'Empleado',
-                exoneraciones.fecha AS 'Fecha',
+                exoneraciones.fecha_inicio AS 'Fecha Inicio',
+                exoneraciones.fecha_fin AS 'Fecha Fin',
                 exoneraciones.motivo AS 'Motivo'
             FROM exoneraciones
-            INNER JOIN empleados ON exoneraciones.idEmpleado = empleados.idEmpleado
-            WHERE DATE(exoneraciones.fecha) IN ($placeholders)";
+            INNER JOIN empleados  ON exoneraciones.idEmpleado = empleados.idEmpleado
+            WHERE DATE(exoneraciones.fecha_inicio) IN ($placeholders)";
     $stmt = $this->conn->prepare($sql);
 
     foreach ($fechas as $index => $fecha) {

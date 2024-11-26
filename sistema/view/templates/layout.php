@@ -91,7 +91,12 @@
                                 </li>
                             </ul>
                         </li>
-
+                        <li class="nav-item">
+                                    <a href="/biometrico/sistema/controller/ReportesController/ReportesController.php?action=mostrarReportes" class="nav-link">
+                                        <i class="nav-icon bi bi-graph-up-arrow"></i>
+                                        <p>Reportes</p>
+                                    </a>
+                                </li>
                         <li class="nav-item menu-close">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-book-fill"></i>
@@ -143,12 +148,7 @@
                                         <p>Turnos</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="/biometrico/sistema/controller/ReportesController/ReportesController.php?action=mostrarReportes" class="nav-link">
-                                        <i class="nav-icon bi bi-graph-up-arrow"></i>
-                                        <p>Reportes</p>
-                                    </a>
-                                </li>
+                                
                             </ul>
                         </li>
 
